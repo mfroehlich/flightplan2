@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<SplitPane dividerPositions="0.47324414715719065" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+	fx:controller="com.prodyna.pac.flightplan.client.planeadmin.mainpage.PlaneAdminMainPagePresenter">
+	<items>
+		<AnchorPane fx:id="planelistpane" minHeight="0.0" minWidth="0.0"
+			prefHeight="398.0" prefWidth="500" />
+		<AnchorPane fx:id="planedetailspane" minHeight="0.0"
+			minWidth="0.0" prefHeight="160.0" prefWidth="500" />
+	</items>
+</SplitPane>

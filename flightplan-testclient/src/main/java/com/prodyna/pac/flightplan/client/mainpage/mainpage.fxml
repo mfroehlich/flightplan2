@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prodyna.pac.flightplan.client.mainpage.MainPagePresenter">
+	<children>
+		<BorderPane layoutX="117.0" layoutY="84.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<top>
+				<MenuBar BorderPane.alignment="CENTER">
+					<menus>
+                  <Menu mnemonicParsing="false" text="Home">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openLoginDialog" text="Login" />
+                        <MenuItem mnemonicParsing="false" onAction="#logoutUser" text="Logout" />
+                     </items>
+                  </Menu>
+						<Menu mnemonicParsing="false" text="Reservation">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#openSceneUserReservations" text="My reservations" />
+								<MenuItem mnemonicParsing="false" onAction="#openSceneCreateReservation" text="Create new reservation" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Administration">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#openScenePilotAdministration" text="Pilots" />
+								<MenuItem mnemonicParsing="false" onAction="#openScenePlaneAdministration" text="Planes" />
+								<MenuItem mnemonicParsing="false" onAction="#openSceneAircrafttypeAdministration" text="Aircrafttypes" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Help">
+							<items>
+								<MenuItem mnemonicParsing="false" text="About" />
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+			</top>
+			<center>
+				<Pane fx:id="mainScene" BorderPane.alignment="CENTER" />
+			</center>
+         <bottom>
+						<Label fx:id="statusBarLabel" prefHeight="17.0" text="Dies ist die Statusbar! Hier könnte ich später mal Meldungen anzeigen!" BorderPane.alignment="CENTER" />
+         </bottom>
+		</BorderPane>
+	</children>
+</AnchorPane>

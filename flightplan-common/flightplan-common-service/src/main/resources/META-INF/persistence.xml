@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+
+	<persistence-unit name="flightplan-mysql">
+		<jta-data-source>java:jboss/datasources/FlightplanMysqlDS</jta-data-source>
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.show_sql" value="true"></property>
+		</properties>
+
+		<class>com.prodyna.pac.flightplan.pilot.entity.Pilot</class>
+
+		<class>com.prodyna.pac.flightplan.plane.entity.Plane</class>
+		<class>com.prodyna.pac.flightplan.plane.entity.AircraftType</class>
+
+		<class>com.prodyna.pac.flightplan.common.entity.User</class>
+		<class>com.prodyna.pac.flightplan.common.entity.Role</class>
+		<class>com.prodyna.pac.flightplan.common.entity.UserToRoleMapping</class>
+
+		<class>com.prodyna.pac.flightplan.reservation.entity.Reservation</class>
+		<class>com.prodyna.pac.flightplan.reservation.entity.ReservationItem</class>
+		<class>com.prodyna.pac.flightplan.reservation.entity.ReservationStatus</class>
+
+		<class>com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation</class>
+
+	</persistence-unit>
+
+</persistence>

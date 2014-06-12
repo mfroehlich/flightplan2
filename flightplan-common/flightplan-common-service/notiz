@@ -1,0 +1,65 @@
+
+===================================================================================================
+Testen mit Arquillian
+
+	* Wie geht das allgemein?
+	* Was muss ich beachten beim Schreiben von Tests für die einzelnen Schichten?    
+
+===================================================================================================
+FACHLICHKEIT: Pilot hat einen oder mehrere Flugzeugtypen, die er ausleihen darf!
+	-> das muss noch implementiert werden!
+    
+===================================================================================================    
+FRAGE:
+	* Wie sichert Christian den Parallelbetrieb?
+
+===================================================================================================    
+Automatisiertes Zurückbringen von Items
+	* Thread, der minütlich startet und das zurückbringen implementiert!
+
+===================================================================================================    
+Validierung vervollständigen
+
+===================================================================================================    
+GUEST-Mode
+	-> sicherstellen, dass der GUEST-Mode funktioniert.
+	==> Spezieller User hierfür?
+	
+	FRAGE: wie melde ich mich OHNE Authentifizierung an? 
+			-> Was muss ich im Code schicken? 
+      
+===================================================================================================    
+Verschlüsselung der Passwörter!!
+	-> in standalone.xml
+	    <module-option name="hashAlgorithm" value="MD5" />
+	    <module-option name="hashEncoding" value="base64" />
+	
+	-> TODO: Bean-Methode fertig implementieren, dass neue User mit Passwort gespeichert werden!
+    
+===================================================================================================
+Übersetzen von Exceptions beim dynamic proxy
+	-> Anzeige schöner Fehlermeldungen in den Fehlerfällen
+
+===================================================================================================    
+SQL-Skript erzeugen für die Erzeugung des Datenbankschemas
+
+===================================================================================================    
+Assembly -> Bauen eines Installationspakets
+	-> EAR-File
+	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
+	-> Quelltext
+	
+	TODO was heißt das? QM: Testergebnisse, Code-Coverage
+    
+===================================================================================================    
+Anzeige von Menüpunkten abhängig vom Anmeldestatus
+  	* Steuerung, welche Menüpunkte aktiv sind!
+  	* Alle Presenter mit initItems()-Methode ausstatten
+  	  -> dort die Ladevorgänge via REST implementieren
+  	* Diese Presenter können dann genutzt werden, um die GUI-Elemente (Menuitems etc.) zu aktivieren oder nicht je nach Autorisierungsstatus des Users!
+
+===================================================================================================    
+Kommentieren des Codes
+
+===================================================================================================    
+Handbuch??

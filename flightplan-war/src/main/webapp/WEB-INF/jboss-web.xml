@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configure usage of the security domain -->
+<jboss-web>
+	<!-- <security-domain>nicht-existierend</security-domain> <security-domain>other</security-domain> -->
+	<security-domain>flightplan-security-domain</security-domain>
+
+</jboss-web>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.prodyna.pac.flightplan.client.reservationcreation.ReservationCreationPresenter">
+	<children>
+		<BorderPane layoutX="91.0" layoutY="51.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="-62.0" AnchorPane.topAnchor="0.0">
+			<top>
+				<FlowPane fx:id="searchBar" prefHeight="30.0" prefWidth="695.0"
+					BorderPane.alignment="CENTER">
+					<children>
+						<Label text="Search reservations:">
+							<FlowPane.margin>
+								<Insets right="50.0" />
+							</FlowPane.margin>
+						</Label>
+						<Label text="Plane">
+							<FlowPane.margin>
+								<Insets right="5.0" />
+							</FlowPane.margin>
+						</Label>
+						<ChoiceBox fx:id="planeSelect" prefHeight="25.0"
+							prefWidth="100.0">
+							<FlowPane.margin>
+								<Insets right="30.0" />
+							</FlowPane.margin>
+						</ChoiceBox>
+						<Label text="Date">
+							<FlowPane.margin>
+								<Insets right="5.0" />
+							</FlowPane.margin>
+						</Label>
+						<DatePicker fx:id="datePicker" prefHeight="25.0"
+							prefWidth="100.0">
+							<FlowPane.margin>
+								<Insets right="30.0" />
+							</FlowPane.margin>
+						</DatePicker>
+						<Button fx:id="openReservationCreationDialogButton" mnemonicParsing="false"
+							onAction="#openReservationCreationDialog" text="Add new reservation" />
+					</children>
+					<padding>
+						<Insets left="5.0" top="5.0" />
+					</padding>
+					<BorderPane.margin>
+						<Insets bottom="5.0" />
+					</BorderPane.margin>
+				</FlowPane>
+			</top>
+			<center>
+				<TableView fx:id="reservationList" editable="true"
+					BorderPane.alignment="CENTER">
+					<columns>
+						<TableColumn fx:id="userName" prefWidth="130.0" text="Pilot" />
+						<TableColumn fx:id="planeName" prefWidth="130.0" text="Plane" />
+						<TableColumn fx:id="planeNumberPlate" prefWidth="100.0"
+							text="Numberplate" />
+						<TableColumn fx:id="startDate" prefWidth="130.0" text="From" />
+						<TableColumn fx:id="endDate" prefWidth="130.0" text="To" />
+						<TableColumn fx:id="state" text="State" />
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</AnchorPane>

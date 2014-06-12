@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.prodyna.pac.flightplan</groupId>
+		<artifactId>flightplan</artifactId>
+		<version>01.00.00-SNAPSHOT</version>
+	</parent>
+	<artifactId>flightplan-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>reservation-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>flightplan-war</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>flightplan-common-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>pilot-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>plane-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>planereservation-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+
+					<modules>
+						<!-- Rename the REST-interface-warfile (root-context) in the generated 
+							application.xml -->
+						<webModule>
+							<groupId>com.prodyna.pac.flightplan</groupId>
+							<artifactId>flightplan-war</artifactId>
+							<contextRoot>/flightplancontext</contextRoot>
+						</webModule>
+					</modules>
+
+				</configuration>
+			</plugin>
+
+			<!-- Deploys application on Wildfly -->
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.1.Final</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.prodyna.pac.flightplan</groupId>
+		<artifactId>flightplan</artifactId>
+		<version>01.00.00-SNAPSHOT</version>
+	</parent>
+	<artifactId>flightplan-testclient</artifactId>
+
+	<dependencies>
+		<!-- <dependency> <groupId>org.jboss.resteasy</groupId> <artifactId>resteasy-client</artifactId> 
+			<version>3.0.2.Final</version> <exclusions> <exclusion> <artifactId>slf4j-simple</artifactId> 
+			<groupId>org.slf4j</groupId> </exclusion> </exclusions> </dependency> <dependency> 
+			<groupId>org.jboss.resteasy</groupId> <artifactId>resteasy-jaxb-provider</artifactId> 
+			<version>2.2.0.GA</version> </dependency> -->
+
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>8.0.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>2.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-proxy-client</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>reservation-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>pilot-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>planereservation-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>common-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>flightplan-common-client</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+	prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.prodyna.pac.flightplan.client.reservationlist.ReservationListPresenter">
+	<children>
+		<TableView fx:id="reservationListTable" layoutX="132.0"
+			layoutY="59.0" prefHeight="400.0" prefWidth="600.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<columns>
+				<TableColumn fx:id="planeName" prefWidth="150.0" text="Plane" />
+				<TableColumn fx:id="numberPlate" prefWidth="150.0" text="Numberplate" />
+				<TableColumn fx:id="startTime" prefWidth="150.0" text="Start" />
+				<TableColumn fx:id="endTime" prefWidth="150.0" text="End" />
+				<TableColumn fx:id="reservationStatus" prefWidth="150.0"
+					text="Status" />
+			</columns>
+			<contextMenu>
+				<ContextMenu fx:id="contextMenu" onShowing="#configureContextMenu">
+					<items>
+						<MenuItem fx:id="deleteReservation" mnemonicParsing="false"
+							onAction="#deleteReservation" text="Delete reservation" />
+						<MenuItem fx:id="editReservation" mnemonicParsing="false"
+							onAction="#editReservation" text="Edit reservation" />
+						<MenuItem fx:id="cancelReservation" mnemonicParsing="false"
+							onAction="#cancelReservation" text="Cancel reservation" />
+						<MenuItem fx:id="startFlight" mnemonicParsing="false"
+							onAction="#startFlight" text="Start flight" />
+						<MenuItem fx:id="returnPlane" mnemonicParsing="false"
+							onAction="#returnPlane" text="Return plane" />
+					</items>
+				</ContextMenu>
+			</contextMenu>
+		</TableView>
+	</children>
+</AnchorPane>
