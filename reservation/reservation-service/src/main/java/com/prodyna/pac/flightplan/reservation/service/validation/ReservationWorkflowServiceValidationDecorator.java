@@ -3,6 +3,8 @@
  */
 package com.prodyna.pac.flightplan.reservation.service.validation;
 
+import java.util.Collection;
+
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
@@ -36,8 +38,8 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus == ReservationStatus.LENT
                 || currentStatus == ReservationStatus.RETURNED) {
-            throw new ReservationWorkflowException("Error cancelling reservation due to wrong reservation status.",
-                    ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            throw new ReservationWorkflowException("Error cancelling reservation for reservation " + reservationId
+                    + " due to wrong reservation status" + currentStatus, ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
         delegate.cancelReservation(reservationId);
@@ -48,7 +50,8 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
         Reservation reservation = reservationService.loadReservationById(reservationId);
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus != ReservationStatus.RESERVED) {
-            throw new ReservationWorkflowException("Error receiving reservation item due to wrong reservation status.",
+            throw new ReservationWorkflowException("Error receiving reservation item for reservation " + reservationId
+                    + " due to wrong reservation status " + currentStatus,
                     ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
@@ -60,10 +63,16 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
         Reservation reservation = reservationService.loadReservationById(reservationId);
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus != ReservationStatus.LENT) {
-            throw new ReservationWorkflowException("Error returning reservation item due to wrong reservation status.",
+            throw new ReservationWorkflowException("Error returning reservation item for reservation " + reservationId
+                    + " due to wrong reservation status " + currentStatus,
                     ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
         delegate.returnReservationItemWithReservationId(reservationId);
+    }
+
+    @Override
+    public Collection<String> loadOverdueLentReservationIds() {
+        return delegate.loadOverdueLentReservationIds();
     }
 }

@@ -5,17 +5,15 @@ package com.prodyna.pac.flightplan.reservation.service;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
-import com.prodyna.pac.flightplan.common.entity.Role;
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
+import com.prodyna.pac.flightplan.user.entity.Role;
 
 /**
  * TODO mfroehlich Comment me
@@ -26,7 +24,7 @@ import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 @Stateless
 @Logging
 @MethodCallsMonitored
-@Interceptors(AuthorizationInterceptor.class)
+// @Interceptors(AuthorizationInterceptor.class)
 @AuthorizedRoles({ Role.ADMIN, Role.USER })
 public class ReservationBean implements ReservationService {
 

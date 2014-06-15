@@ -4,17 +4,23 @@
 package com.prodyna.pac.flightplan.client.pilotadmin.details;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 
+import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
 
 /**
@@ -46,6 +52,9 @@ public class PilotDetailsPresenter implements Initializable {
     @FXML
     private DatePicker licenceValidity;
 
+    @FXML
+    private ListView<AircraftTypeModel> assignedTypesListView;
+
     private PilotDetailsViewModel viewModel;
 
     @Override
@@ -59,7 +68,7 @@ public class PilotDetailsPresenter implements Initializable {
         this.viewModel.selectedPilotProperty().addListener(new ChangeListener<PilotModel>() {
             @Override
             public void changed(ObservableValue<? extends PilotModel> arg0, PilotModel oldPilot, PilotModel newPilot) {
-                viewModel.currentPilotProperty().set(newPilot);
+                updateCurrentPilot(newPilot);
             }
         });
 
@@ -86,24 +95,62 @@ public class PilotDetailsPresenter implements Initializable {
                     lastname.textProperty().bindBidirectional(newPilot.lastNameProperty());
                     email.textProperty().bindBidirectional(newPilot.emailProperty());
                     licenceValidity.valueProperty().bindBidirectional(newPilot.licenceValidityProperty());
+
+                    updateAssignedTypesSelection();
                 }
             }
         });
+
+        password.editableProperty().bind(userid.textProperty().isNull());
+
+        this.assignedTypesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    public void initItems() {
+        ObservableList<AircraftTypeModel> aircraftTypeList = viewModel.loadAllAircraftTypes();
+        this.assignedTypesListView.setItems(aircraftTypeList);
     }
 
     public void savePilot() {
+        if (viewModel.currentPilotProperty().get() != null) {
+            ObservableList<AircraftTypeModel> selectedTypeList = assignedTypesListView.getSelectionModel()
+                    .getSelectedItems();
+            List<AircraftTypeModel> typeList = new ArrayList<>();
+            selectedTypeList.forEach(type -> typeList.add(type));
+            this.viewModel.currentPilotProperty().get().assignedAircraftTypesProperty().set(typeList);
+        }
         this.viewModel.savePilot();
     }
 
     public void loadPilot() {
         this.viewModel.loadPilotById("1");
+        updateAssignedTypesSelection();
     }
 
     public void newPilot() {
-        this.viewModel.currentPilotProperty().set(new PilotModel());
+        updateCurrentPilot(new PilotModel());
     }
 
     public ObjectProperty<PilotModel> selectedPilotProperty() {
         return this.viewModel.selectedPilotProperty();
+    }
+
+    private void updateCurrentPilot(PilotModel model) {
+        this.viewModel.currentPilotProperty().set(model);
+        updateAssignedTypesSelection();
+    }
+
+    /**
+     * TODO mfroehlich Comment me
+     * 
+     * @param set
+     */
+    private void updateAssignedTypesSelection() {
+        assignedTypesListView.getSelectionModel().clearSelection();
+        List<AircraftTypeModel> assignedTypes = viewModel.currentPilotProperty().get().assignedAircraftTypesProperty()
+                .get();
+        if (assignedTypes != null) {
+            assignedTypes.forEach(type -> assignedTypesListView.getSelectionModel().select(type));
+        }
     }
 }

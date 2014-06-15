@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.prodyna.pac.flightplan.common.entity;
+package com.prodyna.pac.flightplan.user.entity;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "role", schema = "flightplan")
 public class Role implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7987759744738655813L;
 
     public static final String ADMIN = "ADMIN";
     public static final String USER = "USER";

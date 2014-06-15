@@ -29,12 +29,14 @@ public class LoggingInterceptor {
     public Object logMethodCall(InvocationContext ctx) throws Exception {
 
         Method method = ctx.getMethod();
+        Class<?> declaringClass = method.getDeclaringClass();
 
-        logger.debug("Calling method " + method.getName());
+        logger.debug("Calling method " + declaringClass.getCanonicalName() + "#" + method.getName());
 
         Object returnValue = ctx.proceed();
 
-        logger.debug("Returning method " + method.getName() + ", return value: " + returnValue);
+        logger.debug("Returning method " + declaringClass.getCanonicalName() + "#" + method.getName()
+                + ", return value: " + returnValue);
 
         return returnValue;
     }

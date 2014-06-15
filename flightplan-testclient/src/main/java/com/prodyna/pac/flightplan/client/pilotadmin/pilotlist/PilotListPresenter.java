@@ -6,13 +6,16 @@ package com.prodyna.pac.flightplan.client.pilotadmin.pilotlist;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.prodyna.pac.flightplan.client.model.PilotModel;
-
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+
+import com.prodyna.pac.flightplan.client.changepassword.ChangePasswordPresenter;
+import com.prodyna.pac.flightplan.client.changepassword.ChangePasswordView;
+import com.prodyna.pac.flightplan.client.dialog.ModalDialog;
+import com.prodyna.pac.flightplan.client.model.PilotModel;
 
 /**
  * TODO mfroehlich Comment me
@@ -30,6 +33,9 @@ public class PilotListPresenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewModel = new PilotListViewModel();
+    }
+
+    public void initItems() {
         loadPilots();
     }
 
@@ -41,6 +47,16 @@ public class PilotListPresenter implements Initializable {
         }
 
         loadPilots();
+    }
+
+    public void changePassword() {
+        ChangePasswordView view = new ChangePasswordView();
+        String userId = pilotListView.getSelectionModel().getSelectedItem().idProperty().get();
+        ChangePasswordPresenter presenter = (ChangePasswordPresenter) view.getPresenter();
+        presenter.initItems(userId);
+
+        ModalDialog dialog = new ModalDialog(view.getView());
+        dialog.showAndWait();
     }
 
     public void loadPilots() {

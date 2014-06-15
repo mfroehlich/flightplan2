@@ -54,5 +54,10 @@
 			<artifactId>planereservation-client</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>user-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

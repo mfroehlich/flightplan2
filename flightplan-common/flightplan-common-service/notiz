@@ -1,24 +1,16 @@
 
-===================================================================================================
-Testen mit Arquillian
-
-	* Wie geht das allgemein?
-	* Was muss ich beachten beim Schreiben von Tests für die einzelnen Schichten?    
-
-===================================================================================================
-FACHLICHKEIT: Pilot hat einen oder mehrere Flugzeugtypen, die er ausleihen darf!
-	-> das muss noch implementiert werden!
-    
 ===================================================================================================    
-FRAGE:
-	* Wie sichert Christian den Parallelbetrieb?
-
-===================================================================================================    
-Automatisiertes Zurückbringen von Items
-	* Thread, der minütlich startet und das zurückbringen implementiert!
+Assembly -> Bauen eines Installationspakets
+	-> EAR-File
+	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
+	-> Quelltext
+	
+	TODO was heißt das? QM: Testergebnisse, Code-Coverage
 
 ===================================================================================================    
 Validierung vervollständigen
+	- BeanValidation!!
+	- Methoden in Decorators implementieren
 
 ===================================================================================================    
 GUEST-Mode
@@ -28,28 +20,21 @@ GUEST-Mode
 	FRAGE: wie melde ich mich OHNE Authentifizierung an? 
 			-> Was muss ich im Code schicken? 
       
-===================================================================================================    
-Verschlüsselung der Passwörter!!
-	-> in standalone.xml
-	    <module-option name="hashAlgorithm" value="MD5" />
-	    <module-option name="hashEncoding" value="base64" />
-	
-	-> TODO: Bean-Methode fertig implementieren, dass neue User mit Passwort gespeichert werden!
-    
 ===================================================================================================
 Übersetzen von Exceptions beim dynamic proxy
 	-> Anzeige schöner Fehlermeldungen in den Fehlerfällen
 
-===================================================================================================    
-SQL-Skript erzeugen für die Erzeugung des Datenbankschemas
+===================================================================================================
+Testen mit Arquillian
 
+	* Wie geht das allgemein?
+	* Was muss ich beachten beim Schreiben von Tests für die einzelnen Schichten?    
+    
 ===================================================================================================    
-Assembly -> Bauen eines Installationspakets
-	-> EAR-File
-	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
-	-> Quelltext
-	
-	TODO was heißt das? QM: Testergebnisse, Code-Coverage
+FRAGE:
+	* Wie sichert Christian den Parallelbetrieb?
+	* Wie gehe ich mit GIT-Conflicts um? Das funzt überhaupt nicht!!
+	* Wie erstelle ich einen wirklichen Singleton?
     
 ===================================================================================================    
 Anzeige von Menüpunkten abhängig vom Anmeldestatus
@@ -63,3 +48,33 @@ Kommentieren des Codes
 
 ===================================================================================================    
 Handbuch??
+
+
+
+
+===================================================================================================    
+Verschlüsselung der Passwörter!!
+	-> in standalone.xml
+	    <module-option name="hashAlgorithm" value="MD5" />
+	    <module-option name="hashEncoding" value="base64" />
+	
+	-> DONE: Bean-Methode fertig implementieren, dass neue User mit Passwort gespeichert werden!
+
+===================================================================================================    
+SQL-Skript erzeugen für die Erzeugung des Datenbankschemas
+
+	HOWTO:	MySQL-Workbench
+		-> Rechtsklick auf Schema -> Schema Inspector öffnen
+		-> Alle Tabellen markieren  
+		-> Rechtsklick -> Send to SQL Editor -> Create Statement auswählen
+
+===================================================================================================
+FACHLICHKEIT: Pilot hat einen oder mehrere Flugzeugtypen, die er ausleihen darf!
+	-> das muss noch implementiert werden!
+	
+===================================================================================================    
+Automatisiertes Zurückbringen von Items
+	* Thread, der minütlich startet und das zurückbringen implementiert!
+
+	TODO: AuthorizationInterceptor in ReservationWorkflowBean und ReservationBean wieder einkommentieren
+	TODO: Prüfen, warum @RunAs in PlaneReservationWatcher nicht funktioniert!

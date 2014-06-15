@@ -4,6 +4,8 @@
 package com.prodyna.pac.flightplan.client.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,6 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 
 /**
@@ -28,8 +31,7 @@ public class PilotModel {
     private final StringProperty password;
     private final StringProperty email;
     private final ObjectProperty<LocalDate> licenceValidity;
-
-    // TODO mfroehlich List of assigned aircrafttypes missing
+    private final ObjectProperty<List<AircraftTypeModel>> assignedAircraftTypes;
 
     private final StringProperty nameAsEntryList;
 
@@ -40,7 +42,8 @@ public class PilotModel {
         lastName = new SimpleStringProperty();
         password = new SimpleStringProperty();
         email = new SimpleStringProperty();
-        licenceValidity = new SimpleObjectProperty<LocalDate>();
+        licenceValidity = new SimpleObjectProperty<>();
+        assignedAircraftTypes = new SimpleObjectProperty<>();
 
         nameAsEntryList = new SimpleStringProperty();
         nameAsEntryList.bind(firstName.concat(" ").concat(lastName).concat(" (").concat(userName).concat(" / ")
@@ -60,6 +63,13 @@ public class PilotModel {
         password.set(pilot.getPassword());
         email.set(pilot.geteMailAddress());
         licenceValidity.set(LocalDateConverter.dateToLocalDate(pilot.getLicenceValidity()));
+
+        List<AircraftType> assignedAircraftTypes = pilot.getAssignedAircraftTypes();
+        List<AircraftTypeModel> aircraftTypes = new ArrayList<>();
+        if (assignedAircraftTypes != null) {
+            assignedAircraftTypes.forEach(type -> aircraftTypes.add(new AircraftTypeModel(type)));
+        }
+        this.assignedAircraftTypes.set(aircraftTypes);
     }
 
     public Pilot getEntity() {
@@ -71,6 +81,11 @@ public class PilotModel {
         pilot.setPassword(password.get());
         pilot.seteMailAddress(email.get());
         pilot.setLicenceValidity(LocalDateConverter.localDateToDate(licenceValidity.get()));
+
+        List<AircraftType> assignedTypes = new ArrayList<>();
+        assignedAircraftTypes.get().forEach(type -> assignedTypes.add(type.getEntity()));
+        pilot.setAssignedAircraftTypes(assignedTypes);
+
         return pilot;
     }
 
@@ -105,6 +120,10 @@ public class PilotModel {
 
     public ObjectProperty<LocalDate> licenceValidityProperty() {
         return licenceValidity;
+    }
+
+    public ObjectProperty<List<AircraftTypeModel>> assignedAircraftTypesProperty() {
+        return assignedAircraftTypes;
     }
 
 }

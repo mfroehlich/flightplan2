@@ -3,12 +3,19 @@
  */
 package com.prodyna.pac.flightplan.client.pilotadmin.details;
 
+import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
+import com.prodyna.pac.flightplan.client.service.AircraftTypeClientService;
 import com.prodyna.pac.flightplan.client.service.PilotClientService;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 
 /**
  * TODO mfroehlich Comment me
@@ -22,6 +29,7 @@ public class PilotDetailsViewModel {
     private final ObjectProperty<PilotModel> currentPilot;
 
     private final PilotClientService service;
+    private final AircraftTypeClientService typeService;
 
     public PilotDetailsViewModel() {
 
@@ -29,6 +37,7 @@ public class PilotDetailsViewModel {
         this.currentPilot = new SimpleObjectProperty<>();
 
         this.service = new PilotClientService();
+        this.typeService = new AircraftTypeClientService();
     }
 
     /**
@@ -56,5 +65,17 @@ public class PilotDetailsViewModel {
 
     public ObjectProperty<PilotModel> currentPilotProperty() {
         return this.currentPilot;
+    }
+
+    /**
+     * TODO mfroehlich Comment me
+     * 
+     * @return
+     */
+    public ObservableList<AircraftTypeModel> loadAllAircraftTypes() {
+        ObservableList<AircraftTypeModel> types = FXCollections.observableArrayList();
+        List<AircraftType> allAircraftTypes = typeService.loadAllAircraftTypes();
+        allAircraftTypes.forEach(type -> types.add(new AircraftTypeModel(type)));
+        return types;
     }
 }

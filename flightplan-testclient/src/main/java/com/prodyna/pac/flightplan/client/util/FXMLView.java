@@ -13,7 +13,7 @@ import javafx.fxml.LoadException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-import com.prodyna.pac.flightplan.common.exception.UserNotLoggedInException;
+import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
 
 public abstract class FXMLView {
 

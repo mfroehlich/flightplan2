@@ -65,12 +65,12 @@
 			<dependency>
 				<groupId>com.prodyna.pac.flightplan</groupId>
 				<artifactId>user-client</artifactId>
-				<version>${project.version}</version>
+				<version>01.00.00-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>com.prodyna.pac.flightplan</groupId>
 				<artifactId>user-service</artifactId>
-				<version>${project.version}</version>
+				<version>01.00.00-SNAPSHOT</version>
 				<type>ejb</type>
 			</dependency>
 			<dependency>
@@ -150,5 +150,6 @@
 		<module>flightplan-testclient</module>
 		<module>monitoring</module>
 		<module>flightplan-common</module>
+		<module>user</module>
 	</modules>
 </project>

@@ -8,8 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.client.service.UserClientService;
-import com.prodyna.pac.flightplan.common.entity.User;
-import com.prodyna.pac.flightplan.common.exception.UserNotLoggedInException;
+import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
 
 /**
  * TODO mfroehlich Comment me
@@ -24,7 +23,7 @@ public class SessionManager {
     private static final SessionManager instance = new SessionManager();
 
     private UserInfo userInfo;
-    private User user;
+    private String userId;
 
     private SessionManager() {
     }
@@ -35,36 +34,37 @@ public class SessionManager {
 
     public void loginUser(UserInfo userInfo) {
         this.userInfo = userInfo;
+        String userName = userInfo.getUserName();
         try {
             UserClientService userClientService = new UserClientService();
-            user = userClientService.loadUserByUserName(userInfo.getUserName());
+            userId = userClientService.loadUserIdByUserName(userName);
         } catch (Exception ex) {
-            logger.error("Error logging in user " + userInfo.getUserName(), ex);
+            logger.error("Error logging in user " + userName, ex);
             this.userInfo = null;
-            this.user = null;
+            this.userId = null;
             throw new UserNotLoggedInException();
         }
     }
 
-    public User logoutUser() {
-        User user = this.user;
+    public String logoutUser() {
+        String userId = this.userId;
         this.userInfo = null;
-        this.user = null;
-        return user;
+        this.userId = null;
+        return userId;
     }
 
     public UserInfo getLoggedUserInfo() {
         return this.userInfo;
     }
 
-    public User getLoggedInUser() {
-        if (user == null) {
+    public String getLoggedInUserId() {
+        if (userId == null) {
             throw new UserNotLoggedInException();
         }
-        return user;
+        return userId;
     }
 
     public boolean isUserLoggedIn() {
-        return this.user != null;
+        return this.userId != null;
     }
 }

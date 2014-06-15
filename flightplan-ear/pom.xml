@@ -39,6 +39,11 @@
 			<artifactId>planereservation-service</artifactId>
 			<type>ejb</type>
 		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>user-service</artifactId>
+			<type>ejb</type>
+		</dependency>
 	</dependencies>
 
 	<build>

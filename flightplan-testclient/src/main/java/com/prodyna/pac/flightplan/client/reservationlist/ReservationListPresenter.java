@@ -89,7 +89,6 @@ public class ReservationListPresenter implements Initializable {
     }
 
     public void configureContextMenu(WindowEvent event) {
-        logger.debug("Configuring context menu!");
 
         // TODO mfroehlich Logik auslagern in WorkflowEngine
         ReservationStatus reservationStatus = viewModel.selectedReservationProperty().get().stateProperty().get();

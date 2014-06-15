@@ -48,7 +48,11 @@
 
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>reservation-client</artifactId>
+			<artifactId>plane-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>common-utils</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan</groupId>
@@ -57,14 +61,6 @@
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan</groupId>
 			<artifactId>planereservation-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>common-utils</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>flightplan-common-client</artifactId>
 		</dependency>
 	</dependencies>
 </project>

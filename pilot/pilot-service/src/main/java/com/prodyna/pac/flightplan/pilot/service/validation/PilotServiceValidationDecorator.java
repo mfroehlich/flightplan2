@@ -10,7 +10,7 @@ import javax.decorator.Delegate;
 import javax.inject.Inject;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
-import com.prodyna.pac.flightplan.pilot.exception.PilotValidationErrorCode;
+import com.prodyna.pac.flightplan.pilot.exception.PilotErrorCode;
 import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.pilot.service.PilotService;
 import com.prodyna.pac.flightplan.utils.StringUtils;
@@ -81,7 +81,7 @@ public class PilotServiceValidationDecorator implements PilotService {
     private void checkPilotId(String pilotId) {
         if (StringUtils.trim(pilotId, null) == null) {
             throw new PilotValidationException("Pilot id not set properly: '" + pilotId + "'",
-                    PilotValidationErrorCode.PILOT_ID_NOT_SET);
+                    PilotErrorCode.PILOT_ID_NOT_SET);
         }
     }
 
@@ -98,11 +98,6 @@ public class PilotServiceValidationDecorator implements PilotService {
     @Override
     public Pilot loadPilotById(String id) {
         return delegate.loadPilotById(id);
-    }
-
-    @Override
-    public Pilot loadPilotByUserName(String userName) {
-        return delegate.loadPilotByUserName(userName);
     }
 
     @Override

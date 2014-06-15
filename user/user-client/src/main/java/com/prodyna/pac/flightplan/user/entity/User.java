@@ -1,4 +1,4 @@
-package com.prodyna.pac.flightplan.common.entity;
+package com.prodyna.pac.flightplan.user.entity;
 
 import java.io.Serializable;
 
@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,9 +23,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "user", schema = "flightplan")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQueries({
+        @NamedQuery(
+                name = User.QUERY_UPDATE_USER_PASSWORD,
+                query = "UPDATE User SET password = :newPwd WHERE id = :userId AND password = :oldPwd "),
+        @NamedQuery(
+                name = User.QUERY_LOAD_USER_ID_BY_USERNAME,
+                query = "SELECT id FROM User WHERE username = :username") })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 7030683266825153410L;
+    private static final long serialVersionUID = 3513803091974740763L;
+
+    public static final String QUERY_UPDATE_USER_PASSWORD = "update_user_password";
+    public static final String QUERY_LOAD_USER_ID_BY_USERNAME = "load_user_id_by_username";
 
     @Id
     private String id;

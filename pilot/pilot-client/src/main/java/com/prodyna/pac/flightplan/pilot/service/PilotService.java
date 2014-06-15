@@ -50,15 +50,6 @@ public interface PilotService {
     public Pilot loadPilotById(@PathParam("id") String id);
 
     /**
-     * TODO mfroehlich Comment me
-     * 
-     * @param userName
-     */
-    @GET
-    @Path("username/{username}")
-    public Pilot loadPilotByUserName(@PathParam("username") String userName);
-
-    /**
      * 
      * TODO mfroehlich Comment me
      * 

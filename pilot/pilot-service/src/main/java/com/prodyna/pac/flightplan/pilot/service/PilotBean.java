@@ -4,6 +4,7 @@
 package com.prodyna.pac.flightplan.pilot.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,7 +14,6 @@ import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
-import com.prodyna.pac.flightplan.common.entity.Role;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
@@ -21,6 +21,9 @@ import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 import com.prodyna.pac.flightplan.pilot.exception.PilotErrorCode;
 import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
+import com.prodyna.pac.flightplan.user.entity.Role;
+import com.prodyna.pac.flightplan.user.entity.UserToRoleMapping;
+import com.prodyna.pac.flightplan.user.service.UserService;
 
 /**
  * TODO mfroehlich Comment me
@@ -39,7 +42,7 @@ public class PilotBean implements PilotService {
     private EntityManager em;
 
     @Inject
-    private PasswordEncryptor encryptor;
+    private UserService userService;
 
     @Inject
     private Logger logger;
@@ -47,11 +50,20 @@ public class PilotBean implements PilotService {
     @Override
     public Pilot createPilot(Pilot pilot) {
         logger.debug("Encrypting pilot password before persisting.");
-        String encryptedPassword = encryptor.encryptPassword(pilot.getPassword());
+        String encryptedPassword = userService.encryptPassword(pilot.getPassword());
         pilot.setPassword(encryptedPassword);
 
         logger.debug("Persisting pilot: " + pilot);
         em.persist(pilot);
+
+        Role role = new Role();
+        role.setId("2");
+        UserToRoleMapping mapping = new UserToRoleMapping();
+        mapping.setId(UUID.randomUUID().toString());
+        mapping.setRole(role);
+        mapping.setUser(pilot);
+        em.persist(mapping);
+
         return pilot;
     }
 
@@ -59,15 +71,6 @@ public class PilotBean implements PilotService {
     @AuthorizedRoles({ Role.USER, Role.GUEST })
     public Pilot loadPilotById(String pilotId) {
         Pilot pilot = em.find(Pilot.class, pilotId);
-        return pilot;
-    }
-
-    @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
-    public Pilot loadPilotByUserName(String userName) {
-        Query query = em.createNamedQuery(Pilot.QUERY_LOAD_PILOT_BY_USERNAME);
-        query.setParameter("username", userName);
-        Pilot pilot = (Pilot) query.getSingleResult();
         return pilot;
     }
 

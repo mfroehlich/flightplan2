@@ -17,7 +17,7 @@ import com.prodyna.pac.flightplan.reservation.service.ReservationService;
  * 
  */
 @Decorator
-public class ReservationBeanValidationDecorator implements ReservationService {
+public class ReservationServiceValidationDecorator implements ReservationService {
 
     @Inject
     @Delegate

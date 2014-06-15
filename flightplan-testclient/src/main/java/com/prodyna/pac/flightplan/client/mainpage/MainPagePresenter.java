@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.client.aircrafttypeadmin.mainpage.AircraftTypeAdminMainPageView;
+import com.prodyna.pac.flightplan.client.pilotadmin.mainpage.PilotAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.client.pilotadmin.mainpage.PilotAdminMainPageView;
 import com.prodyna.pac.flightplan.client.planeadmin.mainpage.PlaneAdminMainPageView;
 import com.prodyna.pac.flightplan.client.reservationcreation.ReservationCreationPresenter;
@@ -32,6 +33,7 @@ public class MainPagePresenter {
 
     public void openScenePilotAdministration() {
         PilotAdminMainPageView pilotAdminView = new PilotAdminMainPageView();
+        ((PilotAdminMainPagePresenter) pilotAdminView.getPresenter()).initItems();
         updateMainScene(pilotAdminView.getView());
     }
 

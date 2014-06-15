@@ -19,12 +19,14 @@ public class PilotErrorCode extends ErrorCode {
     public static final ErrorCode ERROR_UPDATING_PILOT = new PilotErrorCode("error_updating_pilot");
     public static final ErrorCode ERROR_DELETING_PILOT = new PilotErrorCode("error_deleting_pilot");
 
+    public static final ErrorCode PILOT_ID_NOT_SET = new PilotErrorCode("pilot_id_not_set");
+
     public PilotErrorCode(String code) {
         super(code);
     }
 
     @Override
     protected String getPrefix() {
-        return "piloterrors";
+        return "pilot";
     }
 }

@@ -14,13 +14,15 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.prodyna.pac.flightplan.common.entity.Role;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
+import com.prodyna.pac.flightplan.reservation.service.ReservationService;
+import com.prodyna.pac.flightplan.user.entity.Role;
 import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 
 /**
@@ -38,6 +40,37 @@ public class PlaneReservationBean implements PlaneReservationService {
 
     @Inject
     private EntityManager em;
+
+    @Inject
+    private ReservationService reservationService;
+
+    @Override
+    public PlaneReservation createReservation(PlaneReservation reservation) {
+        Reservation res = fromPlaneReservation(reservation);
+        res = reservationService.createReservation(res);
+
+        reservation.setId(res.getId());
+        reservation.setStatus(res.getStatus());
+
+        return reservation;
+    }
+
+    @Override
+    public PlaneReservation updateReservation(PlaneReservation reservation) {
+        Reservation res = fromPlaneReservation(reservation);
+        res = reservationService.updateReservation(res);
+
+        reservation.setId(res.getId());
+        reservation.setStartTime(res.getStart());
+        reservation.setEndTime(res.getEnd());
+        reservation.setStatus(res.getStatus());
+        return reservation;
+    }
+
+    @Override
+    public void deleteReservationById(String reservationId) {
+        reservationService.deleteReservationById(reservationId);
+    }
 
     @Override
     @AuthorizedRoles({ Role.GUEST })
@@ -84,5 +117,16 @@ public class PlaneReservationBean implements PlaneReservationService {
         @SuppressWarnings("unchecked")
         List<PlaneReservation> resultList = query.getResultList();
         return resultList;
+    }
+
+    private Reservation fromPlaneReservation(PlaneReservation reservation) {
+        Reservation res = new Reservation();
+        res.setId(reservation.getId());
+        res.setUser(reservation.getPilot());
+        res.setItem(reservation.getPlane());
+        res.setStart(reservation.getStartTime());
+        res.setEnd(reservation.getEndTime());
+        res.setStatus(reservation.getStatus());
+        return res;
     }
 }

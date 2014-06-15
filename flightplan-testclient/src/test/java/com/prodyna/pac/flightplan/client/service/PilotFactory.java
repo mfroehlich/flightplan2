@@ -3,8 +3,8 @@
  */
 package com.prodyna.pac.flightplan.client.service;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 
@@ -31,7 +31,7 @@ public class PilotFactory {
         pilot.setLicenceValidity(new Date());
         pilot.seteMailAddress("test@test.de");
         pilot.setPassword("test");
-        pilot.setAssignedAircraftTypes(new HashSet<>());
+        pilot.setAssignedAircraftTypes(new ArrayList<>());
 
         return pilot;
     }

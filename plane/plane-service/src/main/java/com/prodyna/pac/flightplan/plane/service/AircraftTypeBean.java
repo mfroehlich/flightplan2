@@ -13,12 +13,12 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.prodyna.pac.flightplan.common.entity.Role;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
 import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.user.entity.Role;
 
 /**
  * TODO mfroehlich Comment me

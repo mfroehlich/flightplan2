@@ -17,14 +17,17 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import org.controlsfx.dialog.Dialogs.UserInfo;
+
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
+import com.prodyna.pac.flightplan.client.service.PilotClientService;
 import com.prodyna.pac.flightplan.client.service.PlaneClientService;
 import com.prodyna.pac.flightplan.client.service.ReservationClientService;
 import com.prodyna.pac.flightplan.client.session.SessionManager;
-import com.prodyna.pac.flightplan.common.entity.User;
+import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
-import com.prodyna.pac.flightplan.reservation.entity.Reservation;
+import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
 import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 
@@ -36,8 +39,9 @@ import com.prodyna.pac.flightplan.utils.LocalDateConverter;
  */
 public class ReservationDetailsViewModel {
 
-    ReservationClientService reservationClientService;
-    PlaneClientService planeClientService;
+    private final ReservationClientService reservationClientService;
+    private final PilotClientService pilotClientService;
+    private final PlaneClientService planeClientService;
 
     private final StringProperty id;
     private final StringProperty pilotName;
@@ -50,6 +54,7 @@ public class ReservationDetailsViewModel {
 
     public ReservationDetailsViewModel() {
         reservationClientService = new ReservationClientService();
+        pilotClientService = new PilotClientService();
         planeClientService = new PlaneClientService();
 
         id = new SimpleStringProperty();
@@ -67,8 +72,8 @@ public class ReservationDetailsViewModel {
         ObjectProperty<LocalDateTime> endTime = model.endTimeProperty();
         PlaneModel planeModel = model.planeProperty().get();
 
-        User loggedInUser = SessionManager.getInstance().getLoggedInUser();
-        String pilotNameText = loggedInUser.getFirstName() + " " + loggedInUser.getLastName();
+        UserInfo loggedInUser = SessionManager.getInstance().getLoggedUserInfo();
+        String pilotNameText = loggedInUser.getUserName();
 
         id.set(model.idProperty().get());
         pilotName.set(pilotNameText);
@@ -81,8 +86,8 @@ public class ReservationDetailsViewModel {
     }
 
     public void initModel(PlaneModel planeModel, LocalDate selectedLocalDate) {
-        User loggedInUser = SessionManager.getInstance().getLoggedInUser();
-        String pilotNameText = loggedInUser.getFirstName() + " " + loggedInUser.getLastName();
+        UserInfo loggedInUser = SessionManager.getInstance().getLoggedUserInfo();
+        String pilotNameText = loggedInUser.getUserName();
 
         LocalDateTime now = LocalDateTime.now();
         int currentHourOfDay = now.getHour();
@@ -118,17 +123,18 @@ public class ReservationDetailsViewModel {
         // TODO mfroehlich Null checks required!
         Plane plane = selectedPlane.get().getEntity();
 
-        User user = SessionManager.getInstance().getLoggedInUser();
+        String userId = SessionManager.getInstance().getLoggedInUserId();
+        Pilot pilot = pilotClientService.loadPilotById(userId);
 
         String reservationId = id.get();
         boolean updateExistingReservation = reservationId != null;
 
-        Reservation reservation = new Reservation();
+        PlaneReservation reservation = new PlaneReservation();
         reservation.setId(reservationId);
-        reservation.setItem(plane);
-        reservation.setUser(user);
-        reservation.setStart(startTime);
-        reservation.setEnd(endTime);
+        reservation.setPlane(plane);
+        reservation.setPilot(pilot);
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(endTime);
         reservation.setStatus(ReservationStatus.RESERVED);
 
         if (updateExistingReservation == true) {

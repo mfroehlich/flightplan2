@@ -3,8 +3,7 @@
  */
 package com.prodyna.pac.flightplan.client.service;
 
-import com.prodyna.pac.flightplan.pilot.entity.Pilot;
-import com.prodyna.pac.flightplan.pilot.service.PilotService;
+import com.prodyna.pac.flightplan.user.service.UserService;
 
 /**
  * TODO mfroehlich Comment me
@@ -14,13 +13,18 @@ import com.prodyna.pac.flightplan.pilot.service.PilotService;
  */
 public class UserClientService extends AbstractClientService {
 
-    private final PilotService pilotService;
+    private final UserService userService;
 
     public UserClientService() {
-        pilotService = createRestService(PilotService.class);
+        userService = createRestService(UserService.class);
     }
 
-    public Pilot loadUserByUserName(String userName) {
-        return pilotService.loadPilotByUserName(userName);
+    public String loadUserIdByUserName(String userName) {
+        String userIdByUserName = userService.loadUserIdByUserName(userName);
+        return userIdByUserName;
+    }
+
+    public void changePassword(String userId, String oldPwd, String newPwd) {
+        userService.updatePassword(userId, oldPwd, newPwd);
     }
 }

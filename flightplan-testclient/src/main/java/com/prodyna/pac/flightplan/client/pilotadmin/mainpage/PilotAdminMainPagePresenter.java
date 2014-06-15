@@ -41,4 +41,9 @@ public class PilotAdminMainPagePresenter implements Initializable {
 
         detailsPresenter.selectedPilotProperty().bind(listPresenter.selectedPilotProperty());
     }
+
+    public void initItems() {
+        listPresenter.initItems();
+        detailsPresenter.initItems();
+    }
 }

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @Entity
-@Table(name = "planetype", schema = "flightplan")
+@Table(name = "aircrafttype", schema = "flightplan")
 @NamedQueries({ @NamedQuery(name = AircraftType.QUERY_LOAD_ALL_TYPES, query = "FROM AircraftType ORDER BY description") })
 public class AircraftType implements Serializable {
 

@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.prodyna.pac.flightplan.common.entity;
+package com.prodyna.pac.flightplan.user.entity;
+
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +18,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_to_role_mapping", schema = "flightplan")
-public class UserToRoleMapping {
+public class UserToRoleMapping implements Serializable {
+
+    private static final long serialVersionUID = -1431125262011670011L;
 
     @Id
     private String id;

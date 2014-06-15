@@ -3,6 +3,8 @@
  */
 package com.prodyna.pac.flightplan.reservation.service;
 
+import java.util.Collection;
+
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
@@ -54,4 +56,12 @@ public interface ReservationWorkflowService {
     @PUT
     @Path("returnitem")
     public void returnReservationItemWithReservationId(String reservationId);
+
+    /**
+     * Load the ids of all expired {@link Reservation} objects (meaning the end time is in the past) of which the
+     * {@link ReservationItem} is still being lent (meaning the user has not yet returned the {@link ReservationItem}).
+     * 
+     * @return
+     */
+    public Collection<String> loadOverdueLentReservationIds();
 }

@@ -13,8 +13,6 @@ import com.prodyna.pac.flightplan.client.session.SessionManager;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
 import com.prodyna.pac.flightplan.planereservation.service.PlaneReservationService;
-import com.prodyna.pac.flightplan.reservation.entity.Reservation;
-import com.prodyna.pac.flightplan.reservation.service.ReservationService;
 import com.prodyna.pac.flightplan.reservation.service.ReservationWorkflowService;
 
 /**
@@ -27,19 +25,17 @@ public class ReservationClientService extends AbstractClientService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationClientService.class);
 
-    private final ReservationService reservationService;
     private final ReservationWorkflowService reservationWorkflowService;
     private final PlaneReservationService planeReservationService;
 
     public ReservationClientService() {
-        this.reservationService = createRestService(ReservationService.class);
         this.reservationWorkflowService = createRestService(ReservationWorkflowService.class);
         this.planeReservationService = createRestService(PlaneReservationService.class);
     }
 
-    public void createReservation(Reservation reservation) {
+    public void createReservation(PlaneReservation reservation) {
         logger.debug("Calling REST service to create the following reservation " + reservation);
-        reservationService.createReservation(reservation);
+        planeReservationService.createReservation(reservation);
     }
 
     public List<PlaneReservation> loadReservations(Plane selectedPlane, Date selectedDate) {
@@ -60,7 +56,7 @@ public class ReservationClientService extends AbstractClientService {
      */
     public List<PlaneReservation> loadReservationsForLoggedInUser() {
         logger.debug("Calling REST service to load all reservations assigned to the logged in user.");
-        String userId = SessionManager.getInstance().getLoggedInUser().getId();
+        String userId = SessionManager.getInstance().getLoggedInUserId();
         List<PlaneReservation> reservationList = planeReservationService.loadPlaneReservationsByUserId(userId);
         logger.debug("Found " + reservationList.size() + " reservations assigned to the user with id " + userId);
         return reservationList;
@@ -71,9 +67,9 @@ public class ReservationClientService extends AbstractClientService {
      * 
      * @param reservation
      */
-    public void updateReservation(Reservation reservation) {
+    public void updateReservation(PlaneReservation reservation) {
         logger.debug("Calling REST service to update reservation " + reservation);
-        reservationService.updateReservation(reservation);
+        planeReservationService.updateReservation(reservation);
     }
 
     /**
@@ -83,7 +79,7 @@ public class ReservationClientService extends AbstractClientService {
      */
     public void deleteReservationById(String reservationId) {
         logger.debug("Calling REST service to delete reservation by id " + reservationId);
-        reservationService.deleteReservationById(reservationId);
+        planeReservationService.deleteReservationById(reservationId);
     }
 
     /**

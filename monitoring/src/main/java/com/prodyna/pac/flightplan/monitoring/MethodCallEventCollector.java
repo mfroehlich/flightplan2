@@ -80,8 +80,6 @@ public class MethodCallEventCollector {
             methodSignatureToCallStatisticsMap.put(event.getMethodSignature(), statistics);
         }
         statistics.processEvent(event);
-
-        logger.debug("Method call processed by Interceptor");
     }
 
     /**

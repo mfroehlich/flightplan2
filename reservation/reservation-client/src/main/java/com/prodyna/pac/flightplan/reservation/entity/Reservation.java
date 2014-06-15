@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.prodyna.pac.flightplan.common.entity.User;
+import com.prodyna.pac.flightplan.user.entity.User;
 
 /**
  * TODO mfroehlich comment me
@@ -26,12 +26,17 @@ import com.prodyna.pac.flightplan.common.entity.User;
 @XmlRootElement
 @Entity
 @Table(name = "reservation", schema = "flightplan")
-@NamedQueries(value = { @NamedQuery(
-        name = Reservation.QUERY_UPDATE_RESERVATIONSTATUS_BY_ID,
-        query = "UPDATE Reservation SET status = :status WHERE id = :id ") })
+@NamedQueries(value = {
+        @NamedQuery(
+                name = Reservation.QUERY_UPDATE_RESERVATIONSTATUS_BY_ID,
+                query = "UPDATE Reservation SET status = :status WHERE id = :id "),
+        @NamedQuery(
+                name = Reservation.QUERY_LOAD_OVERDUE_RESERVATIONIDS,
+                query = "SELECT id FROM Reservation r WHERE r.end < :now AND r.status = :statusLent ") })
 public class Reservation implements Serializable {
 
     public static final String QUERY_UPDATE_RESERVATIONSTATUS_BY_ID = "update_reservation";
+    public static final String QUERY_LOAD_OVERDUE_RESERVATIONIDS = "load_overdue_reservationids";
 
     private static final long serialVersionUID = 1383729821481338652L;
 

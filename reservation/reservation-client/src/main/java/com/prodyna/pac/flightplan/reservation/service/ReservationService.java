@@ -16,6 +16,8 @@ import com.prodyna.pac.flightplan.reservation.entity.Reservation;
  * 
  * TODO mfroehlich Comment me
  * 
+ * TODO mfroehlich soll diese klasse tatsächlich als REST-Service verfügbar sein?
+ * 
  * @author mfroehlich
  * 
  */

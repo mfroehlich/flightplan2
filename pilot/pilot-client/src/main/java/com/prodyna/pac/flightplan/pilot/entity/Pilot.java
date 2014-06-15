@@ -5,7 +5,7 @@ package com.prodyna.pac.flightplan.pilot.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +20,8 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.prodyna.pac.flightplan.common.entity.User;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.user.entity.User;
 
 /**
  * TODO mfroehlich Comment me
@@ -33,12 +33,9 @@ import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 @Entity
 @Table(name = "pilot", schema = "flightplan")
 @PrimaryKeyJoinColumn(name = "id")
-@NamedQueries({
-        @NamedQuery(name = Pilot.QUERY_LOAD_PILOT_BY_USERNAME, query = "FROM Pilot WHERE username = :username"),
-        @NamedQuery(name = Pilot.QUERY_LOAD_ALL_PILOTS, query = "FROM Pilot ORDER BY userName") })
+@NamedQueries({ @NamedQuery(name = Pilot.QUERY_LOAD_ALL_PILOTS, query = "FROM Pilot ORDER BY userName") })
 public class Pilot extends User implements Serializable {
 
-    public static final String QUERY_LOAD_PILOT_BY_USERNAME = "load_pilot_by_username";
     public static final String QUERY_LOAD_ALL_PILOTS = "load_all_pilots";
 
     private static final long serialVersionUID = -5048278756046762394L;
@@ -52,7 +49,7 @@ public class Pilot extends User implements Serializable {
             schema = "flightplan",
             joinColumns = { @JoinColumn(name = "pilot_id") },
             inverseJoinColumns = { @JoinColumn(name = "aircrafttype_id") })
-    private Set<AircraftType> assignedAircraftTypes;
+    private List<AircraftType> assignedAircraftTypes;
 
     @XmlElement
     public Date getLicenceValidity() {
@@ -64,11 +61,11 @@ public class Pilot extends User implements Serializable {
     }
 
     @XmlElement
-    public Set<AircraftType> getAssignedAircraftTypes() {
+    public List<AircraftType> getAssignedAircraftTypes() {
         return assignedAircraftTypes;
     }
 
-    public void setAssignedAircraftTypes(Set<AircraftType> assignedAircraftTypes) {
+    public void setAssignedAircraftTypes(List<AircraftType> assignedAircraftTypes) {
         this.assignedAircraftTypes = assignedAircraftTypes;
     }
 

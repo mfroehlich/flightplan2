@@ -45,12 +45,12 @@ public class PilotClientService extends AbstractClientService {
     /**
      * TODO mfroehlich Comment me
      * 
-     * @param polotId
+     * @param pilotId
      * @return
      */
-    public Pilot loadPilotById(String polotId) {
-        Pilot loadedPilot = pilotService.loadPilotById(polotId);
-        logger.debug("Loaded Pilot by id " + polotId + " :" + loadedPilot);
+    public Pilot loadPilotById(String pilotId) {
+        Pilot loadedPilot = pilotService.loadPilotById(pilotId);
+        logger.debug("Loaded Pilot by id " + pilotId + " :" + loadedPilot);
         return loadedPilot;
     }
 

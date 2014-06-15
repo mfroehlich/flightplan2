@@ -9,7 +9,12 @@ import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
 
+import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationErrorCode;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.planereservation.service.PlaneReservationService;
 
 /**
@@ -24,6 +29,33 @@ public class PlaneReservationServiceValidationDecorator implements PlaneReservat
     @Delegate
     @Inject
     private PlaneReservationService delegate;
+
+    @Override
+    public PlaneReservation createReservation(PlaneReservation reservation) {
+        Pilot pilot = reservation.getPilot();
+        Plane plane = reservation.getPlane();
+
+        AircraftType planeAircraftType = plane.getAircraftType();
+        List<AircraftType> pilotAircraftTypes = pilot.getAssignedAircraftTypes();
+
+        if (pilotAircraftTypes == null || pilotAircraftTypes.contains(planeAircraftType) == false) {
+            throw new PlaneReservationValidationException(
+                    "PlaneReservation has validation error: User may not reserve the plane's aircrafttype.",
+                    PlaneReservationErrorCode.USER_MAY_NOT_RESERVE_AIRCRAFTTYPE);
+        }
+
+        return delegate.createReservation(reservation);
+    }
+
+    @Override
+    public PlaneReservation updateReservation(PlaneReservation reservation) {
+        return delegate.updateReservation(reservation);
+    }
+
+    @Override
+    public void deleteReservationById(String reservationId) {
+        delegate.deleteReservationById(reservationId);
+    }
 
     @Override
     public List<PlaneReservation> loadAllPlaneReservations() {

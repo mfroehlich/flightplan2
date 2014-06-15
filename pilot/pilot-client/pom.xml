@@ -16,5 +16,9 @@
 			<groupId>com.prodyna.pac.flightplan</groupId>
 			<artifactId>flightplan-common-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>user-client</artifactId>
+		</dependency>
 	</dependencies>
 </project>

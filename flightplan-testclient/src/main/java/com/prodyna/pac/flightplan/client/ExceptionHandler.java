@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.common.exception.TechnicalException;
 import com.prodyna.pac.flightplan.common.exception.UserNotAuthorizedException;
-import com.prodyna.pac.flightplan.common.exception.UserNotLoggedInException;
+import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
 
 /**
  * TODO mfroehlich Comment me
