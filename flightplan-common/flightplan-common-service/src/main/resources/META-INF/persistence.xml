@@ -9,21 +9,17 @@
 			<property name="hibernate.show_sql" value="true"></property>
 		</properties>
 
-		<class>com.prodyna.pac.flightplan.pilot.entity.Pilot</class>
-
+        <class>com.prodyna.pac.flightplan.pilot.entity.Pilot</class>
 		<class>com.prodyna.pac.flightplan.plane.entity.Plane</class>
 		<class>com.prodyna.pac.flightplan.plane.entity.AircraftType</class>
-
 		<class>com.prodyna.pac.flightplan.user.entity.User</class>
 		<class>com.prodyna.pac.flightplan.user.entity.Role</class>
 		<class>com.prodyna.pac.flightplan.user.entity.UserToRoleMapping</class>
-
 		<class>com.prodyna.pac.flightplan.reservation.entity.Reservation</class>
 		<class>com.prodyna.pac.flightplan.reservation.entity.ReservationItem</class>
 		<class>com.prodyna.pac.flightplan.reservation.entity.ReservationStatus</class>
-
 		<class>com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation</class>
-
+		
 	</persistence-unit>
 
 </persistence>

@@ -22,19 +22,23 @@ GUEST-Mode
       
 ===================================================================================================
 Übersetzen von Exceptions beim dynamic proxy
-	-> Anzeige schöner Fehlermeldungen in den Fehlerfällen
+	-> Exception-Mapping für Anzeige schöner Fehlermeldungen in den Fehlerfällen
 
 ===================================================================================================
 Testen mit Arquillian
+	* Tests implementieren
 
-	* Wie geht das allgemein?
-	* Was muss ich beachten beim Schreiben von Tests für die einzelnen Schichten?    
+===================================================================================================
+Optimistic logging?
     
 ===================================================================================================    
 FRAGE:
-	* Wie sichert Christian den Parallelbetrieb?
-	* Wie gehe ich mit GIT-Conflicts um? Das funzt überhaupt nicht!!
+	* Timer -> RunAs-Problematik (vs. WorkflowEngine)
+	* Guest-Mode!! Warum geht das bei mir nicht? Wie melde ich mich anonym an?
+
+	* Wie sichert man den Parallelbetrieb? Optimistic logging?
 	* Wie erstelle ich einen wirklichen Singleton?
+	* Wie gehe ich mit GIT-Conflicts um? Das funzt überhaupt nicht!!
     
 ===================================================================================================    
 Anzeige von Menüpunkten abhängig vom Anmeldestatus

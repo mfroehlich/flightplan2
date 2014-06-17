@@ -6,18 +6,20 @@
 		<artifactId>plane</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan.plane</groupId>
 	<artifactId>plane-client</artifactId>
+	
 	<dependencies>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.reservation</groupId>
 			<artifactId>reservation-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
 			<artifactId>user-client</artifactId>
 		</dependency>
 	</dependencies>

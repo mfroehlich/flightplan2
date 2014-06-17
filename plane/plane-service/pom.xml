@@ -6,16 +6,17 @@
 		<artifactId>plane</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan.plane</groupId>
 	<artifactId>plane-service</artifactId>
 	<packaging>ejb</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.plane</groupId>
 			<artifactId>plane-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-service</artifactId>
 		</dependency>
 	</dependencies>

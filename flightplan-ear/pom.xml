@@ -2,16 +2,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.prodyna.pac.flightplan</groupId>
+		<groupId>com.prodyna.pac</groupId>
 		<artifactId>flightplan</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan</groupId>
 	<artifactId>flightplan-ear</artifactId>
 	<packaging>ear</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.reservation</groupId>
 			<artifactId>reservation-service</artifactId>
 			<type>ejb</type>
 		</dependency>
@@ -21,26 +22,26 @@
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
 			<artifactId>pilot-service</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.plane</groupId>
 			<artifactId>plane-service</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
 			<artifactId>planereservation-service</artifactId>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
 			<artifactId>user-service</artifactId>
 			<type>ejb</type>
 		</dependency>

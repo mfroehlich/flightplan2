@@ -6,6 +6,7 @@
 		<artifactId>flightplan-common</artifactId>
 		<groupId>com.prodyna.pac.flightplan</groupId>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 	<artifactId>flightplan-common-service</artifactId>
 
 	<dependencies>
@@ -29,7 +30,7 @@
 			<artifactId>common-utils</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-client</artifactId>
 		</dependency>
 	</dependencies>

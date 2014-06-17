@@ -6,15 +6,17 @@
 		<artifactId>planereservation</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
 	<artifactId>planereservation-service</artifactId>
 	<packaging>ejb</packaging>
+	
 	<dependencies>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
 			<artifactId>planereservation-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
+			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-service</artifactId>
 		</dependency>
 	</dependencies>

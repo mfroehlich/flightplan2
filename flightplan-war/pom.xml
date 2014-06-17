@@ -2,12 +2,52 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.prodyna.pac.flightplan</groupId>
+		<groupId>com.prodyna.pac</groupId>
 		<artifactId>flightplan</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
+	<groupId>com.prodyna.pac.flightplan</groupId>
 	<artifactId>flightplan-war</artifactId>
 	<packaging>war</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
+			<artifactId>pilot-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.plane</groupId>
+			<artifactId>plane-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.reservation</groupId>
+			<artifactId>reservation-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
+			<artifactId>planereservation-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
+			<artifactId>user-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 
 	<build>
@@ -21,43 +61,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<dependencies>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>pilot-client</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>plane-client</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>reservation-client</artifactId>
-			<scope>provided</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>planereservation-client</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.prodyna.pac.flightplan</groupId>
-			<artifactId>user-client</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
 </project>
