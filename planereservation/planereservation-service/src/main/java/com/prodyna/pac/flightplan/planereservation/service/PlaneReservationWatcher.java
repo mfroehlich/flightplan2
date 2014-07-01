@@ -5,7 +5,6 @@ package com.prodyna.pac.flightplan.planereservation.service;
 
 import java.util.Collection;
 
-import javax.annotation.security.RunAs;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
@@ -14,8 +13,8 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 import com.prodyna.pac.flightplan.reservation.service.ReservationWorkflowService;
-import com.prodyna.pac.flightplan.user.entity.Role;
 
 /**
  * TODO mfroehlich Comment me
@@ -23,7 +22,6 @@ import com.prodyna.pac.flightplan.user.entity.Role;
  * @author mfroehlich
  *
  */
-@RunAs(Role.GUEST)
 @Singleton
 @ApplicationScoped
 public class PlaneReservationWatcher {
@@ -40,7 +38,12 @@ public class PlaneReservationWatcher {
     @Schedule(second = "0", minute = "*", hour = "*")
     public void autoReturnOverdueLentPlanes() {
         Collection<String> overdueReservationIds = reservationWorkflowService.loadOverdueLentReservationIds();
-        overdueReservationIds.forEach(reservationId -> reservationWorkflowService
-                .returnReservationItemWithReservationId(reservationId));
+        for (String reservationId : overdueReservationIds) {
+            try {
+                reservationWorkflowService.returnReservationItemWithReservationId(reservationId);
+            } catch (ReservationWorkflowException e) {
+                logger.error("Error auto-returing reservation '" + reservationId + "'", e);
+            }
+        }
     }
 }

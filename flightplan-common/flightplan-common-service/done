@@ -1,0 +1,39 @@
+
+===================================================================================================    
+GUEST-Mode
+
+	https://docs.jboss.org/resteasy/docs/1.1.GA/userguide/html/Securing_JAX-RS_and_RESTeasy.html
+
+
+===================================================================================================
+Optimistic logging einführen!
+	==> Dirty-Write-Sicherheit einbauen -> Funktioniert derzeit nicht!!
+	
+	-> Grund hierfür: http://www.torsten-horn.de/techdocs/java-jpa.htm (nach version suchen!)
+
+===================================================================================================    
+Verschlüsselung der Passwörter!!
+	-> in standalone.xml
+	    <module-option name="hashAlgorithm" value="MD5" />
+	    <module-option name="hashEncoding" value="base64" />
+	
+	-> DONE: Bean-Methode fertig implementieren, dass neue User mit Passwort gespeichert werden!
+
+===================================================================================================    
+SQL-Skript erzeugen für die Erzeugung des Datenbankschemas
+
+	HOWTO:	MySQL-Workbench
+		-> Rechtsklick auf Schema -> Schema Inspector öffnen
+		-> Alle Tabellen markieren  
+		-> Rechtsklick -> Send to SQL Editor -> Create Statement auswählen
+
+===================================================================================================
+FACHLICHKEIT: Pilot hat einen oder mehrere Flugzeugtypen, die er ausleihen darf!
+	-> das muss noch implementiert werden!
+	
+===================================================================================================    
+Automatisiertes Zurückbringen von Items
+	* Thread, der minütlich startet und das zurückbringen implementiert!
+
+	TODO: AuthorizationInterceptor in ReservationWorkflowBean und ReservationBean wieder einkommentieren
+	TODO: Prüfen, warum @RunAs in PlaneReservationWatcher nicht funktioniert!

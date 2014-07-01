@@ -10,23 +10,26 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * TODO mfroehlich comment me
+ * Entity object representing a user.
  * 
  * @author mfroehlich
  * 
  */
 @XmlRootElement
 @Entity
-@Table(name = "user", schema = "flightplan")
+@Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
         @NamedQuery(
                 name = User.QUERY_UPDATE_USER_PASSWORD,
-                query = "UPDATE User SET password = :newPwd WHERE id = :userId AND password = :oldPwd "),
+                query = "UPDATE User SET password = :newPwd, version = (version + 1) WHERE id = :userId AND password = :oldPwd "),
         @NamedQuery(
                 name = User.QUERY_LOAD_USER_ID_BY_USERNAME,
                 query = "SELECT id FROM User WHERE username = :username") })
@@ -37,21 +40,39 @@ public class User implements Serializable {
     public static final String QUERY_UPDATE_USER_PASSWORD = "update_user_password";
     public static final String QUERY_LOAD_USER_ID_BY_USERNAME = "load_user_id_by_username";
 
+    public User() {
+    }
+
+    @NotNull
+    @Size(min = 1, max = 50)
     @Id
     private String id;
 
-    @Column(name = "username")
+    @Version
+    private int version;
+
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "username", unique = true)
     private String userName;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "firstname")
     private String firstName;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "lastname")
     private String lastName;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "password")
     private String password;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "email")
     private String eMailAddress;
 
@@ -107,6 +128,20 @@ public class User implements Serializable {
 
     public void seteMailAddress(String eMailAddress) {
         this.eMailAddress = eMailAddress;
+    }
+
+    /**
+     * @return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

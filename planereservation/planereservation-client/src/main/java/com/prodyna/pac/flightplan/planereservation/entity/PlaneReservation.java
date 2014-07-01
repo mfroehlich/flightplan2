@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -23,14 +24,14 @@ import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
 
 /**
- * TODO mfroehlich Comment me
+ * Entity object representing a concrete reservation for planes.
  * 
  * @author mfroehlich
  *
  */
 @XmlRootElement
 @Entity
-@Table(name = "reservation", schema = "flightplan")
+@Table(name = "reservation")
 @NamedQueries({
         @NamedQuery(name = PlaneReservation.QUERY_LOAD_ALL_PLANERESERVATIONS, query = "FROM PlaneReservation"),
         @NamedQuery(
@@ -47,6 +48,9 @@ public class PlaneReservation {
 
     @Id
     private String id;
+
+    @Version
+    private int version;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -154,5 +158,19 @@ public class PlaneReservation {
      */
     public void setStatus(ReservationStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

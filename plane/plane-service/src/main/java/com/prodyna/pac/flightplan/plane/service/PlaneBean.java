@@ -7,21 +7,18 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
+import org.slf4j.Logger;
+
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
-import com.prodyna.pac.flightplan.plane.exception.PlaneErrorCode;
-import com.prodyna.pac.flightplan.plane.exception.PlaneNotFoundException;
-import com.prodyna.pac.flightplan.user.entity.Role;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
- * TODO mfroehlich Comment me
+ * Stateless EJB - Implementation of {@link PlaneService} providing CRUD service methods for {@link Plane}.
  * 
  * @author mfroehlich
  * 
@@ -29,28 +26,27 @@ import com.prodyna.pac.flightplan.user.entity.Role;
 @Stateless
 @Logging
 @MethodCallsMonitored
-@Interceptors(AuthorizationInterceptor.class)
-@AuthorizedRoles({ Role.ADMIN })
 public class PlaneBean implements PlaneService {
 
     @Inject
     private EntityManager em;
 
+    @Inject
+    private Logger logger;
+
     @Override
-    public Plane createPlane(Plane plane) {
+    public Plane createPlane(Plane plane) throws PlaneValidationException {
         em.persist(plane);
         return plane;
     }
 
     @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
     public Plane loadPlaneById(String id) {
         Plane plane = em.find(Plane.class, id);
         return plane;
     }
 
     @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
     public List<Plane> loadAllPlanes() {
         Query query = em.createNamedQuery(Plane.QUERY_LOAD_ALL_PLANES);
         @SuppressWarnings("unchecked")
@@ -59,19 +55,27 @@ public class PlaneBean implements PlaneService {
     }
 
     @Override
-    public Plane updatePlane(Plane plane) {
+    public Plane updatePlane(Plane plane) throws PlaneValidationException {
         Plane updatedPlane = em.merge(plane);
         return updatedPlane;
     }
 
     @Override
-    public void deletePlaneById(String planeId) {
+    public void deletePlaneById(String planeId) throws PlaneValidationException {
         Plane plane = loadPlaneById(planeId);
-        if (plane == null) {
-            throw new PlaneNotFoundException("Plane with id '" + planeId
-                    + "' not found in the database. Aborting delete action.", PlaneErrorCode.PLANE_NOT_FOUND_BY_ID);
-        }
-
         em.remove(plane);
+        em.flush();
+    }
+
+    @Override
+    public boolean isPlaneNameAndNumberPlateUnique(Plane plane) {
+
+        Query query = em.createNamedQuery(Plane.QUERY_CHECK_NAME_AND_NUMBERPLATE_UNIQUE);
+        query.setParameter("id", plane.getId());
+        query.setParameter("name", plane.getName());
+        query.setParameter("numberPlate", plane.getNumberPlate());
+        Long count = (Long) query.getSingleResult();
+
+        return count == 0;
     }
 }

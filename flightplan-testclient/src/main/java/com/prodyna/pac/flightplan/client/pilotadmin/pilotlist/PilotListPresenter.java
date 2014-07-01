@@ -16,6 +16,8 @@ import com.prodyna.pac.flightplan.client.changepassword.ChangePasswordPresenter;
 import com.prodyna.pac.flightplan.client.changepassword.ChangePasswordView;
 import com.prodyna.pac.flightplan.client.dialog.ModalDialog;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -39,7 +41,7 @@ public class PilotListPresenter implements Initializable {
         loadPilots();
     }
 
-    public void deletePilot() {
+    public void deletePilot() throws PilotNotFoundException, PilotValidationException {
         PilotModel selectedPilot = pilotListView.getSelectionModel().getSelectedItem();
         if (selectedPilot != null) {
             String pilotId = selectedPilot.idProperty().get();

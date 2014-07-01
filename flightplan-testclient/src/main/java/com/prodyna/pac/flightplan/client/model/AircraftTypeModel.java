@@ -3,6 +3,8 @@
  */
 package com.prodyna.pac.flightplan.client.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -18,12 +20,14 @@ public class AircraftTypeModel {
 
     private final StringProperty id;
     private final StringProperty description;
+    private final IntegerProperty version;
 
     private final StringProperty nameValue;
 
     public AircraftTypeModel() {
         this.id = new SimpleStringProperty();
         this.description = new SimpleStringProperty();
+        this.version = new SimpleIntegerProperty();
 
         this.nameValue = new SimpleStringProperty();
         this.nameValue.bind(description.concat(" (").concat(id).concat(")"));
@@ -44,12 +48,14 @@ public class AircraftTypeModel {
         AircraftType type = new AircraftType();
         type.setId(getId());
         type.setDescription(getDescription());
+        type.setVersion(getVersion());
         return type;
     }
 
     public void initFromEntity(AircraftType type) {
         setId(type.getId());
         setDescription(type.getDescription());
+        setVersion(type.getVersion());
     }
 
     public String getId() {
@@ -74,6 +80,18 @@ public class AircraftTypeModel {
 
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    public int getVersion() {
+        return version.get();
+    }
+
+    public void setVersion(int version) {
+        this.version.set(version);
+    }
+
+    public IntegerProperty versionProperty() {
+        return version;
     }
 
     @Override

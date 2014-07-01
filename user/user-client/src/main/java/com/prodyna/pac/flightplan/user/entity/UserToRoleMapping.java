@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "user_to_role_mapping", schema = "flightplan")
+@Table(name = "user_to_role_mapping")
 public class UserToRoleMapping implements Serializable {
 
     private static final long serialVersionUID = -1431125262011670011L;

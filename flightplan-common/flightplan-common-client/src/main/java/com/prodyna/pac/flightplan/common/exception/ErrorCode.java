@@ -3,15 +3,24 @@
  */
 package com.prodyna.pac.flightplan.common.exception;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * TODO mfroehlich Comment me
  * 
  * @author mfroehlich
  *
  */
+@XmlRootElement
 public abstract class ErrorCode {
 
-    private final String code;
+    private String code;
+
+    /**
+     * Default (protected!) constructor for Marshaller.
+     */
+    protected ErrorCode() {
+    }
 
     public ErrorCode(String code) {
         this.code = code;

@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -26,10 +28,21 @@ public class PlaneClientServiceTest {
         AircraftTypeClientService aircraftTypeClientService = new AircraftTypeClientService();
 
         AircraftType type = AircraftTypeFactory.createAircraftType();
-        AircraftType createdType = aircraftTypeClientService.createAircraftType(type);
+        AircraftType createdType;
+        try {
+            createdType = aircraftTypeClientService.createAircraftType(type);
+        } catch (AircraftTypeValidationException e) {
+            Assert.fail("Caught unexpected exception.");
+            createdType = null;
+        }
 
         Plane plane = PlaneFactory.createPlane(createdType);
-        Plane createdPlane = planeClientService.createPlane(plane);
+        Plane createdPlane;
+        try {
+            createdPlane = planeClientService.createPlane(plane);
+        } catch (PlaneValidationException e) {
+            createdPlane = null;
+        }
 
         Assert.assertNotNull(createdPlane.getId());
 

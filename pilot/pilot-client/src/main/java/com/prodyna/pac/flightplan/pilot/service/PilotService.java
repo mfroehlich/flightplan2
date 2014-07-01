@@ -5,6 +5,7 @@ package com.prodyna.pac.flightplan.pilot.service;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,9 +17,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
+import com.prodyna.pac.flightplan.user.entity.Role;
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 
 /**
- * TODO mfroehlich Comment me
+ * REST interface providing CRUD service methods for {@link Pilot} objects.
  * 
  * @author mfroehlich
  * 
@@ -26,32 +31,35 @@ import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 @Path("pilot")
 @Produces(MediaType.APPLICATION_XML)
 @Consumes(MediaType.APPLICATION_XML)
+@RolesAllowed({ Role.ADMIN })
 public interface PilotService {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Persist the specified {@link Pilot} in the database.
      * 
      * @param pilot
      * @return
+     * @throws UserValidationException
      */
     @POST
-    public Pilot createPilot(Pilot pilot);
+    public Pilot createPilot(Pilot pilot) throws PilotValidationException, UserValidationException;
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Load the {@link Pilot} specified by its id from the database.
      * 
      * @param id
      * @return
      */
     @GET
     @Path("id/{id}")
+    @RolesAllowed({ Role.ADMIN, Role.USER })
     public Pilot loadPilotById(@PathParam("id") String id);
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Load all {@link Pilot}s from the database.
      * 
      * @return
      */
@@ -61,21 +69,22 @@ public interface PilotService {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Update the specified {@link Pilot}.
      * 
      * @param pilot
      * @return
      */
     @PUT
-    public Pilot updatePilot(Pilot pilot);
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException;
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Delete the {@link Pilot} specified by its pilotId.
      * 
      * @param pilotId
      */
     @DELETE
     @Path("id/{id}")
-    public void deletePilotById(@PathParam("id") String pilotId);
+    public void deletePilotById(@PathParam("id") String pilotId) throws PilotNotFoundException,
+            PilotValidationException;
 }

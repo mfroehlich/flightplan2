@@ -11,7 +11,7 @@ package com.prodyna.pac.flightplan.common.exception;
  */
 public class TechnicalException extends RuntimeException {
 
-    private static final long serialVersionUID = 5100854786331031825L;
+    private static final long serialVersionUID = -9134879872238960479L;
 
     private final ErrorCode errorCode;
 

@@ -16,6 +16,7 @@ import com.prodyna.pac.flightplan.client.service.AircraftTypeClientService;
 import com.prodyna.pac.flightplan.client.service.PlaneClientService;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -41,8 +42,10 @@ public class PlaneDetailsViewModel {
 
     /**
      * TODO mfroehlich Comment me
+     * 
+     * @throws PlaneValidationException
      */
-    public void savePlane() {
+    public void savePlane() throws PlaneValidationException {
         Plane plane = this.currentPlane.get().getEntity();
         Plane returnValue;
         if (plane.getId() == null) {

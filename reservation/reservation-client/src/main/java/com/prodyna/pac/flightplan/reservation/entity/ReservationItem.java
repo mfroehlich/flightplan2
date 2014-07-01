@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,14 +21,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @Entity
-@Table(name = "reservation_item", schema = "flightplan")
+@Table(name = "reservation_item")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ReservationItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public ReservationItem() {
+    }
+
+    @NotNull
+    @Size(min = 1, max = 50)
     @Id
     private String id;
+
+    @Version
+    private int version;
 
     @XmlElement
     public String getId() {
@@ -34,6 +45,20 @@ public class ReservationItem implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * @return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

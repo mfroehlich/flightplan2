@@ -3,6 +3,7 @@
  */
 package com.prodyna.pac.flightplan.client.service;
 
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 import com.prodyna.pac.flightplan.user.service.UserService;
 
 /**
@@ -24,7 +25,7 @@ public class UserClientService extends AbstractClientService {
         return userIdByUserName;
     }
 
-    public void changePassword(String userId, String oldPwd, String newPwd) {
+    public void changePassword(String userId, String oldPwd, String newPwd) throws UserValidationException {
         userService.updatePassword(userId, oldPwd, newPwd);
     }
 }

@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,7 +30,9 @@ import com.prodyna.pac.flightplan.client.session.SessionManager;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 
 /**
@@ -44,6 +48,7 @@ public class ReservationDetailsViewModel {
     private final PlaneClientService planeClientService;
 
     private final StringProperty id;
+    private final IntegerProperty version;
     private final StringProperty pilotName;
     private final ObjectProperty<PlaneModel> selectedPlane;
     private final ObjectProperty<LocalDate> selectedDate;
@@ -58,6 +63,7 @@ public class ReservationDetailsViewModel {
         planeClientService = new PlaneClientService();
 
         id = new SimpleStringProperty();
+        version = new SimpleIntegerProperty();
         pilotName = new SimpleStringProperty();
         selectedPlane = new SimpleObjectProperty<>();
         selectedDate = new SimpleObjectProperty<>();
@@ -76,6 +82,7 @@ public class ReservationDetailsViewModel {
         String pilotNameText = loggedInUser.getUserName();
 
         id.set(model.idProperty().get());
+        version.set(model.versionProperty().get());
         pilotName.set(pilotNameText);
         selectedPlane.set(planeModel);
         selectedDate.set(startTime.get().toLocalDate());
@@ -93,6 +100,7 @@ public class ReservationDetailsViewModel {
         int currentHourOfDay = now.getHour();
 
         id.set(null);
+        version.set(1);
         pilotName.set(pilotNameText);
         selectedPlane.set(planeModel);
         selectedDate.set(selectedLocalDate);
@@ -104,8 +112,11 @@ public class ReservationDetailsViewModel {
 
     /**
      * Create or update the reservation represented by the properties of this object.
+     * 
+     * @throws ReservationValidationException
+     * @throws PlaneReservationValidationException
      */
-    public void createReservation() {
+    public void createReservation() throws PlaneReservationValidationException, ReservationValidationException {
 
         // TODO mfroehlich Null checks required!
         int startHourInt = new Integer(startHour.get());
@@ -131,6 +142,7 @@ public class ReservationDetailsViewModel {
 
         PlaneReservation reservation = new PlaneReservation();
         reservation.setId(reservationId);
+        reservation.setVersion(version.get());
         reservation.setPlane(plane);
         reservation.setPilot(pilot);
         reservation.setStartTime(startTime);

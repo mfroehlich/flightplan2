@@ -13,34 +13,58 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.prodyna.pac.flightplan.reservation.entity.ReservationItem;
 
 /**
- * TODO mfroehlich Comment me
+ * Entity object representing a plane.
  * 
  * @author mfroehlich
  * 
  */
 @XmlRootElement
 @Entity
-@Table(name = "plane", schema = "flightplan")
+@Table(name = "plane")
 @PrimaryKeyJoinColumn(name = "id")
-@NamedQueries({ @NamedQuery(name = Plane.QUERY_LOAD_ALL_PLANES, query = "FROM Plane ORDER BY name") })
+@NamedQueries({
+        @NamedQuery(name = Plane.QUERY_LOAD_ALL_PLANES, query = "FROM Plane ORDER BY name"),
+        @NamedQuery(
+                name = Plane.QUERY_COUNT_PLANES_REFERENCING_AIRCRAFTTYPE,
+                query = "SELECT count(*) FROM Plane WHERE aircraftType.id = :aircraftTypeId"),
+        @NamedQuery(
+                name = Plane.QUERY_CHECK_NAME_AND_NUMBERPLATE_UNIQUE,
+                query = "SELECT COUNT(*) FROM Plane WHERE id <> :id AND (name = :name OR numberPlate = :numberPlate) ") })
 public class Plane extends ReservationItem implements Serializable {
 
     private static final long serialVersionUID = 7128736888545719542L;
 
     public static final String QUERY_LOAD_ALL_PLANES = "load_all_planes";
+    public static final String QUERY_COUNT_PLANES_REFERENCING_AIRCRAFTTYPE = "count_planes_referencing_aircrafttype";
+    public static final String QUERY_CHECK_NAME_AND_NUMBERPLATE_UNIQUE = "query_check_name_and_numberplate_unique";
 
+    public static final String PROP_ID = "id";
+    public static final String PROP_NAME = "name";
+    public static final String PROP_NUMBERPLATE = "numberPlate";
+    public static final String PROP_AIRCRAFTTYPE = "aircraftType";
+
+    public Plane() {
+    }
+
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
 
-    @Column(name = "numberplate")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "numberplate", unique = true)
     private String numberPlate;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "aircrafttype")
     private AircraftType aircraftType;

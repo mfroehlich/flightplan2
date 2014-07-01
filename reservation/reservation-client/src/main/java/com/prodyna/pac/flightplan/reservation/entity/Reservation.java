@@ -12,49 +12,77 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.prodyna.pac.flightplan.user.entity.User;
 
 /**
- * TODO mfroehlich comment me
+ * Entity object representing a reservation.
  * 
  * @author mfroehlich
  * 
  */
 @XmlRootElement
 @Entity
-@Table(name = "reservation", schema = "flightplan")
-@NamedQueries(value = {
-        @NamedQuery(
-                name = Reservation.QUERY_UPDATE_RESERVATIONSTATUS_BY_ID,
-                query = "UPDATE Reservation SET status = :status WHERE id = :id "),
-        @NamedQuery(
-                name = Reservation.QUERY_LOAD_OVERDUE_RESERVATIONIDS,
-                query = "SELECT id FROM Reservation r WHERE r.end < :now AND r.status = :statusLent ") })
+@Table(name = "reservation")
+@NamedQueries(
+        value = {
+                @NamedQuery(
+                        name = Reservation.QUERY_UPDATE_RESERVATIONSTATUS_BY_ID,
+                        query = "UPDATE Reservation SET status = :status, version = (version + 1) WHERE id = :id "),
+                @NamedQuery(
+                        name = Reservation.QUERY_LOAD_OVERDUE_RESERVATIONIDS,
+                        query = "SELECT id FROM Reservation r WHERE r.end < :now AND r.status = :statusLent "),
+                @NamedQuery(
+                        name = Reservation.QUERY_FIND_RESERVATION_CONFLICTS,
+                        query = "SELECT id FROM Reservation r WHERE r.end > :start AND r.start < :end AND r.status in (:statusLent, :statusReserved) AND r.item = :item AND r.id <> :id ") })
 public class Reservation implements Serializable {
 
     public static final String QUERY_UPDATE_RESERVATIONSTATUS_BY_ID = "update_reservation";
     public static final String QUERY_LOAD_OVERDUE_RESERVATIONIDS = "load_overdue_reservationids";
+    public static final String QUERY_FIND_RESERVATION_CONFLICTS = "query_find_reservation_conflicts";
+
+    public static final String PROP_ID = "id";
+    public static final String PROP_USER = "user";
+    public static final String PROP_RESERVATION_ITEM = "item";
+    public static final String PROP_START = "start";
+    public static final String PROP_END = "end";
+    public static final String PROP_RESERVATION_STATUS = "status";
 
     private static final long serialVersionUID = 1383729821481338652L;
 
+    public Reservation() {
+    }
+
+    @NotNull
+    @Size(min = 1, max = 50)
     @Id
     private String id;
 
+    @Version
+    private int version;
+
+    @NotNull
     @ManyToOne
     private User user;
 
+    @NotNull
     @ManyToOne
     private ReservationItem item;
 
+    @NotNull
     @Column(name = "start")
     private Date start;
 
+    @NotNull
     @Column(name = "end")
     private Date end;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ReservationStatus status;
@@ -111,6 +139,20 @@ public class Reservation implements Serializable {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    /**
+     * @return the version
+     */
+    public int getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

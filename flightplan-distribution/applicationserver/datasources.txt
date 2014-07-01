@@ -1,0 +1,12 @@
+
+Name: FlightplanMysqlDS
+JNDI-Name: java:jboss/datasources/FlightplanMysqlDS
+Driver: mysql
+jdbc:mysql://localhost:3306/flightplan
+Poolsize: 10 - 100
+
+Name: FlightplanMysqlDSTest
+JNDI-Name: java:jboss/datasources/FlightplanMysqlDSTest
+Driver: mysql
+jdbc:mysql://localhost:3306/flightplantest
+Poolsize: 10 - 100

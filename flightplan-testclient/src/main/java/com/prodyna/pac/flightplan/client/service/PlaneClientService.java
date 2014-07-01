@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 import com.prodyna.pac.flightplan.plane.service.PlaneService;
 
 /**
@@ -28,7 +29,7 @@ public class PlaneClientService extends AbstractClientService {
         this.planeService = createRestService(PlaneService.class);
     }
 
-    public Plane createPlane(Plane plane) {
+    public Plane createPlane(Plane plane) throws PlaneValidationException {
         logger.debug("Creating plane '" + plane + "'.");
         plane.setId(UUID.randomUUID().toString());
         Plane createdPlane = planeService.createPlane(plane);
@@ -66,8 +67,9 @@ public class PlaneClientService extends AbstractClientService {
      * 
      * @param plane
      * @return
+     * @throws PlaneValidationException
      */
-    public Plane updatePlane(Plane plane) {
+    public Plane updatePlane(Plane plane) throws PlaneValidationException {
         Plane updatedPlane = planeService.updatePlane(plane);
         logger.debug("Plane updated to " + updatedPlane);
         return updatedPlane;
@@ -77,8 +79,9 @@ public class PlaneClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param planeId
+     * @throws PlaneValidationException
      */
-    public void deletePlaneById(String planeId) {
+    public void deletePlaneById(String planeId) throws PlaneValidationException {
         logger.debug("Calling REST-Service to delete plane by id '" + planeId + "'.");
         planeService.deletePlaneById(planeId);
     }

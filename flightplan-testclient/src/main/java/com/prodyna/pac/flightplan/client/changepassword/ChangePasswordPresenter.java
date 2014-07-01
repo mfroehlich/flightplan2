@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
+
 /**
  * TODO mfroehlich Comment me
  * 
@@ -43,7 +45,7 @@ public class ChangePasswordPresenter implements Initializable {
         viewModel.userIdProperty().set(userId);
     }
 
-    public void changePassword(ActionEvent event) {
+    public void changePassword(ActionEvent event) throws UserValidationException {
         viewModel.changePassword();
 
         /* Close the dialog. */

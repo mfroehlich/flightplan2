@@ -3,7 +3,9 @@
  */
 package com.prodyna.pac.flightplan.client.model;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -19,6 +21,7 @@ import com.prodyna.pac.flightplan.plane.entity.Plane;
 public class PlaneModel {
 
     private final StringProperty id;
+    private final IntegerProperty version;
     private final StringProperty name;
     private final StringProperty numberPlate;
     private final ObjectProperty<AircraftTypeModel> aircraftType;
@@ -27,6 +30,7 @@ public class PlaneModel {
 
     public PlaneModel() {
         id = new SimpleStringProperty();
+        version = new SimpleIntegerProperty();
         name = new SimpleStringProperty();
         numberPlate = new SimpleStringProperty();
         aircraftType = new SimpleObjectProperty<AircraftTypeModel>();
@@ -49,6 +53,7 @@ public class PlaneModel {
     public Plane getEntity() {
         Plane plane = new Plane();
         plane.setId(getId());
+        plane.setVersion(getVersion());
         plane.setName(getName());
         plane.setNumberPlate(getNumberPlate());
         plane.setAircraftType(getAircraftType().getEntity());
@@ -62,6 +67,7 @@ public class PlaneModel {
      */
     public void initFromEntity(Plane plane) {
         setId(plane.getId());
+        setVersion(plane.getVersion());
         setName(plane.getName());
         setNumberPlate(plane.getNumberPlate());
         setAircraftType(new AircraftTypeModel(plane.getAircraftType()));
@@ -69,6 +75,10 @@ public class PlaneModel {
 
     public String getId() {
         return id.get();
+    }
+
+    public int getVersion() {
+        return version.get();
     }
 
     public String getName() {
@@ -87,6 +97,10 @@ public class PlaneModel {
         this.id.set(id);
     }
 
+    public void setVersion(int version) {
+        this.version.set(version);
+    }
+
     public void setName(String name) {
         this.name.set(name);
     }
@@ -101,6 +115,10 @@ public class PlaneModel {
 
     public StringProperty idProperty() {
         return id;
+    }
+
+    public IntegerProperty versionProperty() {
+        return version;
     }
 
     public StringProperty nameProperty() {

@@ -9,24 +9,20 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
-import com.prodyna.pac.flightplan.user.entity.Role;
 import com.prodyna.pac.flightplan.user.entity.User;
 import com.prodyna.pac.flightplan.user.exception.UserErrorCode;
 import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 import com.sun.mail.util.BASE64EncoderStream;
 
 /**
- * TODO mfroehlich Comment me
+ * Stateless EJB - Implementation of {@link UserService} providing CRUD service methods for {@link User}.
  * 
  * @author mfroehlich
  *
@@ -34,8 +30,6 @@ import com.sun.mail.util.BASE64EncoderStream;
 @Stateless
 @MethodCallsMonitored
 @Logging
-@Interceptors(AuthorizationInterceptor.class)
-@AuthorizedRoles({ Role.ADMIN })
 public class UserBean implements UserService {
 
     @Inject
@@ -45,7 +39,6 @@ public class UserBean implements UserService {
     private EntityManager em;
 
     @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
     public String loadUserIdByUserName(String userName) {
         Query query = em.createNamedQuery(User.QUERY_LOAD_USER_ID_BY_USERNAME);
         query.setParameter("username", userName);
@@ -54,7 +47,12 @@ public class UserBean implements UserService {
     }
 
     @Override
-    public String encryptPassword(String password) {
+    public User loadUserById(String userId) {
+        return em.find(User.class, userId);
+    }
+
+    @Override
+    public String encryptPassword(String password) throws UserValidationException {
 
         String encryptedPassword;
         try {
@@ -75,7 +73,7 @@ public class UserBean implements UserService {
     }
 
     @Override
-    public void updatePassword(String userId, String oldPassword, String newPassword) {
+    public void updatePassword(String userId, String oldPassword, String newPassword) throws UserValidationException {
 
         String oldPwdEnc = encryptPassword(oldPassword);
         String newPwdEnc = encryptPassword(newPassword);
@@ -92,5 +90,4 @@ public class UserBean implements UserService {
                     UserErrorCode.PASSWORD_UPDATE_OLD_PASSWORD_IS_NOT_CORRECT);
         }
     }
-
 }

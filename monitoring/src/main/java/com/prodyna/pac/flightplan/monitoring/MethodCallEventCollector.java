@@ -48,7 +48,6 @@ public class MethodCallEventCollector {
 
     @PostConstruct
     public void registerInJMX() {
-        String objectNameStr = MethodCallMonitorMXBean.OBJECTNAME;
         try {
             objectName = new ObjectName(objectNameStr);
             MethodCallMonitor mbean = new MethodCallMonitor(this);

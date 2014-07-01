@@ -6,13 +6,14 @@ package com.prodyna.pac.flightplan.client.planeadmin.planelist;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.prodyna.pac.flightplan.client.model.PlaneModel;
-
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+
+import com.prodyna.pac.flightplan.client.model.PlaneModel;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -33,7 +34,7 @@ public class PlaneListPresenter implements Initializable {
         loadPlanes();
     }
 
-    public void deletePlane() {
+    public void deletePlane() throws PlaneValidationException {
         PlaneModel selectedPlane = planeListView.getSelectionModel().getSelectedItem();
         if (selectedPlane != null) {
             String planeId = selectedPlane.idProperty().get();

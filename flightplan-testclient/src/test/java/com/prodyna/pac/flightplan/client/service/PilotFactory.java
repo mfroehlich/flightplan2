@@ -28,6 +28,7 @@ public class PilotFactory {
         pilot.setFirstName("test");
         pilot.setLastName("test");
         pilot.setId(null);
+        pilot.setVersion(1);
         pilot.setLicenceValidity(new Date());
         pilot.seteMailAddress("test@test.de");
         pilot.setPassword("test");

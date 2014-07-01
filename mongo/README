@@ -1,0 +1,48 @@
+This is a backend for PRODYNA Stream that uses MongoDB as persistent storage.
+
+Overview
+========
+
+* mongo-client defines the API for the session beans. This project is inteded to be given to a client that actually accesses the backend using RMI or REST with a dynamic proxy. One example is included (ApplicationService)
+* mongo-service implements the services defined in mongo-client. The services are both, @Stateless session beans and exposed REST services (@Path, @Produces). Arquillian tests that directly test the Session bean live here (src/test/resources). One example is included (ApplicationServiceBean and ApplicationServiceBeanTest).
+* mongo-web only contains the REST enabler (RESTApplication), but additionally all Arquillian tests that remotely access the REST service also live here, one example is ApplicationServiceRESTTest. They should extend AbstractRESTTest.
+* mongo-ear Packages everything to an EAR file that can be deployed to the application server.
+* mongo-assembly Packages the EAR and much more to a single file that can be delivered to the DML.
+
+Features
+========
+* Persistence is done using Morphia, so Entities are used as DTO, there are no separate DTOs. The Entities are modeled after the REST interface, but are a superset and contain things that are used internally. If they are not needed on the REST interface, they are stripped using @JsonIgnoreProperty.
+* Business Logic is implemented as Session Beans. The session beans can and should use each other to avoid redundancy and support Data Ownership.
+* The session beans have a local interface only, but could be used remotely. In this case, the client would see all properties, therefore this should not be used.
+* The Session Beans are exported as REST using JAX-RS 2.0 annotations.
+* HTTP Basic Authentication is used. A server side filter checks for availability of the HTTP header and calls a validator. There is a DummyAuthenticationValidator, but currently used is MongoUserAuthenticationValidator which reads the "hashedPassword" from the User entity.
+* The passwords are hashed using Hasher and the implementation SHA512Hasher.
+* Arquillian is used for testing and require a running JBoss and MongoDB
+* Session Beans tests are in mongo-service/src/test/java and can use ScenarioSupporterBean to setup a data scenario in MongoDB for testing.
+* REST remote tests are in mongo-web/src/test/java and also use ScenarioSupporterBeans to setup a complex scenario.
+* The InSequence feature is used, so test methods can rely on a particular order* An EAR file is created in mongo-ear that can be deployed.
+* mongo-assembly creates an assembly package containing the EAR file and everything used.
+
+Running the tests
+=================
+
+To run the tests the following must work:
+
+- JBoss WildFly 8.0.0.CR1 must run in standalone-full-configuration (bin/run.sh -c standalone-full.xml)
+- MongoDB must be run
+
+The tests should run instantly by running "mvn install", but can be also launched manually and singly in the IDE. If you have problems running them from the IDE: Some IDEs have a wrong path for the project at runtime. It must be the base directory of the local(!) project.
+
+Deploying the EAR
+=================
+After deploying the ear, the following commands can be used to test:
+
+% curl http://localhost:8080/mongo-web/rest/application/info
+{"name":"read-from-mongo"}
+
+% curl -udkrizic:abc123 http://localhost:8080/mongo-web/rest/channel
+[{"id":1,"key":"hr","label":"Human Resources","readOnly":false,"forceAssignment":false},{"id":2,"key":"dev","label":"Development","readOnly":false,"forceAssignment":false},{"id":3,"key":"cas","label":"Casual","readOnly":false,"forceAssignment":false}]%
+
+% curl -udkrizic:abc123 http://localhost:8080/mongo-web/rest/tweet/42
+{"id":"42","author":{"username":"dkrizic","fullname":"Darko Krizic","avatarUrl":"bla"},"text":"This is the text of the tweet","created":"42","updated":"43","channels":["dev"],"comments":null,"commentsCount":0,"images":null,"userLiked":false}
+

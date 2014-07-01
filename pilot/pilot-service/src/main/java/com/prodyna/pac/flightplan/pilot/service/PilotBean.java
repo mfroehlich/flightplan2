@@ -6,27 +6,28 @@ package com.prodyna.pac.flightplan.pilot.service;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 import com.prodyna.pac.flightplan.pilot.exception.PilotErrorCode;
 import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.user.entity.Role;
 import com.prodyna.pac.flightplan.user.entity.UserToRoleMapping;
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 import com.prodyna.pac.flightplan.user.service.UserService;
 
 /**
- * TODO mfroehlich Comment me
+ * 
+ * Stateless EJB - Implementation of {@link PilotService} providing CRUD service methods for {@link Pilot}.
  * 
  * @author mfroehlich
  * 
@@ -34,8 +35,6 @@ import com.prodyna.pac.flightplan.user.service.UserService;
 @Stateless
 @Logging
 @MethodCallsMonitored
-@Interceptors(AuthorizationInterceptor.class)
-@AuthorizedRoles({ Role.ADMIN })
 public class PilotBean implements PilotService {
 
     @Inject
@@ -48,7 +47,7 @@ public class PilotBean implements PilotService {
     private Logger logger;
 
     @Override
-    public Pilot createPilot(Pilot pilot) {
+    public Pilot createPilot(Pilot pilot) throws PilotValidationException, UserValidationException {
         logger.debug("Encrypting pilot password before persisting.");
         String encryptedPassword = userService.encryptPassword(pilot.getPassword());
         pilot.setPassword(encryptedPassword);
@@ -68,7 +67,6 @@ public class PilotBean implements PilotService {
     }
 
     @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
     public Pilot loadPilotById(String pilotId) {
         Pilot pilot = em.find(Pilot.class, pilotId);
         return pilot;
@@ -76,7 +74,7 @@ public class PilotBean implements PilotService {
 
     @SuppressWarnings("unchecked")
     @Override
-    @AuthorizedRoles({ Role.USER, Role.GUEST })
+    @RolesAllowed({ Role.USER })
     public List<Pilot> loadAllPilots() {
         Query query = em.createNamedQuery(Pilot.QUERY_LOAD_ALL_PILOTS);
         List<Pilot> pilotList = query.getResultList();
@@ -84,13 +82,13 @@ public class PilotBean implements PilotService {
     }
 
     @Override
-    public Pilot updatePilot(Pilot pilot) {
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException {
         Pilot mergedPilot = em.merge(pilot);
         return mergedPilot;
     }
 
     @Override
-    public void deletePilotById(String pilotId) {
+    public void deletePilotById(String pilotId) throws PilotNotFoundException {
         Pilot pilotToBeDeleted = loadPilotById(pilotId);
         if (pilotToBeDeleted == null) {
             throw new PilotNotFoundException("Error loading pilot to be deleted", PilotErrorCode.PILOT_NOT_FOUND_BY_ID);

@@ -5,6 +5,8 @@ package com.prodyna.pac.flightplan.plane.service;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,9 +18,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
+import com.prodyna.pac.flightplan.user.entity.Role;
 
 /**
- * TODO mfroehlich Comment me
+ * REST interface providing CRUD service methods for {@link AircraftType} objects.
  * 
  * @author mfroehlich
  * 
@@ -26,56 +31,76 @@ import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 @Path("aircraftType")
 @Produces(MediaType.APPLICATION_XML)
 @Consumes(MediaType.APPLICATION_XML)
+@RolesAllowed({ Role.ADMIN })
 public interface AircraftTypeService {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Persist the specified {@link AircraftType} in the database.
      * 
      * @param aircraftType
      * @return
+     * @throws AircraftTypeValidationException
      */
     @POST
-    public AircraftType createAircraftType(AircraftType aircraftType);
+    public AircraftType createAircraftType(AircraftType aircraftType) throws AircraftTypeValidationException;
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Load the {@link AircraftType} from the database specified by its id.
      * 
      * @param id
      * @return
      */
     @GET
     @Path("id/{id}")
+    @PermitAll
     public AircraftType loadAircraftTypeById(@PathParam("id") String id);
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Load all {@link AircraftType}s from the database.
      * 
      * @return
      */
     @GET
     @Path("list")
+    @PermitAll
     public List<AircraftType> loadAllAircraftTypes();
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Update the specified {@link AircraftType}.
      * 
      * @param aircraftType
      * @return
      */
     @PUT
-    public AircraftType updateAircraftType(AircraftType aircraftType);
+    public AircraftType updateAircraftType(AircraftType aircraftType) throws AircraftTypeValidationException;
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Delete the {@link AircraftType} specified by its id.
      * 
      * @param aircraftTypeId
      */
     @DELETE
     @Path("id/{id}")
-    public void deleteAircraftTypeById(@PathParam("id") String aircraftTypeId);
+    public void deleteAircraftTypeById(@PathParam("id") String aircraftTypeId) throws AircraftTypeValidationException;
+
+    /**
+     * Check if the {@link AircraftType} specified by its id is referenced by any {@link Plane}.
+     * 
+     * @param aircraftTypeId
+     * @return
+     */
+    public boolean isAircraftTypeReferencedByPlanes(String aircraftTypeId);
+
+    /**
+     * Check if the specified {@link AircraftType} defines a unique description.
+     * 
+     * @param aircraftType
+     * @return
+     */
+    public boolean isAircraftTypeDescriptionUnique(AircraftType aircraftType);
 }

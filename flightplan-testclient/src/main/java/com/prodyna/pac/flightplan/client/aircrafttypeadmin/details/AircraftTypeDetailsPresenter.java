@@ -6,14 +6,15 @@ package com.prodyna.pac.flightplan.client.aircrafttypeadmin.details;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+
+import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -59,7 +60,7 @@ public class AircraftTypeDetailsPresenter implements Initializable {
         });
     }
 
-    public void saveAircraftType() {
+    public void saveAircraftType() throws AircraftTypeValidationException {
         this.viewModel.saveAircraftType();
     }
 

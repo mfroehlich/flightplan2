@@ -16,6 +16,7 @@ import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
 import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationErrorCode;
 import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.planereservation.service.PlaneReservationService;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -31,7 +32,8 @@ public class PlaneReservationServiceValidationDecorator implements PlaneReservat
     private PlaneReservationService delegate;
 
     @Override
-    public PlaneReservation createReservation(PlaneReservation reservation) {
+    public PlaneReservation createReservation(PlaneReservation reservation) throws PlaneReservationValidationException,
+            ReservationValidationException {
         Pilot pilot = reservation.getPilot();
         Plane plane = reservation.getPlane();
 
@@ -48,7 +50,7 @@ public class PlaneReservationServiceValidationDecorator implements PlaneReservat
     }
 
     @Override
-    public PlaneReservation updateReservation(PlaneReservation reservation) {
+    public PlaneReservation updateReservation(PlaneReservation reservation) throws ReservationValidationException {
         return delegate.updateReservation(reservation);
     }
 

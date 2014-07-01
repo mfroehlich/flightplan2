@@ -53,7 +53,7 @@ public class ChangePasswordViewModel {
         return userId;
     }
 
-    public void changePassword() {
+    public void changePassword() throws UserValidationException {
         String pwd1 = StringUtils.trim(newPwd1.get(), "");
         String pwd2 = StringUtils.trim(newPwd2.get(), "");
 

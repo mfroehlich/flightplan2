@@ -17,6 +17,7 @@ public class AircraftTypeFactory {
         AircraftType type = new AircraftType();
         type.setId(null);
         type.setDescription("My TestaircraftType");
+        type.setVersion(1);
         return type;
     }
 }

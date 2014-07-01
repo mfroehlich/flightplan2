@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.service.AircraftTypeClientService;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -31,7 +32,7 @@ public class AircraftTypeDetailsViewModel {
         this.service = new AircraftTypeClientService();
     }
 
-    public void saveAircraftType() {
+    public void saveAircraftType() throws AircraftTypeValidationException {
         AircraftType type = currentType.get().getEntity();
         AircraftType returnValue;
         if (type.getId() == null) {

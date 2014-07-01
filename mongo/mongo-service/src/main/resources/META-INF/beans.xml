@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+    <interceptors>
+        <class>com.prodyna.stream.backend.mongo.common.security.AuthenticationInterceptor</class>
+        <class>com.prodyna.stream.backend.mongo.common.monitoring.MonitoringInterceptor</class>
+    </interceptors>
+    <alternatives>
+        <class>com.prodyna.stream.backend.mongo.common.security.UserMongoAuthenticationValidator</class>
+        <class>com.prodyna.stream.backend.mongo.common.hash.SHA512Hasher</class>
+    </alternatives>
+</beans>

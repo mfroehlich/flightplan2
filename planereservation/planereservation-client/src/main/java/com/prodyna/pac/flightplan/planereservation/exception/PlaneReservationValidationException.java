@@ -4,7 +4,7 @@
 package com.prodyna.pac.flightplan.planereservation.exception;
 
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.FunctionalException;
 
 /**
  * TODO mfroehlich Comment me
@@ -12,7 +12,7 @@ import com.prodyna.pac.flightplan.common.exception.TechnicalException;
  * @author mfroehlich
  *
  */
-public class PlaneReservationValidationException extends TechnicalException {
+public class PlaneReservationValidationException extends FunctionalException {
 
     private static final long serialVersionUID = 1674368653573656881L;
 

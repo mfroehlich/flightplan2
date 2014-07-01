@@ -3,7 +3,7 @@
  */
 package com.prodyna.pac.flightplan.pilot.exception;
 
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.FunctionalException;
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 
 /**
@@ -12,7 +12,7 @@ import com.prodyna.pac.flightplan.common.exception.ErrorCode;
  * @author mfroehlich
  *
  */
-public class PilotPersistenceException extends TechnicalException {
+public class PilotPersistenceException extends FunctionalException {
 
     private static final long serialVersionUID = -9079480752074384290L;
 

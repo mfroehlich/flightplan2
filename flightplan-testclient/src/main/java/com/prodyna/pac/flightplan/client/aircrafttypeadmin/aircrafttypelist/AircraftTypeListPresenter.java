@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -42,7 +43,7 @@ public class AircraftTypeListPresenter implements Initializable {
         listView.getSelectionModel().selectFirst();
     }
 
-    public void deleteAircraftType() {
+    public void deleteAircraftType() throws AircraftTypeValidationException {
         this.viewModel.deleteAircraftType();
         initAircraftTypeList();
     }

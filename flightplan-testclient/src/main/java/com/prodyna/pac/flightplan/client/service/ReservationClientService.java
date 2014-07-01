@@ -12,7 +12,10 @@ import org.slf4j.LoggerFactory;
 import com.prodyna.pac.flightplan.client.session.SessionManager;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.planereservation.service.PlaneReservationService;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 import com.prodyna.pac.flightplan.reservation.service.ReservationWorkflowService;
 
 /**
@@ -33,7 +36,8 @@ public class ReservationClientService extends AbstractClientService {
         this.planeReservationService = createRestService(PlaneReservationService.class);
     }
 
-    public void createReservation(PlaneReservation reservation) {
+    public void createReservation(PlaneReservation reservation) throws PlaneReservationValidationException,
+            ReservationValidationException {
         logger.debug("Calling REST service to create the following reservation " + reservation);
         planeReservationService.createReservation(reservation);
     }
@@ -66,8 +70,9 @@ public class ReservationClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param reservation
+     * @throws ReservationValidationException
      */
-    public void updateReservation(PlaneReservation reservation) {
+    public void updateReservation(PlaneReservation reservation) throws ReservationValidationException {
         logger.debug("Calling REST service to update reservation " + reservation);
         planeReservationService.updateReservation(reservation);
     }
@@ -86,8 +91,9 @@ public class ReservationClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param reservationId
+     * @throws ReservationWorkflowException
      */
-    public void cancelReservation(String reservationId) {
+    public void cancelReservation(String reservationId) throws ReservationWorkflowException {
         logger.debug("Calling REST service to cancel reservation by id " + reservationId);
         reservationWorkflowService.cancelReservation(reservationId);
     }
@@ -96,8 +102,9 @@ public class ReservationClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param reservationId
+     * @throws ReservationWorkflowException
      */
-    public void receiveReservationItem(String reservationId) {
+    public void receiveReservationItem(String reservationId) throws ReservationWorkflowException {
         logger.debug("Calling REST service to receive reservation item for reservation by id " + reservationId);
         reservationWorkflowService.receiveReservationItemWithReservationId(reservationId);
     }
@@ -106,8 +113,9 @@ public class ReservationClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param reservationId
+     * @throws ReservationWorkflowException
      */
-    public void returnReservationItem(String reservationId) {
+    public void returnReservationItem(String reservationId) throws ReservationWorkflowException {
         logger.debug("Calling REST service to return reservation item for reservation by id " + reservationId);
         reservationWorkflowService.returnReservationItemWithReservationId(reservationId);
     }

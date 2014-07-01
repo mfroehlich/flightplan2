@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -90,7 +91,7 @@ public class PlaneDetailsPresenter implements Initializable {
         this.viewModel.currentPlaneProperty().set(new PlaneModel());
     }
 
-    public void savePlane() {
+    public void savePlane() throws PlaneValidationException {
         this.viewModel.savePlane();
     }
 

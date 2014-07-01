@@ -4,6 +4,7 @@
 package com.prodyna.pac.flightplan.common.interceptor;
 
 import java.lang.reflect.Method;
+import java.security.Principal;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -36,19 +37,16 @@ public class AuthorizationInterceptor {
         Method method = ctx.getMethod();
         Class<?> declaringClass = method.getDeclaringClass();
 
-        logger.debug("Checking authorization for user " + sessionContext.getCallerPrincipal().getName()
-                + " calling method " + declaringClass.getCanonicalName() + "#" + method.getName());
+        logger.debug("Checking authorization for user " + getCallerPrincipal() + " calling method "
+                + declaringClass.getCanonicalName() + "#" + method.getName());
 
         AuthorizedRoles[] classAnnotations = declaringClass.getAnnotationsByType(AuthorizedRoles.class);
         if (classAnnotations != null && classAnnotations.length > 0) {
             AuthorizedRoles classAnnotation = classAnnotations[0];
 
             String[] classRoles = classAnnotation.value();
-            for (String classRole : classRoles) {
-                if (sessionContext.isCallerInRole(classRole)) {
-                    userHasRequiredRoleAssigned = true;
-                    break;
-                }
+            if (isCallerInRole(classRoles)) {
+                userHasRequiredRoleAssigned = true;
             }
         }
 
@@ -58,11 +56,8 @@ public class AuthorizationInterceptor {
                 AuthorizedRoles methodAnnotation = methodAnnotations[0];
 
                 String[] methodRoles = methodAnnotation.value();
-                for (String methodRole : methodRoles) {
-                    if (sessionContext.isCallerInRole(methodRole)) {
-                        userHasRequiredRoleAssigned = true;
-                        break;
-                    }
+                if (isCallerInRole(methodRoles)) {
+                    userHasRequiredRoleAssigned = true;
                 }
             }
         }
@@ -70,16 +65,43 @@ public class AuthorizationInterceptor {
         Object returnValue;
 
         if (userHasRequiredRoleAssigned == true) {
-            logger.debug("User " + sessionContext.getCallerPrincipal().getName() + " may call method "
-                    + declaringClass.getCanonicalName() + "#" + method.getName());
+            logger.debug("User " + getCallerPrincipal() + " may call method " + declaringClass.getCanonicalName() + "#"
+                    + method.getName());
             returnValue = ctx.proceed();
         } else {
-            logger.debug("PERMISSION DENIED! User " + sessionContext.getCallerPrincipal().getName()
-                    + " may not call method " + declaringClass.getCanonicalName() + "#" + method.getName());
+            logger.debug("PERMISSION DENIED! User " + getCallerPrincipal() + " may not call method "
+                    + declaringClass.getCanonicalName() + "#" + method.getName());
 
             throw new UserNotAuthorizedException();
         }
 
         return returnValue;
+    }
+
+    private boolean isCallerInRole(String... roles) {
+        boolean isCallerInRole = false;
+
+        for (String role : roles) {
+            if (role.equals("GUEST")) {
+                isCallerInRole = true;
+                break;
+            }
+        }
+        if (isCallerInRole == false) {
+            for (String role : roles) {
+                if (sessionContext.isCallerInRole(role)) {
+                    isCallerInRole = true;
+                    break;
+                }
+            }
+        }
+
+        return isCallerInRole;
+    }
+
+    private String getCallerPrincipal() {
+        Principal callerPrincipal = sessionContext.getCallerPrincipal();
+        String name = callerPrincipal == null ? "anonymous user" : callerPrincipal.getName();
+        return name;
     }
 }

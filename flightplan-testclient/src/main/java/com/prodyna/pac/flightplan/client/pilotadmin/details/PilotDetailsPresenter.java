@@ -22,6 +22,8 @@ import javafx.scene.control.TextField;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -111,7 +113,7 @@ public class PilotDetailsPresenter implements Initializable {
         this.assignedTypesListView.setItems(aircraftTypeList);
     }
 
-    public void savePilot() {
+    public void savePilot() throws PilotValidationException, UserValidationException {
         if (viewModel.currentPilotProperty().get() != null) {
             ObservableList<AircraftTypeModel> selectedTypeList = assignedTypesListView.getSelectionModel()
                     .getSelectedItems();

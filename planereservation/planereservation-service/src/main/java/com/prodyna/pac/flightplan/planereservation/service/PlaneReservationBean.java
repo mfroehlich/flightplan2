@@ -10,23 +10,31 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizationInterceptor;
-import com.prodyna.pac.flightplan.common.interceptor.AuthorizedRoles;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
+import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.service.PlaneService;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
+import com.prodyna.pac.flightplan.reservation.entity.ReservationItem;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.service.ReservationService;
-import com.prodyna.pac.flightplan.user.entity.Role;
+import com.prodyna.pac.flightplan.user.entity.User;
 import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 
 /**
- * TODO mfroehlich Comment me
+ * 
+ * Stateless EJB - Implementation of {@link PlaneService} providing access to {@link Reservation} with {@link Plane}
+ * objects as {@link ReservationItem}s and {@link Pilot}s as {@link User}s.
+ * 
+ * This bean uses the {@link ReservationService} for writing operations (CRUD services) and just implements service
+ * methods providing read-only access to the database.
  * 
  * @author mfroehlich
  *
@@ -34,8 +42,6 @@ import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 @Stateless
 @Logging
 @MethodCallsMonitored
-@Interceptors(AuthorizationInterceptor.class)
-@AuthorizedRoles({ Role.ADMIN, Role.USER })
 public class PlaneReservationBean implements PlaneReservationService {
 
     @Inject
@@ -45,7 +51,8 @@ public class PlaneReservationBean implements PlaneReservationService {
     private ReservationService reservationService;
 
     @Override
-    public PlaneReservation createReservation(PlaneReservation reservation) {
+    public PlaneReservation createReservation(PlaneReservation reservation) throws PlaneReservationValidationException,
+            ReservationValidationException {
         Reservation res = fromPlaneReservation(reservation);
         res = reservationService.createReservation(res);
 
@@ -56,7 +63,7 @@ public class PlaneReservationBean implements PlaneReservationService {
     }
 
     @Override
-    public PlaneReservation updateReservation(PlaneReservation reservation) {
+    public PlaneReservation updateReservation(PlaneReservation reservation) throws ReservationValidationException {
         Reservation res = fromPlaneReservation(reservation);
         res = reservationService.updateReservation(res);
 
@@ -73,7 +80,6 @@ public class PlaneReservationBean implements PlaneReservationService {
     }
 
     @Override
-    @AuthorizedRoles({ Role.GUEST })
     public List<PlaneReservation> loadAllPlaneReservations() {
         Query query = em.createNamedQuery(PlaneReservation.QUERY_LOAD_ALL_PLANERESERVATIONS);
 
@@ -83,7 +89,6 @@ public class PlaneReservationBean implements PlaneReservationService {
     }
 
     @Override
-    @AuthorizedRoles({ Role.GUEST })
     public List<PlaneReservation> loadPlaneReservationsByPlaneAndDate(String planeId, long dateMillis) {
         Query query = em.createNamedQuery(PlaneReservation.QUERY_LOAD_PLANERESERVATIONS_BY_PLANE_AND_DATE);
         LocalDateTime startOfDay = LocalDateConverter.dateToLocalDate(new Date(dateMillis)).atStartOfDay();
@@ -108,7 +113,6 @@ public class PlaneReservationBean implements PlaneReservationService {
     }
 
     @Override
-    @AuthorizedRoles({ Role.GUEST })
     public List<PlaneReservation> loadPlaneReservationsByUserId(String userId) {
         StringBuilder jpql = new StringBuilder(PlaneReservation.QUERY_LOAD_PLANERESERVATIONS_BY_PILOTID);
         Query query = em.createNamedQuery(jpql.toString());
@@ -127,6 +131,7 @@ public class PlaneReservationBean implements PlaneReservationService {
         res.setStart(reservation.getStartTime());
         res.setEnd(reservation.getEndTime());
         res.setStatus(reservation.getStatus());
+        res.setVersion(reservation.getVersion());
         return res;
     }
 }

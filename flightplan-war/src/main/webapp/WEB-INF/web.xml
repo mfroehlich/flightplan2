@@ -3,6 +3,8 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
+	
+	<!-- 
 	<servlet-mapping>
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
 		<url-pattern>/restapp/*</url-pattern>
@@ -18,10 +20,20 @@
 			<role-name>GUEST</role-name>
 		</auth-constraint>
 	</security-constraint>
+	
+	 -->
+	 
+	<context-param>
+		<param-name>resteasy.role.based.security</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	 
 	<login-config>
 		<auth-method>BASIC</auth-method>
 		<realm-name>flightplan-security-domain</realm-name>
 	</login-config>
+	
+	<!-- 
 	<security-role>
 		<role-name>ADMIN</role-name>
 	</security-role>
@@ -31,4 +43,6 @@
 	<security-role>
 		<role-name>GUEST</role-name>
 	</security-role>
+	 -->
+	 
 </web-app>

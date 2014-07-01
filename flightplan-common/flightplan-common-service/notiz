@@ -1,45 +1,33 @@
 
 ===================================================================================================    
-Assembly -> Bauen eines Installationspakets
-	-> EAR-File
-	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
-	-> Quelltext
-	
-	TODO was heißt das? QM: Testergebnisse, Code-Coverage
-
-===================================================================================================    
 Validierung vervollständigen
 	- BeanValidation!!
 	- Methoden in Decorators implementieren
-
-===================================================================================================    
-GUEST-Mode
-	-> sicherstellen, dass der GUEST-Mode funktioniert.
-	==> Spezieller User hierfür?
-	
-	FRAGE: wie melde ich mich OHNE Authentifizierung an? 
-			-> Was muss ich im Code schicken? 
-      
-===================================================================================================
-Übersetzen von Exceptions beim dynamic proxy
-	-> Exception-Mapping für Anzeige schöner Fehlermeldungen in den Fehlerfällen
 
 ===================================================================================================
 Testen mit Arquillian
 	* Tests implementieren
 
-===================================================================================================
-Optimistic logging?
-    
 ===================================================================================================    
-FRAGE:
-	* Timer -> RunAs-Problematik (vs. WorkflowEngine)
-	* Guest-Mode!! Warum geht das bei mir nicht? Wie melde ich mich anonym an?
+Arquillian-Ergänzungen
+	- TechnicalException macht Probleme -> EJBException wrappt TechnialException!
+	- Wie erzeuge ich den Principal? Könnte ich im ReservationWorkflowService gebrauchen, um zu prüfen, wer gerade angemeldet ist!
+		=> https://community.jboss.org/wiki/TestingSecuredEJBsOnJBossAS71xWithArquillian
+	      
+===================================================================================================    
+Assembly -> Bauen eines Installationspakets
+	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
+	-> Quelltext
+	-> TODO: Testergebnisse!
+	-> TODO: Sonar-Testergebnisse!
 
-	* Wie sichert man den Parallelbetrieb? Optimistic logging?
-	* Wie erstelle ich einen wirklichen Singleton?
-	* Wie gehe ich mit GIT-Conflicts um? Das funzt überhaupt nicht!!
-    
+===================================================================================================
+Übersetzen von Exceptions beim dynamic proxy
+	-> Exception-Mapping für Anzeige schöner Fehlermeldungen in den Fehlerfällen
+	
+	ACHTUNG: Fehlerbehandlung von OptimisticLockExceptions
+		http://www.torsten-horn.de/techdocs/java-jpa.htm -> nach isOptimisticLockException suchen!
+        
 ===================================================================================================    
 Anzeige von Menüpunkten abhängig vom Anmeldestatus
   	* Steuerung, welche Menüpunkte aktiv sind!
@@ -50,35 +38,3 @@ Anzeige von Menüpunkten abhängig vom Anmeldestatus
 ===================================================================================================    
 Kommentieren des Codes
 
-===================================================================================================    
-Handbuch??
-
-
-
-
-===================================================================================================    
-Verschlüsselung der Passwörter!!
-	-> in standalone.xml
-	    <module-option name="hashAlgorithm" value="MD5" />
-	    <module-option name="hashEncoding" value="base64" />
-	
-	-> DONE: Bean-Methode fertig implementieren, dass neue User mit Passwort gespeichert werden!
-
-===================================================================================================    
-SQL-Skript erzeugen für die Erzeugung des Datenbankschemas
-
-	HOWTO:	MySQL-Workbench
-		-> Rechtsklick auf Schema -> Schema Inspector öffnen
-		-> Alle Tabellen markieren  
-		-> Rechtsklick -> Send to SQL Editor -> Create Statement auswählen
-
-===================================================================================================
-FACHLICHKEIT: Pilot hat einen oder mehrere Flugzeugtypen, die er ausleihen darf!
-	-> das muss noch implementiert werden!
-	
-===================================================================================================    
-Automatisiertes Zurückbringen von Items
-	* Thread, der minütlich startet und das zurückbringen implementiert!
-
-	TODO: AuthorizationInterceptor in ReservationWorkflowBean und ReservationBean wieder einkommentieren
-	TODO: Prüfen, warum @RunAs in PlaneReservationWatcher nicht funktioniert!

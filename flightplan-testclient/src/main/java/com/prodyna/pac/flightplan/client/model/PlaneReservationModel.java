@@ -5,7 +5,9 @@ package com.prodyna.pac.flightplan.client.model;
 
 import java.time.LocalDateTime;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,6 +25,7 @@ import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 public class PlaneReservationModel {
 
     private final StringProperty id;
+    private final IntegerProperty version;
     private final ObjectProperty<PilotModel> pilot;
     private final ObjectProperty<PlaneModel> plane;
     private final ObjectProperty<LocalDateTime> startTime;
@@ -35,6 +38,7 @@ public class PlaneReservationModel {
 
     public PlaneReservationModel() {
         id = new SimpleStringProperty();
+        version = new SimpleIntegerProperty();
         pilot = new SimpleObjectProperty<>();
         plane = new SimpleObjectProperty<>();
         startTime = new SimpleObjectProperty<>();
@@ -70,6 +74,7 @@ public class PlaneReservationModel {
      */
     private void initFromEntity(PlaneReservation reservation) {
         id.set(reservation.getId());
+        version.set(reservation.getVersion());
         pilot.set(new PilotModel(reservation.getPilot()));
         plane.set(new PlaneModel(reservation.getPlane()));
         startTime.set(LocalDateConverter.dateToLocalDateTime(reservation.getStartTime()));
@@ -80,6 +85,10 @@ public class PlaneReservationModel {
     public StringProperty idProperty() {
         return id;
     };
+
+    public IntegerProperty versionProperty() {
+        return version;
+    }
 
     public ObjectProperty<PilotModel> pilotProperty() {
         return pilot;

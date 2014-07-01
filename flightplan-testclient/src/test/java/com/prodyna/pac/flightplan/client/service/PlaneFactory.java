@@ -17,6 +17,7 @@ public class PlaneFactory {
     public static Plane createPlane(AircraftType type) {
         Plane plane = new Plane();
         plane.setId(null);
+        plane.setVersion(1);
         plane.setName("My Testplane");
         plane.setNumberPlate("MY-TEST-123");
         plane.setAircraftType(type);

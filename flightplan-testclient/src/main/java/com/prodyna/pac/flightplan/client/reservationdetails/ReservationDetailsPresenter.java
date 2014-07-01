@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -84,8 +86,11 @@ public class ReservationDetailsPresenter implements Initializable {
      * Create or update the reservation represented in the data model. TODO mfroehlich Comment me
      * 
      * @param event
+     * @throws ReservationValidationException
+     * @throws PlaneReservationValidationException
      */
-    public void saveReservation(ActionEvent event) {
+    public void saveReservation(ActionEvent event) throws PlaneReservationValidationException,
+            ReservationValidationException {
         viewModel.createReservation();
 
         /* Close the dialog. */

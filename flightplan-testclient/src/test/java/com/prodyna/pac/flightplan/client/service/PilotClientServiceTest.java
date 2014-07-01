@@ -8,6 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -23,11 +25,20 @@ public class PilotClientServiceTest {
         PilotClientService service = new PilotClientService();
 
         Pilot pilot = PilotFactory.createPilot();
-        Pilot createPilot = service.createPilot(pilot);
+        Pilot createdPilot;
+        try {
+            createdPilot = service.createPilot(pilot);
+        } catch (PilotValidationException e) {
+            Assert.fail("Caught not expected exception.");
+            createdPilot = null;
+        } catch (UserValidationException e) {
+            Assert.fail("Caught not expected exception.");
+            createdPilot = null;
+        }
 
         Assert.assertNotNull(pilot.getId());
 
-        pilot.setId(createPilot.getId());
-        Assert.assertEquals(pilot, createPilot);
+        pilot.setId(createdPilot.getId());
+        Assert.assertEquals(pilot, createdPilot);
     }
 }

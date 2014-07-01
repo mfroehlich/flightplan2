@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -25,6 +27,7 @@ import com.prodyna.pac.flightplan.utils.LocalDateConverter;
 public class PilotModel {
 
     private final StringProperty id;
+    private final IntegerProperty version;
     private final StringProperty userName;
     private final StringProperty firstName;
     private final StringProperty lastName;
@@ -37,6 +40,7 @@ public class PilotModel {
 
     public PilotModel() {
         id = new SimpleStringProperty();
+        version = new SimpleIntegerProperty();
         userName = new SimpleStringProperty();
         firstName = new SimpleStringProperty();
         lastName = new SimpleStringProperty();
@@ -57,6 +61,7 @@ public class PilotModel {
 
     public void initFromEntity(Pilot pilot) {
         id.set(pilot.getId());
+        version.set(pilot.getVersion());
         userName.set(pilot.getUserName());
         firstName.set(pilot.getFirstName());
         lastName.set(pilot.getLastName());
@@ -75,6 +80,7 @@ public class PilotModel {
     public Pilot getEntity() {
         Pilot pilot = new Pilot();
         pilot.setId(id.get());
+        pilot.setVersion(version.get());
         pilot.setUserName(userName.get());
         pilot.setFirstName(firstName.get());
         pilot.setLastName(lastName.get());
@@ -96,6 +102,10 @@ public class PilotModel {
 
     public StringProperty idProperty() {
         return id;
+    }
+
+    public IntegerProperty versionProperty() {
+        return version;
     }
 
     public StringProperty userNameProperty() {

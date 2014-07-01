@@ -26,6 +26,7 @@ import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
 import com.prodyna.pac.flightplan.client.reservationdetails.ReservationDetailsPresenter;
 import com.prodyna.pac.flightplan.client.reservationdetails.ReservationDetailsView;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 
 /**
  * TODO mfroehlich Comment me
@@ -133,19 +134,19 @@ public class ReservationListPresenter implements Initializable {
         updateReservationList();
     }
 
-    public void cancelReservation() {
+    public void cancelReservation() throws ReservationWorkflowException {
         viewModel.updateReservationStateToCancelled();
 
         updateReservationList();
     }
 
-    public void startFlight() {
+    public void startFlight() throws ReservationWorkflowException {
         viewModel.updateReservationStateToLent();
 
         updateReservationList();
     }
 
-    public void returnPlane() {
+    public void returnPlane() throws ReservationWorkflowException {
         viewModel.updateReservationStateToReturned();
 
         updateReservationList();

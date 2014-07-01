@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
 import com.prodyna.pac.flightplan.client.service.PlaneClientService;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
+import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -42,8 +43,9 @@ public class PlaneListViewModel {
      * TODO mfroehlich Comment me
      * 
      * @param planeId
+     * @throws PlaneValidationException
      */
-    public void deletePlaneById(String planeId) {
+    public void deletePlaneById(String planeId) throws PlaneValidationException {
         planeClientService.deletePlaneById(planeId);
     }
 }

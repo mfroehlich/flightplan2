@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
 import com.prodyna.pac.flightplan.client.service.PilotClientService;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
+import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -42,8 +44,10 @@ public class PilotListViewModel {
      * TODO mfroehlich Comment me
      * 
      * @param pilotId
+     * @throws PilotValidationException
+     * @throws PilotNotFoundException
      */
-    public void deletePilotById(String pilotId) {
+    public void deletePilotById(String pilotId) throws PilotNotFoundException, PilotValidationException {
         pilotClientService.deletePilotById(pilotId);
     }
 }

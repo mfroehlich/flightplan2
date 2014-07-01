@@ -5,13 +5,15 @@ package com.prodyna.pac.flightplan.client;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.core.Response;
 
 import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.FunctionalException;
 import com.prodyna.pac.flightplan.common.exception.UserNotAuthorizedException;
 import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
 
@@ -38,27 +40,35 @@ public class ExceptionHandler {
             if (ex.getCause() instanceof InvocationTargetException) {
                 InvocationTargetException targetEx = (InvocationTargetException) ex.getCause();
 
-                if (targetEx.getTargetException() instanceof TechnicalException) {
-                    TechnicalException target = (TechnicalException) targetEx.getTargetException();
+                Throwable realException = targetEx.getTargetException();
+                if (realException instanceof BadRequestException) {
+                    BadRequestException badRequestException = (BadRequestException) realException;
+                    String message = badRequestException.getMessage();
+                    Response response = badRequestException.getResponse();
+                    Dialogs.create().title("An error occurred.")
+                            .message("Error message: " + message + "\n\nYou might have made an error...")
+                            .showInformation();
+                } else if (realException instanceof FunctionalException) {
+                    FunctionalException target = (FunctionalException) realException;
                     // TODO mfroehlich Da geht doch mehr, oder?
                     Dialogs.create().showException(target);
-                } else if (targetEx.getTargetException() instanceof NotAuthorizedException) {
-                    NotAuthorizedException target = (NotAuthorizedException) targetEx.getTargetException();
+                } else if (realException instanceof NotAuthorizedException) {
+                    NotAuthorizedException target = (NotAuthorizedException) realException;
                     logger.error("User ist nicht autorisiert!!");
                     Dialogs.create().showException(target);
-                } else if (targetEx.getTargetException() instanceof UserNotLoggedInException) {
-                    UserNotLoggedInException target = (UserNotLoggedInException) targetEx.getTargetException();
+                } else if (realException instanceof UserNotLoggedInException) {
+                    UserNotLoggedInException target = (UserNotLoggedInException) realException;
                     Dialogs.create().showException(target);
-                } else if (targetEx.getTargetException() instanceof UserNotAuthorizedException) {
-                    UserNotAuthorizedException target = (UserNotAuthorizedException) targetEx.getTargetException();
+                } else if (realException instanceof UserNotAuthorizedException) {
+                    UserNotAuthorizedException target = (UserNotAuthorizedException) realException;
                     Dialogs.create().showException(target);
-                } else if (targetEx.getTargetException() instanceof IllegalStateException) {
-                    IllegalStateException target = (IllegalStateException) targetEx.getTargetException();
+                } else if (realException instanceof IllegalStateException) {
+                    IllegalStateException target = (IllegalStateException) realException;
                     logger.error("Fehler beim Einlesen des FXML.");
                     Dialogs.create().showException(target);
                 } else {
                     logger.debug("Displaying default exception");
-                    Dialogs.create().showException(targetEx.getTargetException());
+                    Dialogs.create().showException(realException);
                 }
             }
         }

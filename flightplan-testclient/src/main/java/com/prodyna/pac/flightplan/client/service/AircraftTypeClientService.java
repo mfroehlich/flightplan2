@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 import com.prodyna.pac.flightplan.plane.service.AircraftTypeService;
 
 /**
@@ -33,8 +34,9 @@ public class AircraftTypeClientService extends AbstractClientService {
      * 
      * @param type
      * @return
+     * @throws AircraftTypeValidationException
      */
-    public AircraftType createAircraftType(AircraftType type) {
+    public AircraftType createAircraftType(AircraftType type) throws AircraftTypeValidationException {
         type.setId(UUID.randomUUID().toString());
         AircraftType createdType = aircraftTypeService.createAircraftType(type);
         return createdType;
@@ -70,8 +72,9 @@ public class AircraftTypeClientService extends AbstractClientService {
      * 
      * @param type
      * @return
+     * @throws AircraftTypeValidationException
      */
-    public AircraftType updateAircraftType(AircraftType type) {
+    public AircraftType updateAircraftType(AircraftType type) throws AircraftTypeValidationException {
         logger.debug("Calling REST-Service to update AircraftType: " + type);
         AircraftType updatedType = aircraftTypeService.updateAircraftType(type);
         return updatedType;
@@ -81,8 +84,9 @@ public class AircraftTypeClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param aircraftTypeId
+     * @throws AircraftTypeValidationException
      */
-    public void deleteAircraftTypeById(String aircraftTypeId) {
+    public void deleteAircraftTypeById(String aircraftTypeId) throws AircraftTypeValidationException {
         logger.debug("Calling REST-Service to delete AircraftType by id '" + aircraftTypeId + "'");
         aircraftTypeService.deleteAircraftTypeById(aircraftTypeId);
     }

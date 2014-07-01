@@ -11,12 +11,14 @@ import javax.inject.Inject;
 
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
 import com.prodyna.pac.flightplan.pilot.exception.PilotErrorCode;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.pilot.service.PilotService;
+import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 import com.prodyna.pac.flightplan.utils.StringUtils;
 
 /**
- * TODO mfroehlich Comment me
+ * {@link Decorator} providing validation logic to be executed before {@link PilotService} methods are called.
  * 
  * @author mfroehlich
  *
@@ -36,10 +38,11 @@ public class PilotServiceValidationDecorator implements PilotService {
      * @return
      */
     @Override
-    public Pilot createPilot(Pilot pilot) {
+    public Pilot createPilot(Pilot pilot) throws PilotValidationException, UserValidationException {
 
         checkPilotId(pilot.getId());
         checkPilotUserName(pilot);
+        checkPilotFirstName(pilot);
 
         return delegate.createPilot(pilot);
     }
@@ -52,9 +55,11 @@ public class PilotServiceValidationDecorator implements PilotService {
      * @return
      */
     @Override
-    public Pilot updatePilot(Pilot pilot) {
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException {
 
         checkPilotId(pilot.getId());
+        checkPilotUserName(pilot);
+        checkPilotFirstName(pilot);
 
         return delegate.updatePilot(pilot);
     }
@@ -64,9 +69,10 @@ public class PilotServiceValidationDecorator implements PilotService {
      * TODO mfroehlich Comment me
      * 
      * @param pilotId
+     * @throws PilotNotFoundException
      */
     @Override
-    public void deletePilotById(String pilotId) {
+    public void deletePilotById(String pilotId) throws PilotValidationException, PilotNotFoundException {
 
         checkPilotId(pilotId);
 
@@ -78,7 +84,7 @@ public class PilotServiceValidationDecorator implements PilotService {
      * 
      * @param pilotId
      */
-    private void checkPilotId(String pilotId) {
+    private void checkPilotId(String pilotId) throws PilotValidationException {
         if (StringUtils.trim(pilotId, null) == null) {
             throw new PilotValidationException("Pilot id not set properly: '" + pilotId + "'",
                     PilotErrorCode.PILOT_ID_NOT_SET);
@@ -93,6 +99,20 @@ public class PilotServiceValidationDecorator implements PilotService {
     private void checkPilotUserName(Pilot pilot) {
         // TODO mfroehlich irgendwie prüfen, ob der UserName des Piloten eindeutig ist!
         // TODO mfroehlich ACHTUNG! Diese Prüfung muss auch im Cluster funktionieren! nur wie!?
+    }
+
+    /**
+     * TODO mfroehlich Comment me
+     * 
+     * @param pilot
+     * @throws PilotValidationException
+     */
+    private void checkPilotFirstName(Pilot pilot) throws PilotValidationException {
+        String trimmedFirstName = StringUtils.trim(pilot.getFirstName(), null);
+        if (trimmedFirstName == null) {
+            throw new PilotValidationException("Pilot first name may not be empty.",
+                    PilotErrorCode.PILOT_FIRST_NAME_MAY_NOT_BE_EMPTY);
+        }
     }
 
     @Override

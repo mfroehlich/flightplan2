@@ -8,16 +8,35 @@
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory>
 
-	<dependencySets>
+    <dependencySets>
 		<dependencySet>
-			<outputDirectory>/</outputDirectory>
-			
 			<includes>
-				<include>com.prodyna.pac.flightplan:*:*:*</include>
-            </includes>
-            
+				<include>com.prodyna.*:*:*:*</include>
+			</includes>
 		</dependencySet>
 	</dependencySets>
+
+<!-- 	<moduleSets> -->
+<!--         <moduleSet> -->
+<!--             <includeSubModules>false</includeSubModules> -->
+<!--             <sources> -->
+<!--                 <outputDirectoryMapping> -->
+<!--                     ${module.basedir.name} -->
+<!--                 </outputDirectoryMapping> -->
+<!--                 <excludeSubModuleDirectories> -->
+<!--                     false -->
+<!--                 </excludeSubModuleDirectories> -->
+<!--                 <fileSets> -->
+<!--                     <fileSet> -->
+<!--                         <directory>/</directory> -->
+<!--                         <excludes> -->
+<!--                             <exclude>**/target</exclude> -->
+<!--                         </excludes> -->
+<!--                     </fileSet> -->
+<!--                 </fileSets> -->
+<!--             </sources> -->
+<!--         </moduleSet> -->
+<!--     </moduleSets> -->
 
 	<fileSets>
 
@@ -25,6 +44,15 @@
 		<fileSet>
 			<directory>database</directory>
 			<outputDirectory>database</outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+
+		<fileSet>
+			<directory>applicationserver</directory>
+			<outputDirectory>applicationserver</outputDirectory>
 			<filtered>true</filtered>
 			<includes>
 				<include>*</include>

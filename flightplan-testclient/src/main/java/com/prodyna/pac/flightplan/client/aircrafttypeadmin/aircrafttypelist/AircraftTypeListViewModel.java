@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.service.AircraftTypeClientService;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
+import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 
 /**
  * TODO mfroehlich Comment me
@@ -31,7 +32,7 @@ public class AircraftTypeListViewModel {
         this.service = new AircraftTypeClientService();
     }
 
-    public void deleteAircraftType() {
+    public void deleteAircraftType() throws AircraftTypeValidationException {
         AircraftTypeModel selectedType = selectedAircraftType.get();
         if (selectedType != null) {
             String aircraftTypeId = selectedType.getId();

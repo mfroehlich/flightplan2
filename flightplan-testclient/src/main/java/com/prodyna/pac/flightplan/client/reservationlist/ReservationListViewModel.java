@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
 import com.prodyna.pac.flightplan.client.service.ReservationClientService;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 
 /**
  * TODO mfroehlich Comment me
@@ -57,24 +58,30 @@ public class ReservationListViewModel {
 
     /**
      * TODO mfroehlich Comment me
+     * 
+     * @throws ReservationWorkflowException
      */
-    public void updateReservationStateToCancelled() {
+    public void updateReservationStateToCancelled() throws ReservationWorkflowException {
         String reservationId = selectedReservation.get().idProperty().get();
         reservationService.cancelReservation(reservationId);
     }
 
     /**
      * TODO mfroehlich Comment me
+     * 
+     * @throws ReservationWorkflowException
      */
-    public void updateReservationStateToLent() {
+    public void updateReservationStateToLent() throws ReservationWorkflowException {
         String reservationId = selectedReservation.get().idProperty().get();
         reservationService.receiveReservationItem(reservationId);
     }
 
     /**
      * TODO mfroehlich Comment me
+     * 
+     * @throws ReservationWorkflowException
      */
-    public void updateReservationStateToReturned() {
+    public void updateReservationStateToReturned() throws ReservationWorkflowException {
         String reservationId = selectedReservation.get().idProperty().get();
         reservationService.returnReservationItem(reservationId);
     }
