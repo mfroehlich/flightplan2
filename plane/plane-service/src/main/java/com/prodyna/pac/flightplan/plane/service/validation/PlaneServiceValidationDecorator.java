@@ -3,21 +3,15 @@
  */
 package com.prodyna.pac.flightplan.plane.service.validation;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
 import org.slf4j.Logger;
 
-import com.prodyna.pac.flightplan.common.exception.ErrorCode;
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.ErrorCodeCollector;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.plane.exception.PlaneErrorCode;
 import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
@@ -33,7 +27,7 @@ import com.prodyna.pac.flightplan.plane.service.PlaneService;
 public class PlaneServiceValidationDecorator implements PlaneService {
 
     @Inject
-    private Validator validator;
+    private ErrorCodeCollector<Plane> collector;
 
     @Inject
     private Logger logger;
@@ -97,25 +91,14 @@ public class PlaneServiceValidationDecorator implements PlaneService {
      * @throws PlaneValidationException
      */
     private void executeBeanValidationOnPlane(Plane plane) throws PlaneValidationException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
-        Set<ConstraintViolation<Plane>> constraintViolations = validator.validate(plane);
-        if (constraintViolations.size() > 0) {
-            for (ConstraintViolation<Plane> violation : constraintViolations) {
-                String property = violation.getPropertyPath().toString();
-                if (Plane.PROP_ID.equals(property)) {
-                    throw new TechnicalException("Plane-ID is not set.", PlaneErrorCode.ID_MUST_NOT_BE_NULL);
-                } else if (Plane.PROP_NAME.equals(property)) {
-                    errorCodes.add(PlaneErrorCode.NAME_INVALID);
-                } else if (Plane.PROP_NUMBERPLATE.equals(property)) {
-                    errorCodes.add(PlaneErrorCode.NUMBERPLATE_INVALID);
-                } else if (Plane.PROP_AIRCRAFTTYPE.equals(property)) {
-                    errorCodes.add(PlaneErrorCode.AIRCRAFTTYPE_MUST_NOT_BE_NULL);
-                } else {
-                    throw new TechnicalException("Unknown error validating Plane.", PlaneErrorCode.UNKNOWN_ERROR);
-                }
-            }
 
-            throw new PlaneValidationException("Found validation errors.", errorCodes);
+        collector.validateProperty(plane, Plane.PROP_ID, PlaneErrorCode.ID_MUST_NOT_BE_NULL);
+        collector.validateProperty(plane, Plane.PROP_NAME, PlaneErrorCode.NAME_INVALID);
+        collector.validateProperty(plane, Plane.PROP_NUMBERPLATE, PlaneErrorCode.NUMBERPLATE_INVALID);
+        collector.validateProperty(plane, Plane.PROP_AIRCRAFTTYPE, PlaneErrorCode.AIRCRAFTTYPE_MUST_NOT_BE_NULL);
+
+        if (collector.hasErrorCodes()) {
+            throw new PlaneValidationException("Found validation errors.", collector.getErrorCodes());
         }
     }
 

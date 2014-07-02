@@ -81,8 +81,11 @@ public class ReservationClientService extends AbstractClientService {
      * TODO mfroehlich Comment me
      * 
      * @param reservationId
+     * @throws ReservationValidationException
+     * @throws PlaneReservationValidationException
      */
-    public void deleteReservationById(String reservationId) {
+    public void deleteReservationById(String reservationId) throws PlaneReservationValidationException,
+            ReservationValidationException {
         logger.debug("Calling REST service to delete reservation by id " + reservationId);
         planeReservationService.deleteReservationById(reservationId);
     }

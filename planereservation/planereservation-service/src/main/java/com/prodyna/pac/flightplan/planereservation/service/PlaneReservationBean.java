@@ -75,7 +75,8 @@ public class PlaneReservationBean implements PlaneReservationService {
     }
 
     @Override
-    public void deleteReservationById(String reservationId) {
+    public void deleteReservationById(String reservationId) throws PlaneReservationValidationException,
+            ReservationValidationException {
         reservationService.deleteReservationById(reservationId);
     }
 

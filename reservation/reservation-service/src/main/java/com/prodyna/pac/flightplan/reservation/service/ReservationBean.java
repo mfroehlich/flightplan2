@@ -10,12 +10,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
-import com.prodyna.pac.flightplan.reservation.exception.ReservationErrorCode;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 
 /**
@@ -52,12 +50,8 @@ public class ReservationBean implements ReservationService {
     }
 
     @Override
-    public void deleteReservationById(String reservationId) {
+    public void deleteReservationById(String reservationId) throws ReservationValidationException {
         Reservation reservation = loadReservationById(reservationId);
-        if (reservation == null) {
-            throw new TechnicalException("Reservation to be deleted does not exist anymore.",
-                    ReservationErrorCode.RESERVATION_TO_BE_DELETED_DOES_NOT_EXIST);
-        }
         em.remove(reservation);
     }
 

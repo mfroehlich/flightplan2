@@ -3,6 +3,8 @@
  */
 package com.prodyna.pac.flightplan.planereservation.exception;
 
+import java.util.Collection;
+
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 import com.prodyna.pac.flightplan.common.exception.FunctionalException;
 
@@ -22,5 +24,13 @@ public class PlaneReservationValidationException extends FunctionalException {
      */
     public PlaneReservationValidationException(String message, ErrorCode errorCode) {
         super(message, errorCode);
+    }
+
+    /**
+     * @param message
+     * @param errorCodes
+     */
+    public PlaneReservationValidationException(String message, Collection<ErrorCode> errorCodes) {
+        super(message, errorCodes);
     }
 }

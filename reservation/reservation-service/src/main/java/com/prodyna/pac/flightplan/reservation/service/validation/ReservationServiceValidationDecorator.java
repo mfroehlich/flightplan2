@@ -3,18 +3,13 @@
  */
 package com.prodyna.pac.flightplan.reservation.service.validation;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
-import com.prodyna.pac.flightplan.common.exception.ErrorCode;
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.ErrorCodeCollector;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationErrorCode;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
@@ -30,7 +25,7 @@ import com.prodyna.pac.flightplan.reservation.service.ReservationService;
 public class ReservationServiceValidationDecorator implements ReservationService {
 
     @Inject
-    private Validator validator;
+    private ErrorCodeCollector<Reservation> collector;
 
     @Inject
     @Delegate
@@ -72,7 +67,12 @@ public class ReservationServiceValidationDecorator implements ReservationService
     }
 
     @Override
-    public void deleteReservationById(String reservationId) {
+    public void deleteReservationById(String reservationId) throws ReservationValidationException {
+        Reservation reservation = loadReservationById(reservationId);
+        if (reservation == null) {
+            throw new ReservationValidationException("Reservation to be deleted does not exist anymore.",
+                    ReservationErrorCode.RESERVATION_TO_BE_DELETED_DOES_NOT_EXIST);
+        }
         delegate.deleteReservationById(reservationId);
     }
 
@@ -87,34 +87,21 @@ public class ReservationServiceValidationDecorator implements ReservationService
      * 
      * @param reservation
      * @throws ReservationValidationException
-     * @throws TechnicalException
      */
-    private void executeBeanValidationOnReservation(Reservation reservation) throws ReservationValidationException,
-            TechnicalException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
-        Set<ConstraintViolation<Reservation>> constraintViolations = validator.validate(reservation);
-        if (constraintViolations.size() > 0) {
-            for (ConstraintViolation<Reservation> violation : constraintViolations) {
-                String property = violation.getPropertyPath().toString();
-                if (Reservation.PROP_ID.equals(property)) {
-                    throw new TechnicalException("Reservation-ID is not set.", ReservationErrorCode.ID_MUST_NOT_BE_NULL);
-                } else if (Reservation.PROP_START.equals(property)) {
-                    errorCodes.add(ReservationErrorCode.STARTTIME_MUST_NOT_BE_NULL);
-                } else if (Reservation.PROP_END.equals(property)) {
-                    errorCodes.add(ReservationErrorCode.ENDTIME_MUST_NOT_BE_NULL);
-                } else if (Reservation.PROP_RESERVATION_STATUS.equals(property)) {
-                    errorCodes.add(ReservationErrorCode.STATUS_MUST_NOT_BE_NULL);
-                } else if (Reservation.PROP_USER.equals(property)) {
-                    errorCodes.add(ReservationErrorCode.USER_MUST_NOT_BE_NULL);
-                } else if (Reservation.PROP_RESERVATION_ITEM.equals(property)) {
-                    errorCodes.add(ReservationErrorCode.RESERVATION_ITEM_MUST_NOT_BE_NULL);
-                } else {
-                    throw new TechnicalException("Unknown error validating reservation.",
-                            ReservationErrorCode.UNKNOWN_ERROR);
-                }
-            }
+    private void executeBeanValidationOnReservation(Reservation reservation) throws ReservationValidationException {
 
-            throw new ReservationValidationException("Found validation errors.", errorCodes);
+        collector.validateProperty(reservation, Reservation.PROP_ID, ReservationErrorCode.ID_MUST_NOT_BE_NULL);
+        collector
+                .validateProperty(reservation, Reservation.PROP_START, ReservationErrorCode.STARTTIME_MUST_NOT_BE_NULL);
+        collector.validateProperty(reservation, Reservation.PROP_END, ReservationErrorCode.ENDTIME_MUST_NOT_BE_NULL);
+        collector.validateProperty(reservation, Reservation.PROP_RESERVATION_STATUS,
+                ReservationErrorCode.STATUS_MUST_NOT_BE_NULL);
+        collector.validateProperty(reservation, Reservation.PROP_USER, ReservationErrorCode.USER_MUST_NOT_BE_NULL);
+        collector.validateProperty(reservation, Reservation.PROP_RESERVATION_ITEM,
+                ReservationErrorCode.RESERVATION_ITEM_MUST_NOT_BE_NULL);
+
+        if (collector.hasErrorCodes()) {
+            throw new ReservationValidationException("Found validation errors.", collector.getErrorCodes());
         }
     }
 

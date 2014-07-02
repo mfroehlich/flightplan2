@@ -102,8 +102,11 @@ public interface PlaneReservationService {
      * Delete the {@link PlaneReservation} from the database specified by its id.
      * 
      * @param reservationId
+     * @throws PlaneReservationValidationException
+     * @throws ReservationValidationException
      */
     @DELETE
     @Path("id/{id}")
-    public void deleteReservationById(@PathParam("id") String reservationId);
+    public void deleteReservationById(@PathParam("id") String reservationId)
+            throws PlaneReservationValidationException, ReservationValidationException;
 }

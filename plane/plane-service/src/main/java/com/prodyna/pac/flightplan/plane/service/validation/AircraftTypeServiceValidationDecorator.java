@@ -3,19 +3,13 @@
  */
 package com.prodyna.pac.flightplan.plane.service.validation;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
-import com.prodyna.pac.flightplan.common.exception.ErrorCode;
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.common.exception.ErrorCodeCollector;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.plane.exception.AircraftTypeErrorCode;
@@ -32,7 +26,7 @@ import com.prodyna.pac.flightplan.plane.service.AircraftTypeService;
 public class AircraftTypeServiceValidationDecorator implements AircraftTypeService {
 
     @Inject
-    private Validator validator;
+    private ErrorCodeCollector<AircraftType> collector;
 
     @Inject
     @Delegate
@@ -121,22 +115,14 @@ public class AircraftTypeServiceValidationDecorator implements AircraftTypeServi
      * @throws AircraftTypeValidationException
      */
     private void executeBeanValidationOnAircraftType(AircraftType aircraftType) throws AircraftTypeValidationException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
-        Set<ConstraintViolation<AircraftType>> constraintViolations = validator.validate(aircraftType);
-        if (constraintViolations.size() > 0) {
-            for (ConstraintViolation<AircraftType> violation : constraintViolations) {
-                String property = violation.getPropertyPath().toString();
-                if (AircraftType.PROP_ID.equals(property)) {
-                    throw new TechnicalException("AircraftType-ID is not set.", AircraftTypeErrorCode.ID_NOT_SET);
-                } else if (AircraftType.PROP_DESCRIPTION.equals(property)) {
-                    errorCodes.add(AircraftTypeErrorCode.DESCRIPTION_IS_NOT_SET);
-                } else {
-                    throw new TechnicalException("Unknown error validating aircrafttype.",
-                            AircraftTypeErrorCode.UNKNOWN_ERROR);
-                }
-            }
 
-            throw new AircraftTypeValidationException("Found validation errors.", errorCodes);
+        collector.validateProperty(aircraftType, AircraftType.PROP_ID, AircraftTypeErrorCode.ID_NOT_SET);
+        collector.validateProperty(aircraftType, AircraftType.PROP_DESCRIPTION,
+                AircraftTypeErrorCode.DESCRIPTION_IS_NOT_SET);
+        collector.validateProperty(aircraftType, AircraftType.PROP_ID, AircraftTypeErrorCode.ID_NOT_SET);
+
+        if (collector.hasErrorCodes()) {
+            throw new AircraftTypeValidationException("Found validation errors.", collector.getErrorCodes());
         }
     }
 }

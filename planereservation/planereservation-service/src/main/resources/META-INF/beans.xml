@@ -3,6 +3,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://jboss.org/schema/cdi/beans_1_0.xsd">
  <decorators>
   <class>com.prodyna.pac.flightplan.planereservation.service.validation.PlaneReservationServiceValidationDecorator</class>
+  <class>com.prodyna.pac.flightplan.reservation.service.validation.ReservationServiceValidationDecorator</class>
  </decorators>
  <interceptors>
   <class>com.prodyna.pac.flightplan.monitoring.MethodCallMonitorInterceptor</class>

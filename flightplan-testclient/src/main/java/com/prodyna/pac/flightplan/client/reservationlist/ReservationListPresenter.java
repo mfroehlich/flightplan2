@@ -25,7 +25,9 @@ import com.prodyna.pac.flightplan.client.dialog.ModalDialog;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
 import com.prodyna.pac.flightplan.client.reservationdetails.ReservationDetailsPresenter;
 import com.prodyna.pac.flightplan.client.reservationdetails.ReservationDetailsView;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 
 /**
@@ -116,7 +118,7 @@ public class ReservationListPresenter implements Initializable {
     public void openReservationDetails() {
     }
 
-    public void deleteReservation() {
+    public void deleteReservation() throws PlaneReservationValidationException, ReservationValidationException {
         viewModel.deleteSelectedReservation();
 
         updateReservationList();

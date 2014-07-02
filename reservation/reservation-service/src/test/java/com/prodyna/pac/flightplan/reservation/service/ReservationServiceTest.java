@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationItem;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
@@ -75,16 +74,10 @@ public class ReservationServiceTest {
             reservationService.createReservation(reservation);
 
             Assert.fail("Reservation with null id may not be created!");
-        } catch (TechnicalException e) {
-            Assert.assertEquals(ReservationErrorCode.ID_MUST_NOT_BE_NULL, e.getErrorCode());
+        } catch (ReservationValidationException e) {
+            Assert.assertEquals(true, e.getErrorCodes().contains(ReservationErrorCode.ID_MUST_NOT_BE_NULL));
         } catch (Exception ex) {
-            // TODO mfroehlich Hier wird eine javax.ejb.EJBException geworfen! Warum auch immer!
-            if (ex.getCause() instanceof TechnicalException) {
-                Assert.assertEquals(true, true);
-            } else {
-                ex.printStackTrace();
-                Assert.fail("No TechnicalException has been thrown: " + ex.getMessage());
-            }
+            Assert.fail("Unexpected exception " + ex);
         }
     }
 
@@ -236,7 +229,11 @@ public class ReservationServiceTest {
     @InSequence(110)
     public void testDeleteReservationById() {
 
-        reservationService.deleteReservationById("1");
+        try {
+            reservationService.deleteReservationById("1");
+        } catch (Exception e) {
+            Assert.fail("unexpected exception");
+        }
         Reservation loadDeletedReservation = reservationService.loadReservationById("1");
         Assert.assertNull(loadDeletedReservation);
     }

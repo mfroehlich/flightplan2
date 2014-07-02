@@ -71,10 +71,11 @@ public interface ReservationService {
      * 
      * @param reservationId
      * @return
+     * @throws ReservationValidationException
      */
     @DELETE
     @Path("id/{id}")
-    public void deleteReservationById(@PathParam("id") String reservationId);
+    public void deleteReservationById(@PathParam("id") String reservationId) throws ReservationValidationException;
 
     /**
      * Determines the ids of all already stored {@link Reservation}s in the database that could conflict the creation of

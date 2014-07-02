@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.prodyna.pac.flightplan.common.exception.TechnicalException;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.plane.exception.AircraftTypeErrorCode;
 import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
@@ -68,17 +67,10 @@ public class AircraftTypeServiceTest {
         try {
             service.createAircraftType(type);
             Assert.fail("Created invalid aircraft type, but no exception was thrown.");
-        } catch (TechnicalException e) {
-            Assert.assertEquals(AircraftTypeErrorCode.ID_NOT_SET, e.getErrorCode());
+        } catch (AircraftTypeValidationException e) {
+            Assert.assertEquals(true, e.getErrorCodes().contains(AircraftTypeErrorCode.ID_NOT_SET));
         } catch (Exception ex) {
-            // TODO mfroehlich Hier wird eine javax.ejb.EJBException geworfen! Warum auch immer!
-            if (ex.getCause() instanceof TechnicalException) {
-                Assert.assertEquals(true, true);
-            } else {
-                ex.printStackTrace();
-                Assert.fail("No TechnicalException has been thrown: " + ex.getMessage());
-            }
-
+            Assert.fail("Unexpected exception");
         }
     }
 

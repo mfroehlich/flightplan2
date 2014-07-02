@@ -43,6 +43,10 @@ public class ErrorCodeCollector<T> {
         }
     }
 
+    public void addErrorCode(ErrorCode code) {
+        this.errorCodes.add(code);
+    }
+
     public Collection<ErrorCode> getErrorCodes() {
         return errorCodes;
     }

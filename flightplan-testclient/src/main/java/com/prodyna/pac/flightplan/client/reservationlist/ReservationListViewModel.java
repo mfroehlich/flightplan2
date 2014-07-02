@@ -13,6 +13,8 @@ import javafx.collections.ObservableList;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
 import com.prodyna.pac.flightplan.client.service.ReservationClientService;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
+import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
+import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationWorkflowException;
 
 /**
@@ -34,8 +36,11 @@ public class ReservationListViewModel {
 
     /**
      * TODO mfroehlich Comment me
+     * 
+     * @throws ReservationValidationException
+     * @throws PlaneReservationValidationException
      */
-    public void deleteSelectedReservation() {
+    public void deleteSelectedReservation() throws PlaneReservationValidationException, ReservationValidationException {
         String reservationId = selectedReservation.get().idProperty().get();
         reservationService.deleteReservationById(reservationId);
     }
