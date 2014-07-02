@@ -18,7 +18,8 @@ Arquillian-Ergänzungen
 Assembly -> Bauen eines Installationspakets
 	-> Beschreibung der Umgebung, die für Test- und PROD-Umgebung aufgebaut wird
 	-> Quelltext
-	-> TODO: Testergebnisse!
+	-> Testergebnisse!
+		--> Hierfür jeweils den Inhalt aus dem Ordner target/surefire-reports zusammenkopieren
 	-> TODO: Sonar-Testergebnisse!
 
 ===================================================================================================

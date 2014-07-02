@@ -39,6 +39,17 @@ public class UserBean implements UserService {
     private EntityManager em;
 
     @Override
+    public User createUser(User user) throws UserValidationException {
+
+        logger.debug("Encrypting user password before persisting.");
+        String encryptedPassword = encryptPassword(user.getPassword());
+        user.setPassword(encryptedPassword);
+
+        em.persist(user);
+        return user;
+    }
+
+    @Override
     public String loadUserIdByUserName(String userName) {
         Query query = em.createNamedQuery(User.QUERY_LOAD_USER_ID_BY_USERNAME);
         query.setParameter("username", userName);
@@ -49,6 +60,11 @@ public class UserBean implements UserService {
     @Override
     public User loadUserById(String userId) {
         return em.find(User.class, userId);
+    }
+
+    @Override
+    public User updateUser(User user) throws UserValidationException {
+        return em.merge(user);
     }
 
     @Override
@@ -85,9 +101,17 @@ public class UserBean implements UserService {
         int numberOfChangedRows = query.executeUpdate();
 
         if (numberOfChangedRows == 0) {
-            // TODO mfroehlich Richtige Exception werfen
             throw new UserValidationException("Old password is not correct.",
                     UserErrorCode.PASSWORD_UPDATE_OLD_PASSWORD_IS_NOT_CORRECT);
         }
+    }
+
+    @Override
+    public boolean isUserNameUnique(User user) {
+        Query query = em.createNamedQuery(User.QUERY_COUNT_OTHER_USERS_WITH_USERNAME);
+        query.setParameter("userName", user.getUserName());
+        query.setParameter("userId", user.getId());
+        Long numberOfOtherUsersWithSameUserName = (Long) query.getSingleResult();
+        return numberOfOtherUsersWithSameUserName == 0;
     }
 }

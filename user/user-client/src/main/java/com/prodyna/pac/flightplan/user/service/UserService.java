@@ -6,6 +6,7 @@ package com.prodyna.pac.flightplan.user.service;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,6 +29,10 @@ import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 @RolesAllowed({ Role.ADMIN })
 public interface UserService {
 
+    @POST
+    @RolesAllowed({ Role.ADMIN })
+    public User createUser(User user) throws UserValidationException;
+
     /**
      * Load the id of the {@link User} specified by its user name.
      * 
@@ -47,6 +52,17 @@ public interface UserService {
      */
     @RolesAllowed({ Role.ADMIN, Role.USER })
     public User loadUserById(String userId);
+
+    /**
+     * Update the specified {@link User} in the database.
+     * 
+     * @param user
+     * @return
+     * @throws UserValidationException
+     */
+    @PUT
+    @RolesAllowed({ Role.ADMIN })
+    public User updateUser(User user) throws UserValidationException;
 
     /**
      * 
@@ -73,4 +89,12 @@ public interface UserService {
     @Consumes(MediaType.TEXT_PLAIN)
     public void updatePassword(@PathParam("id") String userId, @PathParam("oldpwd") String oldPassword,
             String newPassword) throws UserValidationException;
+
+    /**
+     * Check if the user name of the specified {@link User} is unique in the database.
+     * 
+     * @param user
+     * @return
+     */
+    public boolean isUserNameUnique(User user);
 }

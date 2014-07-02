@@ -51,11 +51,12 @@ public interface PilotService {
      * 
      * @param id
      * @return
+     * @throws PilotNotFoundException
      */
     @GET
     @Path("id/{id}")
     @RolesAllowed({ Role.ADMIN, Role.USER })
-    public Pilot loadPilotById(@PathParam("id") String id);
+    public Pilot loadPilotById(@PathParam("id") String id) throws PilotNotFoundException;
 
     /**
      * 
@@ -73,9 +74,10 @@ public interface PilotService {
      * 
      * @param pilot
      * @return
+     * @throws UserValidationException
      */
     @PUT
-    public Pilot updatePilot(Pilot pilot) throws PilotValidationException;
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException, UserValidationException;
 
     /**
      * 

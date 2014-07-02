@@ -15,6 +15,7 @@ import com.prodyna.pac.flightplan.client.model.PilotModel;
 import com.prodyna.pac.flightplan.client.service.AircraftTypeClientService;
 import com.prodyna.pac.flightplan.client.service.PilotClientService;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.plane.entity.AircraftType;
 import com.prodyna.pac.flightplan.user.exception.UserValidationException;
@@ -59,7 +60,7 @@ public class PilotDetailsViewModel {
         currentPilot.set(new PilotModel(returnValue));
     }
 
-    public void loadPilotById(String pilotId) {
+    public void loadPilotById(String pilotId) throws PilotNotFoundException {
         Pilot pilot = service.loadPilotById(pilotId);
         this.currentPilot.set(new PilotModel(pilot));
     }

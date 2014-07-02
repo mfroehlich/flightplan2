@@ -37,9 +37,12 @@ import com.prodyna.pac.flightplan.user.entity.User;
 @NamedQueries({ @NamedQuery(name = Pilot.QUERY_LOAD_ALL_PILOTS, query = "FROM Pilot ORDER BY userName") })
 public class Pilot extends User implements Serializable {
 
+    private static final long serialVersionUID = -5048278756046762394L;
+
     public static final String QUERY_LOAD_ALL_PILOTS = "load_all_pilots";
 
-    private static final long serialVersionUID = -5048278756046762394L;
+    public static final String PROP_LICENCE_VALIDITY = "licenceValidity";
+    public static final String PROP_AIRCRAFTTYPES = "assignedAircraftTypes";
 
     public Pilot() {
     }
@@ -48,6 +51,7 @@ public class Pilot extends User implements Serializable {
     @Column(name = "licence_validity")
     private Date licenceValidity;
 
+    @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pilot_to_aircrafttype",

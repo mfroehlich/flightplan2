@@ -28,6 +28,7 @@ import com.prodyna.pac.flightplan.client.service.PlaneClientService;
 import com.prodyna.pac.flightplan.client.service.ReservationClientService;
 import com.prodyna.pac.flightplan.client.session.SessionManager;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
 import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
@@ -115,8 +116,10 @@ public class ReservationDetailsViewModel {
      * 
      * @throws ReservationValidationException
      * @throws PlaneReservationValidationException
+     * @throws PilotNotFoundException
      */
-    public void createReservation() throws PlaneReservationValidationException, ReservationValidationException {
+    public void createReservation() throws PlaneReservationValidationException, ReservationValidationException,
+            PilotNotFoundException {
 
         // TODO mfroehlich Null checks required!
         int startHourInt = new Integer(startHour.get());

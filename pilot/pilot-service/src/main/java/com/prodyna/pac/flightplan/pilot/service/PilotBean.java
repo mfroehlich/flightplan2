@@ -12,8 +12,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.slf4j.Logger;
-
 import com.prodyna.pac.flightplan.common.interceptor.Logging;
 import com.prodyna.pac.flightplan.monitoring.MethodCallsMonitored;
 import com.prodyna.pac.flightplan.pilot.entity.Pilot;
@@ -43,31 +41,24 @@ public class PilotBean implements PilotService {
     @Inject
     private UserService userService;
 
-    @Inject
-    private Logger logger;
-
     @Override
     public Pilot createPilot(Pilot pilot) throws PilotValidationException, UserValidationException {
-        logger.debug("Encrypting pilot password before persisting.");
-        String encryptedPassword = userService.encryptPassword(pilot.getPassword());
-        pilot.setPassword(encryptedPassword);
 
-        logger.debug("Persisting pilot: " + pilot);
-        em.persist(pilot);
+        Pilot createdPilot = (Pilot) userService.createUser(pilot);
 
         Role role = new Role();
         role.setId("2");
         UserToRoleMapping mapping = new UserToRoleMapping();
         mapping.setId(UUID.randomUUID().toString());
         mapping.setRole(role);
-        mapping.setUser(pilot);
+        mapping.setUser(createdPilot);
         em.persist(mapping);
 
-        return pilot;
+        return createdPilot;
     }
 
     @Override
-    public Pilot loadPilotById(String pilotId) {
+    public Pilot loadPilotById(String pilotId) throws PilotNotFoundException {
         Pilot pilot = em.find(Pilot.class, pilotId);
         return pilot;
     }
@@ -82,18 +73,19 @@ public class PilotBean implements PilotService {
     }
 
     @Override
-    public Pilot updatePilot(Pilot pilot) throws PilotValidationException {
-        Pilot mergedPilot = em.merge(pilot);
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException, UserValidationException {
+        Pilot mergedPilot = (Pilot) userService.updateUser(pilot);
         return mergedPilot;
     }
 
     @Override
-    public void deletePilotById(String pilotId) throws PilotNotFoundException {
+    public void deletePilotById(String pilotId) throws PilotNotFoundException, PilotValidationException {
         Pilot pilotToBeDeleted = loadPilotById(pilotId);
         if (pilotToBeDeleted == null) {
             throw new PilotNotFoundException("Error loading pilot to be deleted", PilotErrorCode.PILOT_NOT_FOUND_BY_ID);
         }
 
         em.remove(pilotToBeDeleted);
+        em.flush();
     }
 }

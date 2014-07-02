@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
 import com.prodyna.pac.flightplan.client.model.PlaneReservationModel;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
 
@@ -88,9 +89,10 @@ public class ReservationDetailsPresenter implements Initializable {
      * @param event
      * @throws ReservationValidationException
      * @throws PlaneReservationValidationException
+     * @throws PilotNotFoundException
      */
     public void saveReservation(ActionEvent event) throws PlaneReservationValidationException,
-            ReservationValidationException {
+            ReservationValidationException, PilotNotFoundException {
         viewModel.createReservation();
 
         /* Close the dialog. */

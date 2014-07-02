@@ -41,10 +41,16 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		
-		
-		
+
+		<!-- Arquillian Suite extension -->
 		<dependency>
+			<groupId>org.eu.ingwar.tools</groupId>
+			<artifactId>arquillian-suite-extension</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
+		</dependency>
+
+<!-- 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-api</artifactId>
 			<scope>test</scope>
@@ -59,11 +65,8 @@
 			<artifactId>shrinkwrap-resolver-api-maven</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		
-		
-		
-		
+ -->
+
 
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
@@ -72,6 +75,12 @@
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
+			<artifactId>user-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

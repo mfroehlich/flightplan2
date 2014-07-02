@@ -3,6 +3,8 @@
  */
 package com.prodyna.pac.flightplan.common.exception;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -12,7 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
-public abstract class ErrorCode {
+public abstract class ErrorCode implements Serializable {
+
+    private static final long serialVersionUID = 4740311542415950128L;
 
     private String code;
 

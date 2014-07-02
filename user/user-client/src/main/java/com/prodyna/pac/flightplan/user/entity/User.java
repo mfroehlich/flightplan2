@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,13 +33,24 @@ import javax.xml.bind.annotation.XmlRootElement;
                 query = "UPDATE User SET password = :newPwd, version = (version + 1) WHERE id = :userId AND password = :oldPwd "),
         @NamedQuery(
                 name = User.QUERY_LOAD_USER_ID_BY_USERNAME,
-                query = "SELECT id FROM User WHERE username = :username") })
+                query = "SELECT id FROM User WHERE userName = :username"),
+        @NamedQuery(
+                name = User.QUERY_COUNT_OTHER_USERS_WITH_USERNAME,
+                query = "SELECT COUNT(id) FROM User WHERE userName = :userName AND id <> :userId ") })
 public class User implements Serializable {
 
     private static final long serialVersionUID = 3513803091974740763L;
 
     public static final String QUERY_UPDATE_USER_PASSWORD = "update_user_password";
     public static final String QUERY_LOAD_USER_ID_BY_USERNAME = "load_user_id_by_username";
+    public static final String QUERY_COUNT_OTHER_USERS_WITH_USERNAME = "query_count_other_users_with_username";
+
+    public static final String PROP_ID = "id";
+    public static final String PROP_USERNAME = "userName";
+    public static final String PROP_FIRSTNAME = "firstName";
+    public static final String PROP_LASTNAME = "lastName";
+    public static final String PROP_PASSWORD = "password";
+    public static final String PROP_EMAIL = "eMailAddress";
 
     public User() {
     }
@@ -73,6 +85,7 @@ public class User implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 50)
+    @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")
     @Column(name = "email")
     private String eMailAddress;
 

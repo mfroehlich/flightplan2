@@ -85,7 +85,7 @@ CREATE TABLE `user_to_role_mapping` (
   KEY `FK_gkq1lls31afb1efpx2t09ny61` (`role_id`),
   KEY `FK_sb71rxr1c8x0lqn7i9c56oqy` (`user_id`),
   CONSTRAINT `FK_gkq1lls31afb1efpx2t09ny61` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FK_sb71rxr1c8x0lqn7i9c56oqy` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FK_sb71rxr1c8x0lqn7i9c56oqy` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

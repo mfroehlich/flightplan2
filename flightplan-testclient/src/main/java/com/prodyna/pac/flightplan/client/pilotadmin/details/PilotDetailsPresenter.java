@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
+import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 
@@ -124,7 +125,7 @@ public class PilotDetailsPresenter implements Initializable {
         this.viewModel.savePilot();
     }
 
-    public void loadPilot() {
+    public void loadPilot() throws PilotNotFoundException {
         this.viewModel.loadPilotById("1");
         updateAssignedTypesSelection();
     }

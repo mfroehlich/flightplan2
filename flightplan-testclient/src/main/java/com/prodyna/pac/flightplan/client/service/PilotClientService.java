@@ -52,8 +52,9 @@ public class PilotClientService extends AbstractClientService {
      * 
      * @param pilotId
      * @return
+     * @throws PilotNotFoundException
      */
-    public Pilot loadPilotById(String pilotId) {
+    public Pilot loadPilotById(String pilotId) throws PilotNotFoundException {
         Pilot loadedPilot = pilotService.loadPilotById(pilotId);
         logger.debug("Loaded Pilot by id " + pilotId + " :" + loadedPilot);
         return loadedPilot;
@@ -77,8 +78,9 @@ public class PilotClientService extends AbstractClientService {
      * @param pilot
      * @return
      * @throws PilotValidationException
+     * @throws UserValidationException
      */
-    public Pilot updatePilot(Pilot pilot) throws PilotValidationException {
+    public Pilot updatePilot(Pilot pilot) throws PilotValidationException, UserValidationException {
         Pilot updatedPilot = pilotService.updatePilot(pilot);
         logger.debug("Pilot updated to " + updatedPilot);
         return updatedPilot;

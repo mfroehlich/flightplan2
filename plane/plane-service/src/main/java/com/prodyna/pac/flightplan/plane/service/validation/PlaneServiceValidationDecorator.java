@@ -76,7 +76,7 @@ public class PlaneServiceValidationDecorator implements PlaneService {
 
         try {
             delegate.deletePlaneById(planeId);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             logger.error("Error deleting plane '" + planeId + "'.");
             throw new PlaneValidationException("Error deleting plane '" + planeId + "'.",
                     PlaneErrorCode.PLANE_CANNOT_BE_DELETED);

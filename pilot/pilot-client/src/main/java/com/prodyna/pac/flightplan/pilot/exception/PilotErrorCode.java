@@ -16,15 +16,17 @@ import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 @XmlRootElement
 public class PilotErrorCode extends ErrorCode {
 
+    private static final long serialVersionUID = -9094633278724209764L;
+
+    public static final ErrorCode ID_MUST_NOT_BE_NULL = new PilotErrorCode("id_must_not_be_null");
     public static final ErrorCode PILOT_NOT_FOUND_BY_ID = new PilotErrorCode("pilot_not_found_by_id");
     public static final ErrorCode ERROR_PERSISTING_PILOT = new PilotErrorCode("error_persisting_pilot");
     public static final ErrorCode ERROR_LOADING_ALL_PILOTS = new PilotErrorCode("error_loading_all_pilots");
     public static final ErrorCode ERROR_UPDATING_PILOT = new PilotErrorCode("error_updating_pilot");
     public static final ErrorCode ERROR_DELETING_PILOT = new PilotErrorCode("error_deleting_pilot");
-
-    public static final ErrorCode PILOT_ID_NOT_SET = new PilotErrorCode("pilot_id_not_set");
-    public static final ErrorCode PILOT_FIRST_NAME_MAY_NOT_BE_EMPTY = new PilotErrorCode(
-            "pilot_first_name_may_not_be_empty");
+    public static final ErrorCode LICENCE_VALIDITY_INVALID = new PilotErrorCode("licence_validity_invalid");
+    public static final ErrorCode AIRCRAFTTYPES_MUST_NOT_BE_NULL = new PilotErrorCode("aircrafttypes_must_not_be_null");
+    public static final ErrorCode PILOT_CANNOT_BE_DELETED = new PilotErrorCode("pilot_cannot_be_deleted");
 
     /**
      * Default (protected!) constructor for Marshaller.

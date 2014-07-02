@@ -5,6 +5,7 @@ package com.prodyna.pac.flightplan.user.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -25,7 +26,7 @@ public class UserToRoleMapping implements Serializable {
     @Id
     private String id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private User user;
 
     @ManyToOne

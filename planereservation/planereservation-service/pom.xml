@@ -30,8 +30,16 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.eu.ingwar.tools</groupId>
+			<artifactId>arquillian-suite-extension</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
 			<artifactId>planereservation-client</artifactId>
@@ -39,6 +47,30 @@
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
 			<artifactId>flightplan-common-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.reservation</groupId>
+			<artifactId>reservation-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.plane</groupId>
+			<artifactId>plane-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
+			<artifactId>pilot-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
+			<artifactId>user-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
