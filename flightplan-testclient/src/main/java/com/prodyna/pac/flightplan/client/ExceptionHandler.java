@@ -3,17 +3,23 @@
  */
 package com.prodyna.pac.flightplan.client;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 
-import com.prodyna.pac.flightplan.common.exception.FunctionalException;
+import com.prodyna.pac.flightplan.client.messages.MessageReader;
+import com.prodyna.pac.flightplan.common.exception.ErrorCodeWrapper;
 import com.prodyna.pac.flightplan.common.exception.UserNotAuthorizedException;
 import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
 
@@ -45,13 +51,14 @@ public class ExceptionHandler {
                     BadRequestException badRequestException = (BadRequestException) realException;
                     String message = badRequestException.getMessage();
                     Response response = badRequestException.getResponse();
-                    Dialogs.create().title("An error occurred.")
-                            .message("Error message: " + message + "\n\nYou might have made an error...")
-                            .showInformation();
-                } else if (realException instanceof FunctionalException) {
-                    FunctionalException target = (FunctionalException) realException;
-                    // TODO mfroehlich Da geht doch mehr, oder?
-                    Dialogs.create().showException(target);
+                    Object entity = response.getEntity();
+                    if (entity instanceof ByteArrayInputStream) {
+                        ByteArrayInputStream stream = (ByteArrayInputStream) entity;
+                        ErrorCodeWrapper wrapper = readWrapperFromEntityStream(stream);
+                        String errorMessage = translateErrorCodes(wrapper);
+                        Dialogs.create().title("An error occurred.")
+                                .message("The following errors have occurred:\n\n" + errorMessage).showInformation();
+                    }
                 } else if (realException instanceof NotAuthorizedException) {
                     NotAuthorizedException target = (NotAuthorizedException) realException;
                     logger.error("User ist nicht autorisiert!!");
@@ -72,5 +79,36 @@ public class ExceptionHandler {
                 }
             }
         }
+    }
+
+    /**
+     * TODO mfroehlich Comment me
+     * 
+     * @param entity
+     * @return
+     */
+    private ErrorCodeWrapper readWrapperFromEntityStream(ByteArrayInputStream stream) {
+
+        ErrorCodeWrapper errorCodeWrapper;
+        try {
+            InputSource src = new InputSource(stream);
+            JAXBContext context = JAXBContext.newInstance(ErrorCodeWrapper.class);
+            Unmarshaller um = context.createUnmarshaller();
+            errorCodeWrapper = (ErrorCodeWrapper) um.unmarshal(src);
+        } catch (JAXBException e) {
+            logger.error("Error reading ErrorCodeWrapper from Response#Entity.", e);
+            errorCodeWrapper = null;
+        }
+
+        return errorCodeWrapper;
+    }
+
+    private String translateErrorCodes(ErrorCodeWrapper wrapper) {
+        StringBuilder s = new StringBuilder();
+        for (String code : wrapper.getErrorCodes()) {
+            String message = MessageReader.getMessage(code);
+            s.append(message + "\n\n");
+        }
+        return s.toString();
     }
 }

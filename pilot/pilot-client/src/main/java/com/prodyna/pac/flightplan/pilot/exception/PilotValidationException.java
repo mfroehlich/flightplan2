@@ -3,7 +3,7 @@
  */
 package com.prodyna.pac.flightplan.pilot.exception;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 import com.prodyna.pac.flightplan.common.exception.FunctionalException;
@@ -22,7 +22,7 @@ public class PilotValidationException extends FunctionalException {
         super(message, errorCode);
     }
 
-    public PilotValidationException(String message, Collection<ErrorCode> errorCodes) {
+    public PilotValidationException(String message, List<ErrorCode> errorCodes) {
         super(message, errorCodes);
     }
 }

@@ -4,19 +4,20 @@
 package com.prodyna.pac.flightplan.common.exception;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /**
- * TODO mfroehlich Comment me
+ * Abstract exception class to group all exceptions that result from functional validation and that can be corrected by
+ * the user.
  * 
  * @author mfroehlich
  *
  */
-public class FunctionalException extends Exception {
+public abstract class FunctionalException extends Exception {
 
     private static final long serialVersionUID = 5100854786331031825L;
 
-    private final Collection<ErrorCode> errorCodes;
+    private final List<ErrorCode> errorCodes;
 
     public FunctionalException(String message, ErrorCode errorCode) {
         super(message);
@@ -30,7 +31,7 @@ public class FunctionalException extends Exception {
      * @param message
      * @param errorCode
      */
-    public FunctionalException(String message, Collection<ErrorCode> errorCodes) {
+    public FunctionalException(String message, List<ErrorCode> errorCodes) {
         super(message);
 
         this.errorCodes = errorCodes;
@@ -38,11 +39,11 @@ public class FunctionalException extends Exception {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Get the list of error codes of the errors encapsulated by this exception.
      * 
      * @return
      */
-    public Collection<ErrorCode> getErrorCodes() {
+    public List<ErrorCode> getErrorCodes() {
         return errorCodes;
     }
 }

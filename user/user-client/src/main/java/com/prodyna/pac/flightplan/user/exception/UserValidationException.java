@@ -3,7 +3,7 @@
  */
 package com.prodyna.pac.flightplan.user.exception;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 import com.prodyna.pac.flightplan.common.exception.FunctionalException;
@@ -30,7 +30,7 @@ public class UserValidationException extends FunctionalException {
      * @param message
      * @param errorCode
      */
-    public UserValidationException(String message, Collection<ErrorCode> errorCodes) {
+    public UserValidationException(String message, List<ErrorCode> errorCodes) {
         super(message, errorCodes);
     }
 }

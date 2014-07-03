@@ -8,36 +8,37 @@
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory>
 
-    <dependencySets>
+     <dependencySets>
 		<dependencySet>
 			<includes>
 				<include>com.prodyna.*:*:*:*</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>
-
-<!-- 	<moduleSets> -->
-<!--         <moduleSet> -->
-<!--             <includeSubModules>false</includeSubModules> -->
-<!--             <sources> -->
-<!--                 <outputDirectoryMapping> -->
-<!--                     ${module.basedir.name} -->
-<!--                 </outputDirectoryMapping> -->
-<!--                 <excludeSubModuleDirectories> -->
-<!--                     false -->
-<!--                 </excludeSubModuleDirectories> -->
-<!--                 <fileSets> -->
-<!--                     <fileSet> -->
-<!--                         <directory>/</directory> -->
-<!--                         <excludes> -->
-<!--                             <exclude>**/target</exclude> -->
-<!--                         </excludes> -->
-<!--                     </fileSet> -->
-<!--                 </fileSets> -->
-<!--             </sources> -->
-<!--         </moduleSet> -->
-<!--     </moduleSets> -->
-
+ 
+<!-- 	<moduleSets>
+        <moduleSet>
+            <includeSubModules>false</includeSubModules>
+            <sources>
+                <outputDirectoryMapping>
+                    ${module.basedir.name}
+                </outputDirectoryMapping>
+                <excludeSubModuleDirectories>
+                    false
+                </excludeSubModuleDirectories>
+                <fileSets>
+                    <fileSet>
+                        <directory>/</directory>
+                        <excludes>
+                            <exclude>**/target</exclude>
+                        </excludes>
+                    </fileSet>
+                </fileSets>
+            </sources>
+        </moduleSet>
+    </moduleSets>
+ -->
+ 
 	<fileSets>
 
 		<!-- Datenbankskripte -->
@@ -60,4 +61,5 @@
 		</fileSet>
 
 	</fileSets>
+	
 </assembly>

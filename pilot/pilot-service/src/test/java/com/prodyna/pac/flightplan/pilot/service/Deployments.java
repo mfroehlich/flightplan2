@@ -10,12 +10,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
-/**
- * TODO mfroehlich Comment me
- * 
- * @author mfroehlich
- *
- */
 @ArquilianSuiteDeployment
 public class Deployments {
 
@@ -32,14 +26,9 @@ public class Deployments {
         // }
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war");
-        // archive.addAsLibraries(libs);
-        // archive.addPackages(true, "com.prodyna.pac.flightplan.pilot");
-        // archive.addPackages(true, "com.prodyna.pac.flightplan.monitoring");
         archive.addPackages(true, "com.prodyna.pac.flightplan");
         archive.addAsResource("persistence-test.xml", "META-INF/persistence.xml");
         archive.addAsWebInfResource(new File("src/main/resources/META-INF/beans.xml"), "beans.xml");
-
-        System.out.println(archive.toString(true));
 
         return archive;
     }

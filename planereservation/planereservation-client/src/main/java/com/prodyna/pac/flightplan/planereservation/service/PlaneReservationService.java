@@ -21,11 +21,14 @@ import com.prodyna.pac.flightplan.plane.entity.Plane;
 import com.prodyna.pac.flightplan.planereservation.entity.PlaneReservation;
 import com.prodyna.pac.flightplan.planereservation.exception.PlaneReservationValidationException;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationValidationException;
+import com.prodyna.pac.flightplan.reservation.service.ReservationService;
 import com.prodyna.pac.flightplan.user.entity.Role;
 import com.prodyna.pac.flightplan.user.entity.User;
 
 /**
  * REST interface providing CRUD service methods for {@link PlaneReservation} objects.
+ * 
+ * CAUTION: Writing operations should be delegated to the {@link ReservationService}.
  * 
  * @author mfroehlich
  *

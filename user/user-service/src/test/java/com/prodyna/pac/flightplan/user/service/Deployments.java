@@ -10,12 +10,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
-/**
- * TODO mfroehlich Comment me
- * 
- * @author mfroehlich
- *
- */
 @ArquilianSuiteDeployment
 public class Deployments {
 

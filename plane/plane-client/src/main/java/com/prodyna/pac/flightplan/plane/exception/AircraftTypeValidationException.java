@@ -3,7 +3,7 @@
  */
 package com.prodyna.pac.flightplan.plane.exception;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 import com.prodyna.pac.flightplan.common.exception.FunctionalException;
@@ -30,7 +30,7 @@ public class AircraftTypeValidationException extends FunctionalException {
      * @param message
      * @param errorCode
      */
-    public AircraftTypeValidationException(String message, Collection<ErrorCode> errorCodes) {
+    public AircraftTypeValidationException(String message, List<ErrorCode> errorCodes) {
         super(message, errorCodes);
     }
 }

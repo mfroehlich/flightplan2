@@ -14,8 +14,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ApplicationErrorCode extends ErrorCode {
 
+    private static final long serialVersionUID = 9032658524126960760L;
+
     public static final ErrorCode USER_NOT_AUTHORIZED = new ApplicationErrorCode("user_not_authorized");
     public static final ErrorCode OPTIMISTIC_LOCK_EXCEPTION = new ApplicationErrorCode("optimistic_lock_exception");
+    public static final ErrorCode TECHNICAL_PROBLEM = new ApplicationErrorCode("technical_problem");
 
     /**
      * Default (protected!) constructor for Marshaller.

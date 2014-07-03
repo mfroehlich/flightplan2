@@ -4,7 +4,7 @@
 package com.prodyna.pac.flightplan.common.exception;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ public class ErrorCodeCollector<T> {
     @Inject
     private Logger logger;
 
-    private final Collection<ErrorCode> errorCodes;
+    private final List<ErrorCode> errorCodes;
 
     public ErrorCodeCollector() {
         errorCodes = new ArrayList<ErrorCode>();
@@ -47,7 +47,7 @@ public class ErrorCodeCollector<T> {
         this.errorCodes.add(code);
     }
 
-    public Collection<ErrorCode> getErrorCodes() {
+    public List<ErrorCode> getErrorCodes() {
         return errorCodes;
     }
 

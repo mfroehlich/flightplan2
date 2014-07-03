@@ -49,6 +49,6 @@ public class UserErrorCode extends ErrorCode {
 
     @Override
     protected String getPrefix() {
-        return "global";
+        return "user";
     }
 }

@@ -5,10 +5,11 @@ package com.prodyna.pac.flightplan.common.exception;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * TODO mfroehlich Comment me
+ * This abstract class and implementations of this class are needed to represent error situations.
  * 
  * @author mfroehlich
  *
@@ -32,7 +33,7 @@ public abstract class ErrorCode implements Serializable {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Prefix string to bundle a group of similar errors.
      * 
      * @return
      */
@@ -40,11 +41,17 @@ public abstract class ErrorCode implements Serializable {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * String representation of a concrete error (error code).
      * 
      * @return
      */
+    @XmlElement
     public String getCode() {
         return getPrefix() + "." + code;
+    }
+
+    @Override
+    public String toString() {
+        return getCode();
     }
 }

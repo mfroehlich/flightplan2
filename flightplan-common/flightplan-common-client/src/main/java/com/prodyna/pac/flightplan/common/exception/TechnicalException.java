@@ -4,7 +4,7 @@
 package com.prodyna.pac.flightplan.common.exception;
 
 /**
- * TODO mfroehlich Comment me
+ * Abstract exception class to group all exceptions that have a technical reason which cannot be corrected by the user.
  * 
  * @author mfroehlich
  *
@@ -28,7 +28,7 @@ public class TechnicalException extends RuntimeException {
 
     /**
      * 
-     * TODO mfroehlich Comment me
+     * Get the error code of the error encapsulated by this exception.
      * 
      * @return
      */

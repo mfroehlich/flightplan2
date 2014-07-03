@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * TODO mfroehlich Comment me
+ * Helper class to convert different date types.
  * 
  * @author mfroehlich
  *

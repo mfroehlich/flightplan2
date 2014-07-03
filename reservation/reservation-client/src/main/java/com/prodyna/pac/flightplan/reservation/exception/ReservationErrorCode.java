@@ -18,6 +18,8 @@ import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
 @XmlRootElement
 public class ReservationErrorCode extends ErrorCode {
 
+    private static final long serialVersionUID = -919900881044191391L;
+
     public static final ErrorCode ERROR_PERSISTING_RESERVATION = new ReservationErrorCode(
             "error_persisting_reservation");
     public static final ErrorCode ERROR_LOADING_RESERVATION_BY_ID = new ReservationErrorCode(

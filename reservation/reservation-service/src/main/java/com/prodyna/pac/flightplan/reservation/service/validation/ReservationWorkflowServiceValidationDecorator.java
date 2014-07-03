@@ -4,7 +4,6 @@
 package com.prodyna.pac.flightplan.reservation.service.validation;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,7 +11,9 @@ import javax.decorator.Decorator;
 import javax.decorator.Delegate;
 import javax.inject.Inject;
 
-import com.prodyna.pac.flightplan.common.exception.ErrorCode;
+import org.slf4j.Logger;
+
+import com.prodyna.pac.flightplan.common.exception.ErrorCodeCollector;
 import com.prodyna.pac.flightplan.reservation.entity.Reservation;
 import com.prodyna.pac.flightplan.reservation.entity.ReservationStatus;
 import com.prodyna.pac.flightplan.reservation.exception.ReservationErrorCode;
@@ -36,21 +37,28 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
     private ReservationWorkflowService delegate;
 
     @Inject
+    private Logger logger;
+
+    @Inject
     private ReservationService reservationService;
+
+    @Inject
+    private ErrorCodeCollector<Reservation> collector;
 
     @Override
     public void cancelReservation(String reservationId) throws ReservationWorkflowException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
         Reservation reservation = reservationService.loadReservationById(reservationId);
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus == ReservationStatus.CANCELLED
                 || currentStatus == ReservationStatus.RETURNED) {
-            errorCodes.add(ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            logger.warn("Cannot cancel reservation due to wrong status, returning error code "
+                    + ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            collector.addErrorCode(ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
-        if (errorCodes.size() > 0) {
+        if (collector.hasErrorCodes()) {
             throw new ReservationWorkflowException("Error cancelling reservation for reservation " + reservationId,
-                    errorCodes);
+                    collector.getErrorCodes());
         }
 
         delegate.cancelReservation(reservationId);
@@ -58,11 +66,12 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
 
     @Override
     public void receiveReservationItemWithReservationId(String reservationId) throws ReservationWorkflowException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
         Reservation reservation = reservationService.loadReservationById(reservationId);
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus != ReservationStatus.RESERVED) {
-            errorCodes.add(ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            logger.warn("Cannot receive reservation item due to wrong status, returning error code "
+                    + ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            collector.addErrorCode(ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
         Date start = reservation.getStart();
@@ -70,12 +79,14 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
         LocalDateTime now = LocalDateTime.now();
         if (start == null || LocalDateConverter.dateToLocalDateTime(start).isAfter(now) || end == null
                 || LocalDateConverter.dateToLocalDateTime(end).isBefore(now)) {
-            errorCodes.add(ReservationErrorCode.RESERVATION_DATE_IN_PAST_OR_FUTURE);
+            logger.warn("Cannot receive reservation item because reservation period is in past or future, returning error code "
+                    + ReservationErrorCode.RESERVATION_DATE_IN_PAST_OR_FUTURE);
+            collector.addErrorCode(ReservationErrorCode.RESERVATION_DATE_IN_PAST_OR_FUTURE);
         }
 
-        if (errorCodes.size() > 0) {
+        if (collector.hasErrorCodes()) {
             throw new ReservationWorkflowException("Error receiving reservation item for reservation " + reservationId,
-                    errorCodes);
+                    collector.getErrorCodes());
         }
 
         delegate.receiveReservationItemWithReservationId(reservationId);
@@ -83,16 +94,17 @@ public class ReservationWorkflowServiceValidationDecorator implements Reservatio
 
     @Override
     public void returnReservationItemWithReservationId(String reservationId) throws ReservationWorkflowException {
-        Collection<ErrorCode> errorCodes = new ArrayList<ErrorCode>();
         Reservation reservation = reservationService.loadReservationById(reservationId);
         ReservationStatus currentStatus = reservation.getStatus();
         if (currentStatus == null || currentStatus != ReservationStatus.LENT) {
-            errorCodes.add(ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            logger.warn("Cannot return reservation item due to wrong status, returning error code "
+                    + ReservationErrorCode.WRONG_RESERVATION_STATUS);
+            collector.addErrorCode(ReservationErrorCode.WRONG_RESERVATION_STATUS);
         }
 
-        if (errorCodes.size() > 0) {
+        if (collector.hasErrorCodes()) {
             throw new ReservationWorkflowException("Error returning reservation item for reservation " + reservationId,
-                    errorCodes);
+                    collector.getErrorCodes());
         }
 
         delegate.returnReservationItemWithReservationId(reservationId);
