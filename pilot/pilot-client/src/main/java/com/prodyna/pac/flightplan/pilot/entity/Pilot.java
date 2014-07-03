@@ -44,9 +44,6 @@ public class Pilot extends User implements Serializable {
     public static final String PROP_LICENCE_VALIDITY = "licenceValidity";
     public static final String PROP_AIRCRAFTTYPES = "assignedAircraftTypes";
 
-    public Pilot() {
-    }
-
     @NotNull
     @Column(name = "licence_validity")
     private Date licenceValidity;
@@ -58,6 +55,9 @@ public class Pilot extends User implements Serializable {
             joinColumns = { @JoinColumn(name = "pilot_id") },
             inverseJoinColumns = { @JoinColumn(name = "aircrafttype_id") })
     private List<AircraftType> assignedAircraftTypes;
+
+    public Pilot() {
+    }
 
     @XmlElement
     public Date getLicenceValidity() {

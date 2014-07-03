@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
+import com.prodyna.pac.flightplan.client.aircrafttypeadmin.mainpage.AircraftTypeAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.plane.exception.AircraftTypeValidationException;
 
@@ -31,6 +32,8 @@ public class AircraftTypeDetailsPresenter implements Initializable {
     private TextField description;
 
     private AircraftTypeDetailsViewModel viewModel;
+
+    private AircraftTypeAdminMainPagePresenter parent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,8 +63,13 @@ public class AircraftTypeDetailsPresenter implements Initializable {
         });
     }
 
+    public void initItems(AircraftTypeAdminMainPagePresenter parent) {
+        this.parent = parent;
+    }
+
     public void saveAircraftType() throws AircraftTypeValidationException {
         this.viewModel.saveAircraftType();
+        parent.updateAircraftTypeList();
     }
 
     public void loadAircraftType() {

@@ -31,9 +31,10 @@ public class AircraftTypeListPresenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.viewModel = new AircraftTypeListViewModel();
-
         this.viewModel.selectedAircraftTypeProperty().bind(selectedTypeProperty());
+    }
 
+    public void initItems() {
         initAircraftTypeList();
     }
 

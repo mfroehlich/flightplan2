@@ -41,4 +41,13 @@ public class PlaneAdminMainPagePresenter implements Initializable {
 
         detailsPresenter.selectedPlaneProperty().bind(listPresenter.selectedPlaneProperty());
     }
+
+    public void initItems() {
+        listPresenter.initItems();
+        detailsPresenter.initItems(this);
+    }
+
+    public void updatePlaneList() {
+        listPresenter.initItems();
+    }
 }

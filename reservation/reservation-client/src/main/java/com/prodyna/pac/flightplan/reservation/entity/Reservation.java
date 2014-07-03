@@ -55,9 +55,6 @@ public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1383729821481338652L;
 
-    public Reservation() {
-    }
-
     @NotNull
     @Size(min = 1, max = 50)
     @Id
@@ -86,6 +83,9 @@ public class Reservation implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ReservationStatus status;
+
+    public Reservation() {
+    }
 
     @XmlElement
     public ReservationStatus getStatus() {

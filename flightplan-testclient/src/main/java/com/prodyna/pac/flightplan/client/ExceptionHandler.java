@@ -5,6 +5,7 @@ package com.prodyna.pac.flightplan.client;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
@@ -19,12 +20,15 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import com.prodyna.pac.flightplan.client.messages.MessageReader;
+import com.prodyna.pac.flightplan.common.exception.ApplicationErrorCode;
+import com.prodyna.pac.flightplan.common.exception.ErrorCode;
 import com.prodyna.pac.flightplan.common.exception.ErrorCodeWrapper;
-import com.prodyna.pac.flightplan.common.exception.UserNotAuthorizedException;
-import com.prodyna.pac.flightplan.user.exception.UserNotLoggedInException;
+import com.prodyna.pac.flightplan.common.exception.FunctionalException;
+import com.prodyna.pac.flightplan.common.exception.TechnicalException;
+import com.prodyna.pac.flightplan.user.exception.UserErrorCode;
 
 /**
- * TODO mfroehlich Comment me
+ * Helper class to display error messages depending on the occurring exception.
  * 
  * @author mfroehlich
  *
@@ -34,13 +38,16 @@ public class ExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
     /**
-     * TODO mfroehlich Comment me
+     * Transform the specified exception into an error message and display it in an info dialog.
      * 
      * @param throwable
      */
     public void handleException(Throwable throwable) {
 
-        logger.error("An error has occurred and is to be handled now: ", throwable);
+        logger.error("An error has occurred. An error message will be displayed now. Exception: ", throwable);
+
+        String errorMessage;
+
         if (throwable instanceof RuntimeException) {
             RuntimeException ex = (RuntimeException) throwable;
             if (ex.getCause() instanceof InvocationTargetException) {
@@ -49,44 +56,37 @@ public class ExceptionHandler {
                 Throwable realException = targetEx.getTargetException();
                 if (realException instanceof BadRequestException) {
                     BadRequestException badRequestException = (BadRequestException) realException;
-                    String message = badRequestException.getMessage();
                     Response response = badRequestException.getResponse();
                     Object entity = response.getEntity();
-                    if (entity instanceof ByteArrayInputStream) {
-                        ByteArrayInputStream stream = (ByteArrayInputStream) entity;
-                        ErrorCodeWrapper wrapper = readWrapperFromEntityStream(stream);
-                        String errorMessage = translateErrorCodes(wrapper);
-                        Dialogs.create().title("An error occurred.")
-                                .message("The following errors have occurred:\n\n" + errorMessage).showInformation();
-                    }
+                    ByteArrayInputStream stream = (ByteArrayInputStream) entity;
+                    ErrorCodeWrapper wrapper = readWrapperFromEntityStream(stream);
+                    errorMessage = translateErrorCodes(wrapper);
+                } else if (realException instanceof TechnicalException) {
+                    TechnicalException target = (TechnicalException) realException;
+                    errorMessage = translateErrorCode(target.getErrorCode());
+                } else if (realException instanceof FunctionalException) {
+                    FunctionalException target = (FunctionalException) realException;
+                    errorMessage = translateErrorCodes(target.getErrorCodes());
                 } else if (realException instanceof NotAuthorizedException) {
-                    NotAuthorizedException target = (NotAuthorizedException) realException;
-                    logger.error("User ist nicht autorisiert!!");
-                    Dialogs.create().showException(target);
-                } else if (realException instanceof UserNotLoggedInException) {
-                    UserNotLoggedInException target = (UserNotLoggedInException) realException;
-                    Dialogs.create().showException(target);
-                } else if (realException instanceof UserNotAuthorizedException) {
-                    UserNotAuthorizedException target = (UserNotAuthorizedException) realException;
-                    Dialogs.create().showException(target);
-                } else if (realException instanceof IllegalStateException) {
-                    IllegalStateException target = (IllegalStateException) realException;
-                    logger.error("Fehler beim Einlesen des FXML.");
-                    Dialogs.create().showException(target);
+                    errorMessage = translateErrorCode(UserErrorCode.USER_NOT_AUTHORIZED);
                 } else {
-                    logger.debug("Displaying default exception");
-                    Dialogs.create().showException(realException);
+                    errorMessage = translateErrorCode(ApplicationErrorCode.TECHNICAL_PROBLEM);
                 }
+            } else {
+                errorMessage = translateErrorCode(ApplicationErrorCode.TECHNICAL_PROBLEM);
             }
+        } else {
+            errorMessage = translateErrorCode(ApplicationErrorCode.TECHNICAL_PROBLEM);
         }
+
+        showErrorDialog(errorMessage);
     }
 
-    /**
-     * TODO mfroehlich Comment me
-     * 
-     * @param entity
-     * @return
-     */
+    private void showErrorDialog(String message) {
+        Dialogs.create().title("An error occurred.").message("The following error(s) occurred:\n\n" + message)
+                .showInformation();
+    }
+
     private ErrorCodeWrapper readWrapperFromEntityStream(ByteArrayInputStream stream) {
 
         ErrorCodeWrapper errorCodeWrapper;
@@ -110,5 +110,17 @@ public class ExceptionHandler {
             s.append(message + "\n\n");
         }
         return s.toString();
+    }
+
+    private String translateErrorCodes(List<ErrorCode> errorCodes) {
+        StringBuilder s = new StringBuilder();
+        errorCodes.forEach(code -> s.append(translateErrorCode(code)));
+        s.append("\n\n");
+        return s.toString();
+    }
+
+    private String translateErrorCode(ErrorCode code) {
+        String message = MessageReader.getMessage(code.getCode());
+        return message;
     }
 }

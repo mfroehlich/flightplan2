@@ -41,7 +41,7 @@
 				<Pane fx:id="mainScene" BorderPane.alignment="CENTER" />
 			</center>
          <bottom>
-						<Label fx:id="statusBarLabel" prefHeight="17.0" text="Dies ist die Statusbar! Hier könnte ich später mal Meldungen anzeigen!" BorderPane.alignment="CENTER" />
+						<Label fx:id="statusBarLabel" prefHeight="17.0" text="This statusbar is proudly presented by Markus Fröhlich ..." BorderPane.alignment="CENTER" />
          </bottom>
 		</BorderPane>
 	</children>

@@ -1,2 +1,12 @@
 
 MySQL 6.0
+
+Driver: mysql-connector-java-5.1.29-bin.jar
+
+Configuration:
+for further information see: applicationserver/datasources.txt
+
+
+Initial database setup:
+	- run database/create_datamodel.sql to create database schema for the flightplan application containing some startup data.
+	- run database/create_datamodel_test.sql to create database schema for JUnit-test cases with empty tables.

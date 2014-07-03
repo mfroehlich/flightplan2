@@ -6,7 +6,7 @@ package com.prodyna.pac.flightplan.user.exception;
 import com.prodyna.pac.flightplan.common.exception.TechnicalException;
 
 /**
- * TODO mfroehlich Comment me
+ * Exception for: user is not logged in.
  * 
  * @author mfroehlich
  *

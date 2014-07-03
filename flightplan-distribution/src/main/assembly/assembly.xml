@@ -40,6 +40,16 @@
  -->
  
 	<fileSets>
+	
+		<!-- README.txt -->
+		<fileSet>
+			<directory></directory>
+			<outputDirectory></outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>README.txt</include>
+			</includes>
+		</fileSet>
 
 		<!-- Datenbankskripte -->
 		<fileSet>

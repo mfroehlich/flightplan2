@@ -45,6 +45,10 @@ public class MessageReader {
             logger.debug("Could not find a value for the message code " + messageCode, ex);
         }
 
+        if (StringUtils.trim(value, null) == null) {
+            value = messageCode + " (!! missing translation !!)";
+        }
+
         return value;
     }
 }

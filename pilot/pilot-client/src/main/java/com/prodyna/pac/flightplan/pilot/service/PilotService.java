@@ -31,7 +31,6 @@ import com.prodyna.pac.flightplan.user.exception.UserValidationException;
 @Path("pilot")
 @Produces(MediaType.APPLICATION_XML)
 @Consumes(MediaType.APPLICATION_XML)
-@RolesAllowed({ Role.ADMIN })
 public interface PilotService {
 
     /**
@@ -43,6 +42,7 @@ public interface PilotService {
      * @throws UserValidationException
      */
     @POST
+    @RolesAllowed({ Role.ADMIN })
     public Pilot createPilot(Pilot pilot) throws PilotValidationException, UserValidationException;
 
     /**
@@ -55,7 +55,6 @@ public interface PilotService {
      */
     @GET
     @Path("id/{id}")
-    @RolesAllowed({ Role.ADMIN, Role.USER })
     public Pilot loadPilotById(@PathParam("id") String id) throws PilotNotFoundException;
 
     /**
@@ -77,6 +76,7 @@ public interface PilotService {
      * @throws UserValidationException
      */
     @PUT
+    @RolesAllowed({ Role.ADMIN })
     public Pilot updatePilot(Pilot pilot) throws PilotValidationException, UserValidationException;
 
     /**
@@ -87,6 +87,7 @@ public interface PilotService {
      */
     @DELETE
     @Path("id/{id}")
+    @RolesAllowed({ Role.ADMIN })
     public void deletePilotById(@PathParam("id") String pilotId) throws PilotNotFoundException,
             PilotValidationException;
 }

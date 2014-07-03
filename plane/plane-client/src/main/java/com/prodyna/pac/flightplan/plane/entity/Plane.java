@@ -51,9 +51,6 @@ public class Plane extends ReservationItem implements Serializable {
     public static final String PROP_NUMBERPLATE = "numberPlate";
     public static final String PROP_AIRCRAFTTYPE = "aircraftType";
 
-    public Plane() {
-    }
-
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")
@@ -68,6 +65,9 @@ public class Plane extends ReservationItem implements Serializable {
     @ManyToOne
     @JoinColumn(name = "aircrafttype")
     private AircraftType aircraftType;
+
+    public Plane() {
+    }
 
     @XmlElement
     public String getName() {

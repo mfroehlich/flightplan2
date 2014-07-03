@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PilotModel;
+import com.prodyna.pac.flightplan.client.pilotadmin.mainpage.PilotAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.pilot.exception.PilotNotFoundException;
 import com.prodyna.pac.flightplan.pilot.exception.PilotValidationException;
 import com.prodyna.pac.flightplan.user.exception.UserValidationException;
@@ -59,6 +60,8 @@ public class PilotDetailsPresenter implements Initializable {
     private ListView<AircraftTypeModel> assignedTypesListView;
 
     private PilotDetailsViewModel viewModel;
+
+    private PilotAdminMainPagePresenter parent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,9 +112,11 @@ public class PilotDetailsPresenter implements Initializable {
         this.assignedTypesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-    public void initItems() {
+    public void initItems(PilotAdminMainPagePresenter parent) {
         ObservableList<AircraftTypeModel> aircraftTypeList = viewModel.loadAllAircraftTypes();
         this.assignedTypesListView.setItems(aircraftTypeList);
+
+        this.parent = parent;
     }
 
     public void savePilot() throws PilotValidationException, UserValidationException {
@@ -123,6 +128,8 @@ public class PilotDetailsPresenter implements Initializable {
             this.viewModel.currentPilotProperty().get().assignedAircraftTypesProperty().set(typeList);
         }
         this.viewModel.savePilot();
+
+        parent.updatePilotList();
     }
 
     public void loadPilot() throws PilotNotFoundException {
@@ -143,15 +150,12 @@ public class PilotDetailsPresenter implements Initializable {
         updateAssignedTypesSelection();
     }
 
-    /**
-     * TODO mfroehlich Comment me
-     * 
-     * @param set
-     */
     private void updateAssignedTypesSelection() {
         assignedTypesListView.getSelectionModel().clearSelection();
-        List<AircraftTypeModel> assignedTypes = viewModel.currentPilotProperty().get().assignedAircraftTypesProperty()
-                .get();
+        List<AircraftTypeModel> assignedTypes = null;
+        if (viewModel.currentPilotProperty().get() != null) {
+            assignedTypes = viewModel.currentPilotProperty().get().assignedAircraftTypesProperty().get();
+        }
         if (assignedTypes != null) {
             assignedTypes.forEach(type -> assignedTypesListView.getSelectionModel().select(type));
         }

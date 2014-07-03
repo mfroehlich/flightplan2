@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.prodyna.pac.flightplan.client.model.AircraftTypeModel;
 import com.prodyna.pac.flightplan.client.model.PlaneModel;
+import com.prodyna.pac.flightplan.client.planeadmin.mainpage.PlaneAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
@@ -46,12 +47,11 @@ public class PlaneDetailsPresenter implements Initializable {
 
     private PlaneDetailsViewModel viewModel;
 
+    private PlaneAdminMainPagePresenter parent;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.viewModel = new PlaneDetailsViewModel();
-
-        ObservableList<AircraftTypeModel> aircraftTypeList = viewModel.loadAircraftTypes();
-        this.aircraftType.setItems(aircraftTypeList);
 
         this.selectedPlaneProperty().addListener(new ChangeListener<PlaneModel>() {
             @Override
@@ -87,12 +87,20 @@ public class PlaneDetailsPresenter implements Initializable {
         });
     }
 
+    public void initItems(PlaneAdminMainPagePresenter parent) {
+        this.parent = parent;
+
+        ObservableList<AircraftTypeModel> aircraftTypeList = viewModel.loadAircraftTypes();
+        this.aircraftType.setItems(aircraftTypeList);
+    }
+
     public void newPlane() {
         this.viewModel.currentPlaneProperty().set(new PlaneModel());
     }
 
     public void savePlane() throws PlaneValidationException {
         this.viewModel.savePlane();
+        parent.updatePlaneList();
     }
 
     public void loadPlane() {

@@ -16,8 +16,6 @@ import com.prodyna.pac.flightplan.client.model.PlaneModel;
 import com.prodyna.pac.flightplan.plane.exception.PlaneValidationException;
 
 /**
- * TODO mfroehlich Comment me
- * 
  * @author mfroehlich
  *
  */
@@ -31,6 +29,9 @@ public class PlaneListPresenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewModel = new PlaneListViewModel();
+    }
+
+    public void initItems() {
         loadPlanes();
     }
 

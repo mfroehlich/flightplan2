@@ -47,4 +47,13 @@ public class AircraftTypeAdminMainPagePresenter implements Initializable {
 
         this.detailsPresenter.selectedTypeProperty().bind(this.listPresenter.selectedTypeProperty());
     }
+
+    public void initItems() {
+        listPresenter.initItems();
+        detailsPresenter.initItems(this);
+    }
+
+    public void updateAircraftTypeList() {
+        listPresenter.initItems();
+    }
 }

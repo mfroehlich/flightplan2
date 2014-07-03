@@ -44,6 +44,10 @@ public class PilotAdminMainPagePresenter implements Initializable {
 
     public void initItems() {
         listPresenter.initItems();
-        detailsPresenter.initItems();
+        detailsPresenter.initItems(this);
+    }
+
+    public void updatePilotList() {
+        listPresenter.initItems();
     }
 }

@@ -52,9 +52,6 @@ public class User implements Serializable {
     public static final String PROP_PASSWORD = "password";
     public static final String PROP_EMAIL = "eMailAddress";
 
-    public User() {
-    }
-
     @NotNull
     @Size(min = 1, max = 50)
     @Id
@@ -88,6 +85,9 @@ public class User implements Serializable {
     @Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")
     @Column(name = "email")
     private String eMailAddress;
+
+    public User() {
+    }
 
     @XmlElement
     public String getId() {

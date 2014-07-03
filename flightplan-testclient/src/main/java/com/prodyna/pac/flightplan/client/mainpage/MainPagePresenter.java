@@ -10,9 +10,11 @@ import org.controlsfx.dialog.Dialogs.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.prodyna.pac.flightplan.client.aircrafttypeadmin.mainpage.AircraftTypeAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.client.aircrafttypeadmin.mainpage.AircraftTypeAdminMainPageView;
 import com.prodyna.pac.flightplan.client.pilotadmin.mainpage.PilotAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.client.pilotadmin.mainpage.PilotAdminMainPageView;
+import com.prodyna.pac.flightplan.client.planeadmin.mainpage.PlaneAdminMainPagePresenter;
 import com.prodyna.pac.flightplan.client.planeadmin.mainpage.PlaneAdminMainPageView;
 import com.prodyna.pac.flightplan.client.reservationcreation.ReservationCreationPresenter;
 import com.prodyna.pac.flightplan.client.reservationcreation.ReservationCreationView;
@@ -39,11 +41,13 @@ public class MainPagePresenter {
 
     public void openScenePlaneAdministration() {
         PlaneAdminMainPageView planeAdminView = new PlaneAdminMainPageView();
+        ((PlaneAdminMainPagePresenter) planeAdminView.getPresenter()).initItems();
         updateMainScene(planeAdminView.getView());
     }
 
     public void openSceneAircrafttypeAdministration() {
         AircraftTypeAdminMainPageView aircraftTypeAdminView = new AircraftTypeAdminMainPageView();
+        ((AircraftTypeAdminMainPagePresenter) aircraftTypeAdminView.getPresenter()).initItems();
         updateMainScene(aircraftTypeAdminView.getView());
     }
 
