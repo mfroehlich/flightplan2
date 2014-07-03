@@ -4,7 +4,8 @@
 package com.prodyna.pac.flightplan.monitoring;
 
 /**
- * TODO mfroehlich Comment me
+ * This event is created by the {@link MethodCallMonitorInterceptor} and sent to the {@link MethodCallEventCollector} in
+ * order to update the method call statistics.
  * 
  * @author mfroehlich
  * 

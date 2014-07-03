@@ -26,7 +26,8 @@ import com.prodyna.pac.flightplan.monitoring.mbean.MethodCallMonitor;
 import com.prodyna.pac.flightplan.monitoring.mbean.MethodCallMonitorMXBean;
 
 /**
- * TODO mfroehlich Comment me
+ * Singleton class that is initialized on startup. Registers the MBean {@link MethodCallMonitor} at the mbean server and
+ * collects and provides the method call statistics for this mbean.
  * 
  * @author mfroehlich
  * 

@@ -44,10 +44,6 @@ public abstract class AbstractClientService {
      * Create an instance of the specified REST-Service-class with header information containing the username and
      * password of the logged-in user so that REST-service-calls will be successfully authenticated against the backend.
      * 
-     * TODO mfroehlich
-     * http://stackoverflow.com/questions/22561527/handling-custom-error-response-in-jax-rs-2-0-client-library
-     * https://jersey.java.net/documentation/latest/client.html#d0e4706
-     * 
      * 
      * @param restServiceClass
      * @return

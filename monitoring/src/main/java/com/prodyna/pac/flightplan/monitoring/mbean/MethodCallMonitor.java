@@ -10,7 +10,7 @@ import com.prodyna.pac.flightplan.monitoring.MethodCallEventCollector;
 import com.prodyna.pac.flightplan.monitoring.MethodCallStatistics;
 
 /**
- * TODO mfroehlich Comment me
+ * MBean to monitor Method call statistics via JMX.
  * 
  * @author mfroehlich
  * 

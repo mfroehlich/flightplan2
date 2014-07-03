@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 import javax.interceptor.InterceptorBinding;
 
 /**
- * TODO mfroehlich Comment me
+ * Interceptor binding to bind the {@link MethodCallMonitorInterceptor} to EJBs.
  * 
  * @author mfroehlich
  * 

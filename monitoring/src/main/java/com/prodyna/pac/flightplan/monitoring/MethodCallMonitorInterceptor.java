@@ -8,8 +8,11 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
+import com.prodyna.pac.flightplan.monitoring.mbean.MethodCallMonitor;
+
 /**
- * TODO mfroehlich Comment me
+ * Interceptor to intercepts EJB method calls and collecting method call statistics for the {@link MethodCallMonitor}
+ * (MBean).
  * 
  * @author mfroehlich
  * 

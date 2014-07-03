@@ -4,7 +4,7 @@
 package com.prodyna.pac.flightplan.monitoring;
 
 /**
- * TODO mfroehlich Comment me
+ * Statistics object for method calls that is held in a map by the {@link MethodCallEventCollector}.
  * 
  * @author mfroehlich
  * 
