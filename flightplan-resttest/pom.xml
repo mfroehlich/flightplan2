@@ -2,15 +2,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.prodyna.pac.flightplan</groupId>
-		<artifactId>user</artifactId>
+		<groupId>com.prodyna.pac</groupId>
+		<artifactId>flightplan</artifactId>
 		<version>01.00.00-SNAPSHOT</version>
 	</parent>
-	<groupId>com.prodyna.pac.flightplan.user</groupId>
-	<artifactId>user-service</artifactId>
-	<packaging>ejb</packaging>
+	<artifactId>flightplan-resttest</artifactId>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>2.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-proxy-client</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
@@ -40,26 +49,20 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan.user</groupId>
-			<artifactId>user-client</artifactId>
+			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
+			<artifactId>pilot-service</artifactId>
+			<type>ejb</type>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.prodyna.pac.flightplan.flightplan-common</groupId>
-			<artifactId>flightplan-common-service</artifactId>
+			<groupId>com.prodyna.pac.flightplan.user</groupId>
+			<artifactId>user-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan.plane</groupId>
+			<artifactId>plane-service</artifactId>
+			<type>ejb</type>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ejb-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<ejbVersion>3.2</ejbVersion>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>

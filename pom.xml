@@ -161,5 +161,6 @@
 		<module>flightplan-ear</module>
 		<module>monitoring</module>
 		<module>flightplan-testclient</module>
+		<module>flightplan-resttest</module>
 	</modules>
 </project>
