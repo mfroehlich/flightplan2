@@ -53,7 +53,7 @@
 		<module>../flightplan-war</module>
 		<module>../flightplan-ear</module>
 		<module>../monitoring</module>
-		<module>../flightplan-testclient</module>
+		<module>../flightplan-frontend</module>
 	</modules>
 
 	<dependencies>
@@ -62,6 +62,11 @@
 			<artifactId>flightplan-ear</artifactId>
 			<version>01.00.00-SNAPSHOT</version>
 			<type>ear</type>
+		</dependency>
+		<dependency>
+			<groupId>com.prodyna.pac.flightplan</groupId>
+			<artifactId>flightplan-frontend</artifactId>
+			<version>01.00.00-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

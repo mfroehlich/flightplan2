@@ -144,9 +144,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-
 		</plugins>
-
 	</build>
 
 	<modules>
@@ -160,7 +158,7 @@
 		<module>flightplan-war</module>
 		<module>flightplan-ear</module>
 		<module>monitoring</module>
-		<module>flightplan-testclient</module>
+		<module>flightplan-frontend</module>
 		<module>flightplan-resttest</module>
 	</modules>
 </project>

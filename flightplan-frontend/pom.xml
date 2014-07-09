@@ -1,13 +1,56 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.prodyna.pac</groupId>
-		<artifactId>flightplan</artifactId>
-		<version>01.00.00-SNAPSHOT</version>
-	</parent>
+	<!-- <parent> -->
+	<!-- <groupId>com.prodyna.pac</groupId> -->
+	<!-- <artifactId>flightplan</artifactId> -->
+	<!-- <version>01.00.00-SNAPSHOT</version> -->
+	<!-- </parent> -->
 	<groupId>com.prodyna.pac.flightplan</groupId>
-	<artifactId>flightplan-testclient</artifactId>
+	<artifactId>flightplan-frontend</artifactId>
+	<version>01.00.00-SNAPSHOT</version>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.prodyna.pac.flightplan.client.FlightplanApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>${basedir}/target/dependency</directory>
+			</resource>
+		</resources>
+	</build>
 
 	<dependencies>
 		<!-- <dependency> <groupId>org.jboss.resteasy</groupId> <artifactId>resteasy-client</artifactId> 
@@ -36,32 +79,39 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>4.11</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.7</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.plane</groupId>
 			<artifactId>plane-client</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan</groupId>
 			<artifactId>common-utils</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.pilot</groupId>
 			<artifactId>pilot-client</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.prodyna.pac.flightplan.planereservation</groupId>
 			<artifactId>planereservation-client</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>
