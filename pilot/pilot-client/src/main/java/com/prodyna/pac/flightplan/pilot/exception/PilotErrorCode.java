@@ -25,7 +25,7 @@ public class PilotErrorCode extends ErrorCode {
     public static final ErrorCode ERROR_UPDATING_PILOT = new PilotErrorCode("error_updating_pilot");
     public static final ErrorCode ERROR_DELETING_PILOT = new PilotErrorCode("error_deleting_pilot");
     public static final ErrorCode LICENCE_VALIDITY_INVALID = new PilotErrorCode("licence_validity_invalid");
-    public static final ErrorCode AIRCRAFTTYPES_MUST_NOT_BE_NULL = new PilotErrorCode("aircrafttypes_must_not_be_null");
+    public static final ErrorCode AIRCRAFTTYPES_MUST_NOT_BE_NULL = new PilotErrorCode("aircraft_types_must_not_be_null");
     public static final ErrorCode PILOT_CANNOT_BE_DELETED = new PilotErrorCode("pilot_cannot_be_deleted");
 
     /**

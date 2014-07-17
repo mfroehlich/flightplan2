@@ -34,7 +34,7 @@ public class Role implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "rolename", unique = true)
+    @Column(name = "role_name", unique = true)
     private String roleName;
 
     public String getId() {

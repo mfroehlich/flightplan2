@@ -43,7 +43,7 @@ public class Plane extends ReservationItem implements Serializable {
     private static final long serialVersionUID = 7128736888545719542L;
 
     public static final String QUERY_LOAD_ALL_PLANES = "load_all_planes";
-    public static final String QUERY_COUNT_PLANES_REFERENCING_AIRCRAFTTYPE = "count_planes_referencing_aircrafttype";
+    public static final String QUERY_COUNT_PLANES_REFERENCING_AIRCRAFTTYPE = "count_planes_referencing_aircraft_type";
     public static final String QUERY_CHECK_NAME_AND_NUMBERPLATE_UNIQUE = "query_check_name_and_numberplate_unique";
 
     public static final String PROP_ID = "id";
@@ -58,12 +58,12 @@ public class Plane extends ReservationItem implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "numberplate", unique = true)
+    @Column(name = "number_plate", unique = true)
     private String numberPlate;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "aircrafttype")
+    @JoinColumn(name = "aircraft_type")
     private AircraftType aircraftType;
 
     public Plane() {

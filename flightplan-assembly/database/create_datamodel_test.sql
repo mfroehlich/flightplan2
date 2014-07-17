@@ -6,12 +6,12 @@ CREATE TABLE `user` (
   `id` varchar(50) NOT NULL,
   `version` int default 1 not null,
   `email` varchar(50) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `username` varchar(50) DEFAULT NULL,
+  `user_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT uc_user_username_unique UNIQUE (`username`)
+  CONSTRAINT uc_user_username_unique UNIQUE (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -22,7 +22,7 @@ CREATE TABLE `pilot` (
   CONSTRAINT `FK_kp4l415fkxg688bg286x3cga5` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `aircrafttype` (
+CREATE TABLE `aircraft_type` (
   `id` varchar(50) NOT NULL,
   `version` int default 1 not null,
   `description` varchar(50) DEFAULT NULL,
@@ -30,12 +30,12 @@ CREATE TABLE `aircrafttype` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `pilot_to_aircrafttype` (
+CREATE TABLE `pilot_to_aircraft_type` (
   `pilot_id` varchar(50) NOT NULL,
-  `aircrafttype_id` varchar(50) NOT NULL,
-  PRIMARY KEY (`pilot_id`,`aircrafttype_id`),
-  KEY `FK_g56mhw9sj2f3r6eltff9whlk8` (`aircrafttype_id`),
-  CONSTRAINT `FK_g56mhw9sj2f3r6eltff9whlk8` FOREIGN KEY (`aircrafttype_id`) REFERENCES `aircrafttype` (`id`),
+  `aircraft_type_id` varchar(50) NOT NULL,
+  PRIMARY KEY (`pilot_id`,`aircraft_type_id`),
+  KEY `FK_g56mhw9sj2f3r6eltff9whlk8` (`aircraft_type_id`),
+  CONSTRAINT `FK_g56mhw9sj2f3r6eltff9whlk8` FOREIGN KEY (`aircraft_type_id`) REFERENCES `aircraft_type` (`id`),
   CONSTRAINT `FK_pd7yfmmhx2wxqfm0hec24qeaq` FOREIGN KEY (`pilot_id`) REFERENCES `pilot` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,13 +47,13 @@ CREATE TABLE `reservation_item` (
 
 CREATE TABLE `plane` (
   `name` varchar(50) DEFAULT NULL,
-  `numberplate` varchar(50) DEFAULT NULL,
+  `number_plate` varchar(50) DEFAULT NULL,
   `id` varchar(50) NOT NULL,
-  `aircrafttype` varchar(50) DEFAULT NULL,
+  `aircraft_type` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_okt3vwgmoby1jsew888uiixpq` (`aircrafttype`),
+  KEY `FK_okt3vwgmoby1jsew888uiixpq` (`aircraft_type`),
   CONSTRAINT `FK_e4w9wuowwylouucireu4otyh0` FOREIGN KEY (`id`) REFERENCES `reservation_item` (`id`),
-  CONSTRAINT `FK_okt3vwgmoby1jsew888uiixpq` FOREIGN KEY (`aircrafttype`) REFERENCES `aircrafttype` (`id`)
+  CONSTRAINT `FK_okt3vwgmoby1jsew888uiixpq` FOREIGN KEY (`aircraft_type`) REFERENCES `aircraft_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `reservation` (
@@ -73,7 +73,7 @@ CREATE TABLE `reservation` (
 
 CREATE TABLE `role` (
   `id` varchar(50) NOT NULL,
-  `rolename` varchar(50) DEFAULT NULL,
+  `role_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

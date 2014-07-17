@@ -1,4 +1,20 @@
 
+
+######################################################################################
+DataSources können über die Admin-Console des Wildfly konfiguriert werden.
+Link: http://localhost:9990
+
+	-> Im Menü: Profile auswählen
+	-> Im Untermenü: Connector auswählen
+	-> Darunter: Datasources auswählen
+	-> Im Hauptfenster-Fenster erscheinen die JDBC-Datasources.
+		-> dort "Add"-Button wählen
+		-> Wizard zur Erstellung einer neuen Datasource befolgen
+			(Daten der Datasources: siehe unten)
+		
+######################################################################################
+
+
 Name: FlightplanMysqlDS
 JNDI-Name: java:jboss/datasources/FlightplanMysqlDS
 Driver: mysql

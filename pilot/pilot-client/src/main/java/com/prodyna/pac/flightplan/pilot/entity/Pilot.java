@@ -51,9 +51,9 @@ public class Pilot extends User implements Serializable {
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "pilot_to_aircrafttype",
+            name = "pilot_to_aircraft_type",
             joinColumns = { @JoinColumn(name = "pilot_id") },
-            inverseJoinColumns = { @JoinColumn(name = "aircrafttype_id") })
+            inverseJoinColumns = { @JoinColumn(name = "aircraft_type_id") })
     private List<AircraftType> assignedAircraftTypes;
 
     public Pilot() {

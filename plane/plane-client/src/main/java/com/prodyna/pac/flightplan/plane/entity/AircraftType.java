@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @Entity
-@Table(name = "aircrafttype")
+@Table(name = "aircraft_type")
 @NamedQueries({
         @NamedQuery(name = AircraftType.QUERY_LOAD_ALL_TYPES, query = "FROM AircraftType ORDER BY description"),
         @NamedQuery(
@@ -39,7 +39,7 @@ public class AircraftType implements Serializable {
 
     public static final String PROP_ID = "id";
     public static final String PROP_DESCRIPTION = "description";
-    public static final String QUERY_COUNT_OTHER_AIRCRAFTTYPES_DEFINING_DESCRIPTION = "query_count_other_aircrafttypes_defining_description";
+    public static final String QUERY_COUNT_OTHER_AIRCRAFTTYPES_DEFINING_DESCRIPTION = "query_count_other_aircraft_types_defining_description";
 
     public AircraftType() {
     }

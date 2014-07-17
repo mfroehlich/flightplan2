@@ -19,7 +19,7 @@ public class PlaneReservationErrorCode extends ErrorCode {
     private static final long serialVersionUID = -3261268640513831846L;
 
     public static final ErrorCode USER_MAY_NOT_RESERVE_AIRCRAFTTYPE = new PlaneReservationErrorCode(
-            "user_may_not_reserve_aircrafttype");
+            "user_may_not_reserve_aircraft_type");
     public static final ErrorCode PILOT_MAY_NOT_BE_NULL = new PlaneReservationErrorCode("pilot_may_not_be_null");
     public static final ErrorCode PLANE_MAY_NOT_BE_NULL = new PlaneReservationErrorCode("plane_may_not_be_null");
     public static final ErrorCode ID_MAY_NOT_BE_NULL = new PlaneReservationErrorCode("id_may_not_be_null");

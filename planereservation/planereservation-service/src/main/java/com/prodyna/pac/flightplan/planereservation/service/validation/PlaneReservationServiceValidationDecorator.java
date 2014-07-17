@@ -60,7 +60,7 @@ public class PlaneReservationServiceValidationDecorator implements PlaneReservat
 
             if (pilotAircraftTypes == null || pilotAircraftTypes.contains(planeAircraftType) == false) {
                 throw new PlaneReservationValidationException(
-                        "PlaneReservation has validation error: User may not reserve the plane's aircrafttype.",
+                        "PlaneReservation has validation error: User may not reserve the plane's aircraft_type.",
                         PlaneReservationErrorCode.USER_MAY_NOT_RESERVE_AIRCRAFTTYPE);
             }
 

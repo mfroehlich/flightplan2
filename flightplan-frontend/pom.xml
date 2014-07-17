@@ -21,6 +21,8 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			
+			<!-- ACHTUNG: siehe http://direinem.blogspot.be/2012/01/maven-executable-jar-with-dependencies.html -->
 
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
