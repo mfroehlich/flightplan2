@@ -29,9 +29,6 @@ public class FlightplanApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        // URL log4jXML = getClass().getClassLoader().getResource("logging/log4j.xml");
-        // DOMConfigurator.configure(log4jXML);
-
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
             new ExceptionHandler().handleException(throwable);
         });
