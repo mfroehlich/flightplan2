@@ -3,13 +3,10 @@
  */
 package com.prodyna.pac.flightplan.client;
 
-import java.net.URL;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +29,8 @@ public class FlightplanApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        URL log4jXML = getClass().getClassLoader().getResource("logging/log4j.xml");
-        DOMConfigurator.configure(log4jXML);
+        // URL log4jXML = getClass().getClassLoader().getResource("logging/log4j.xml");
+        // DOMConfigurator.configure(log4jXML);
 
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
             new ExceptionHandler().handleException(throwable);

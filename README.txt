@@ -35,6 +35,7 @@ Einrichten des ApplicationServers
 			* module.xml (Inhalt siehe %HAUPTORDNER%/flightplan-assembly/applicationserver/module.xml)
 			
 	* standalone.xml anpassen mit Snippets 
+		ACHTUNG: Hierfür vorher den Wildfly herunterfahren, dass dieser die standalone.xml beim Herunterfahren nicht wieder überschreibt!
 		-> Einfügen der Snippets ist beschrieben in %HAUPTORDNER%/flightplan-assembly/applicationserver/standalone-snippets.txt
 		
  
