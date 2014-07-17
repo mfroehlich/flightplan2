@@ -13,8 +13,11 @@ Voraussetzung:
 
 
 Einrichten der Datenbank
+
     * Datenbank sollte über Port 3306 erreichbar sein
     	-> falls anderer Port gewählt wird, bitte entsprechend bei der Einrichtung der DataSources beachten!
+    	
+    * Es sollte ein spezieller Datenbankuser angelegt sein, welcher dann beim Einrichten der DataSources angegeben werden kann.
     	
 	* Zur Initialisierung der Test-Datenbank folgendes Skript ausführen: %HAUPTORDNER%/flightplan-assembly/database/create_datamodel_test.sql
 	* Zur Initialisierung der Live-Datenbank folgendes Skript ausführen: %HAUPTORDNER%/flightplan-assembly/database/create_datamodel.sql
@@ -24,20 +27,24 @@ Einrichten der Datenbank
 	 
  	
 Einrichten des ApplicationServers
-	* DataSources einrichten
-		-> DataSources können über die Admin-Console des Wildfly administriert werden: http://localhost:9990
-		-> Einrichtung der DataSources ist beschrieben in %HAUPTORDNER%/flightplan-assembly/applicationserver/datasources.txt
 
-	* Mysql-Driver in Wildfly bekanntmachen
-		-> unterhalb von %WILDFLY-HOME%/modules den Ordner org/mysql/main anlegen
-		-> in diesen Ordner folgende Dateien legen:
-			* mysql-connector-java-5.1.29-bin.jar
-			* module.xml (Inhalt siehe %HAUPTORDNER%/flightplan-assembly/applicationserver/module.xml)
-			
 	* standalone.xml anpassen mit Snippets 
 		ACHTUNG: Hierfür vorher den Wildfly herunterfahren, dass dieser die standalone.xml beim Herunterfahren nicht wieder überschreibt!
 		-> Einfügen der Snippets ist beschrieben in %HAUPTORDNER%/flightplan-assembly/applicationserver/standalone-snippets.txt
 		
+    * standalone.xml:
+    	-> Folgenden Eintrag entfernen: <default-security-domain value="other"/> 
+    	
+    ### Wildfly starten ###
+
+	* Mysql-Driver in Wildfly bekanntmachen
+		-> den heruntergeladenen Treiber in folgenden Ordner ablegen: %WILDFLY-Installationsverzeichnis%/standalone/deployments
+		-> Wildfly führt dann ein Auto-Deployment durch
+
+	* DataSources einrichten
+		-> DataSources können über die Admin-Console des Wildfly administriert werden: http://localhost:9990
+		-> Einrichtung der DataSources ist beschrieben in %HAUPTORDNER%/flightplan-assembly/applicationserver/datasources.txt
+					
  
 Vorbedingungen:
  	* Datenbank starten

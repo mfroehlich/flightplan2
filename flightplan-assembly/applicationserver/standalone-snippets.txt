@@ -59,24 +59,7 @@ INFO: Subsystem "logging" kann komplett ersetzt werden:
                 <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
             </formatter>
         </subsystem>
-        
     
-######################################################################################
-Im Subsystem "datasources" lediglich den hier gegebenen Block "driver" ergänzen:
-######################################################################################
-        <subsystem xmlns="urn:jboss:domain:datasources:2.0">
-            <datasources>
-                <drivers>
-                
-<!-- ACHTUNG: nur driver-Block ergänzen! -->
-                    <driver name="mysql" module="org.mysql">
-                        <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
-                    </driver>
-                    
-                </drivers>
-            </datasources>
-        </subsystem>
-        
 ######################################################################################
 Im Subsystem "security" lediglich den hier gegebenen Block "security-domain" ergänzen:
 ######################################################################################

@@ -1,9 +1,0 @@
-
-Wildfly-Version: 8.0.0-Final
-
-Configuration:
-	- replace the standalone.xlm
-	- create a subfolder 'org/mysql/main' in the WILDFLY/modules folder
-      and put the following files into it:
-        * applicationserver/module.xml
-        * mysql-driver-file (version: see database/mysql.txt)

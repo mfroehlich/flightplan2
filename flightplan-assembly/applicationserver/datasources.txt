@@ -26,3 +26,8 @@ JNDI-Name: java:jboss/datasources/FlightplanMysqlDSTest
 Driver: mysql
 jdbc:mysql://localhost:3306/flightplantest
 Poolsize: 10 - 100
+
+
+######################################################################################
+ACHTUNG: hier den Datenbankuser verwenden, der beim Einrichten der MySQL definiert wurde!
+######################################################################################
